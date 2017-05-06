@@ -1,0 +1,52 @@
+@import "true";
+@import "scss/entity";
+
+@include test-module('entity') {
+  @include test('Pass in unescaped unencoded entity') {
+    $test: entity('!');
+    $expect: '\00021';
+    @include assert-equal($test, $expect, 'Returns the correct encoded entity');
+  }
+
+  @include test('Pass in escaped unencoded entity') {
+    $test: entity('\!');
+    $expect: '\00021';
+    @include assert-equal($test, $expect, 'Returns the correct encoded entity');
+  }
+
+  @include test('Pass in HTML name') {
+    $test: entity('excl');
+    $expect: '\00021';
+    @include assert-equal($test, $expect, 'Returns the correct encoded entity');
+  }
+
+  @include test('Pass in hex value') {
+    $test: entity('00021');
+    $expect: '\00021';
+    @include assert-equal($test, $expect, 'Returns the correct encoded entity');
+  }
+
+  @include test('Pass in decimal value') {
+    $test: entity('33');
+    $expect: '\00021';
+    @include assert-equal($test, $expect, 'Returns the correct encoded entity');
+  }
+
+  @include test('Pass in unsupported value') {
+    $test: entity('unsupported');
+    $expect: 'unsupported';
+    @include assert-equal($test, $expect, 'Returns the original value');
+  }
+
+  @include test('Pass in unescaped illegal entity') {
+    $test: entity(']');
+    $expect: '\0005D';
+    @include assert-equal($test, $expect, 'Returns the correct encoded entity');
+  }
+
+  @include test('Pass in escaped illegal entity') {
+    $test: entity('\]');
+    $expect: '\0005D';
+    @include assert-equal($test, $expect, 'Returns the correct encoded entity');
+  }
+}

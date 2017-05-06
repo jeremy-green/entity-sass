@@ -1,0 +1,2915 @@
+////
+/// Entities
+/// A Sass function that will output properly encoded entities.
+/// @see https://dev.w3.org/html5/html-author/charref
+////
+
+/// The list of entities
+/// @type Map
+$entities: (
+  // U+00009 CHARACTER TABULATION
+  "\00009": ("\	", "Tab", "00009", "9"),
+  // U+0000A LINE FEED (LF)
+  "\0000A": ("NewLine", "0000A", "10"),
+  // U+00021 EXCLAMATION MARK
+  "\00021": ("\!", "excl", "00021", "33"),
+  // U+00022 QUOTATION MARK
+  "\00022": ('\"', "quot", "QUOT", "00022", "34"),
+  // U+00023 NUMBER SIGN
+  "\00023": ("\#", "num", "00023", "35"),
+  // U+00024 DOLLAR SIGN
+  "\00024": ("\$", "dollar", "00024", "36"),
+  // U+00025 PERCENT SIGN
+  "\00025": ("\%", "percnt", "00025", "37"),
+  // U+00026 AMPERSAND
+  "\00026": ("\&", "amp", "AMP", "00026", "38"),
+  // U+00027 APOSTROPHE
+  "\00027": ("\'", "apos", "00027", "39"),
+  // U+00028 LEFT PARENTHESIS
+  "\00028": ("\(", "lpar", "00028", "40"),
+  // U+00029 RIGHT PARENTHESIS
+  "\00029": ("\)", "rpar", "00029", "41"),
+  // U+0002A ASTERISK
+  "\0002A": ("\*", "ast", "midast", "0002A", "42"),
+  // U+0002B PLUS SIGN
+  "\0002B": ("\+", "plus", "0002B", "43"),
+  // U+0002C COMMA
+  "\0002C": ("\,", "comma", "0002C", "44"),
+  // U+0002E FULL STOP
+  "\0002E": ("\.", "period", "0002E", "46"),
+  // U+0002F SOLIDUS
+  "\0002F": ("\/", "sol", "0002F", "47"),
+  // U+0003A COLON
+  "\0003A": ("\:", "colon", "0003A", "58"),
+  // U+0003B SEMICOLON
+  "\0003B": ("\;", "semi", "0003B", "59"),
+  // U+0003C LESS-THAN SIGN
+  "\0003C": ("\<", "lt", "LT", "0003C", "60"),
+  // U+0003D EQUALS SIGN
+  "\0003D": ("\=", "equals", "0003D", "61"),
+  // U+0003E GREATER-THAN SIGN
+  "\0003E": ("\>", "gt", "GT", "0003E", "62"),
+  // U+0003F QUESTION MARK
+  "\0003F": ("\?", "quest", "0003F", "63"),
+  // U+00040 COMMERCIAL AT
+  "\00040": ("\@", "commat", "00040", "64"),
+  // U+0005B LEFT SQUARE BRACKET
+  "\0005B": ("\[", "lsqb", "lbrack", "0005B", "91"),
+  // U+0005C REVERSE SOLIDUS
+  "\0005C": ("\\", "bsol", "0005C", "92"),
+  // U+0005D RIGHT SQUARE BRACKET
+  "\0005D": ("\]", "rsqb", "rbrack", "0005D", "93"),
+  // U+0005E CIRCUMFLEX ACCENT
+  "\0005E": ("\^", "Hat", "0005E", "94"),
+  // U+0005F LOW LINE
+  "\0005F": ("\_", "lowbar", "0005F", "95"),
+  // U+00060 GRAVE ACCENT
+  "\00060": ("\`", "grave", "DiacriticalGrave", "00060", "96"),
+  // U+0007B LEFT CURLY BRACKET
+  "\0007B": ("\{", "lcub", "lbrace", "0007B", "123"),
+  // U+0007C VERTICAL LINE
+  "\0007C": ("\|", "verbar", "vert", "VerticalLine", "0007C", "124"),
+  // U+0007D RIGHT CURLY BRACKET
+  "\0007D": ("\}", "rcub", "rbrace", "0007D", "125"),
+  // U+000A0 NO-BREAK SPACE
+  "\000A0": ("\ ", "nbsp", "NonBreakingSpace", "000A0", "160"),
+  // U+000A1 INVERTED EXCLAMATION MARK
+  "\000A1": ("\¡", "iexcl", "000A1", "161"),
+  // U+000A2 CENT SIGN
+  "\000A2": ("\¢", "cent", "000A2", "162"),
+  // U+000A3 POUND SIGN
+  "\000A3": ("\£", "pound", "000A3", "163"),
+  // U+000A4 CURRENCY SIGN
+  "\000A4": ("\¤", "curren", "000A4", "164"),
+  // U+000A5 YEN SIGN
+  "\000A5": ("\¥", "yen", "000A5", "165"),
+  // U+000A6 BROKEN BAR
+  "\000A6": ("\¦", "brvbar", "000A6", "166"),
+  // U+000A7 SECTION SIGN
+  "\000A7": ("\§", "sect", "000A7", "167"),
+  // U+000A8 DIAERESIS
+  "\000A8": ("\¨", "Dot", "die", "DoubleDot", "uml", "000A8", "168"),
+  // U+000A9 COPYRIGHT SIGN
+  "\000A9": ("\©", "copy", "COPY", "000A9", "169"),
+  // U+000AA FEMININE ORDINAL INDICATOR
+  "\000AA": ("\ª", "ordf", "000AA", "170"),
+  // U+000AB LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+  "\000AB": ("\«", "laquo", "000AB", "171"),
+  // U+000AC NOT SIGN
+  "\000AC": ("\¬", "not", "000AC", "172"),
+  // U+000AD SOFT HYPHEN
+  "\000AD": ("\­", "shy", "000AD", "173"),
+  // U+000AE REGISTERED SIGN
+  "\000AE": ("\®", "reg", "circledR", "REG", "000AE", "174"),
+  // U+000AF MACRON
+  "\000AF": ("\¯", "macr", "OverBar", "strns", "000AF", "175"),
+  // U+000B0 DEGREE SIGN
+  "\000B0": ("\°", "deg", "000B0", "176"),
+  // U+000B1 PLUS-MINUS SIGN
+  "\000B1": ("\±", "plusmn", "pm", "PlusMinus", "000B1", "177"),
+  // U+000B2 SUPERSCRIPT TWO
+  "\000B2": ("\²", "sup2", "000B2", "178"),
+  // U+000B3 SUPERSCRIPT THREE
+  "\000B3": ("\³", "sup3", "000B3", "179"),
+  // U+000B4 ACUTE ACCENT
+  "\000B4": ("\´", "acute", "DiacriticalAcute", "000B4", "180"),
+  // U+000B5 MICRO SIGN
+  "\000B5": ("\µ", "micro", "000B5", "181"),
+  // U+000B6 PILCROW SIGN
+  "\000B6": ("\¶", "para", "000B6", "182"),
+  // U+000B7 MIDDLE DOT
+  "\000B7": ("\·", "middot", "centerdot", "CenterDot", "000B7", "183"),
+  // U+000B8 CEDILLA
+  "\000B8": ("\¸", "cedil", "Cedilla", "000B8", "184"),
+  // U+000B9 SUPERSCRIPT ONE
+  "\000B9": ("\¹", "sup1", "000B9", "185"),
+  // U+000BA MASCULINE ORDINAL INDICATOR
+  "\000BA": ("\º", "ordm", "000BA", "186"),
+  // U+000BB RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK
+  "\000BB": ("\»", "raquo", "000BB", "187"),
+  // U+000BC VULGAR FRACTION ONE QUARTER
+  "\000BC": ("\¼", "frac14", "000BC", "188"),
+  // U+000BD VULGAR FRACTION ONE HALF
+  "\000BD": ("\½", "frac12", "half", "000BD", "189"),
+  // U+000BE VULGAR FRACTION THREE QUARTERS
+  "\000BE": ("\¾", "frac34", "000BE", "190"),
+  // U+000BF INVERTED QUESTION MARK
+  "\000BF": ("\¿", "iquest", "000BF", "191"),
+  // U+000C0 LATIN CAPITAL LETTER A WITH GRAVE
+  "\000C0": ("\À", "Agrave", "000C0", "192"),
+  // U+000C1 LATIN CAPITAL LETTER A WITH ACUTE
+  "\000C1": ("\Á", "Aacute", "000C1", "193"),
+  // U+000C2 LATIN CAPITAL LETTER A WITH CIRCUMFLEX
+  "\000C2": ("\Â", "Acirc", "000C2", "194"),
+  // U+000C3 LATIN CAPITAL LETTER A WITH TILDE
+  "\000C3": ("\Ã", "Atilde", "000C3", "195"),
+  // U+000C4 LATIN CAPITAL LETTER A WITH DIAERESIS
+  "\000C4": ("\Ä", "Auml", "000C4", "196"),
+  // U+000C5 LATIN CAPITAL LETTER A WITH RING ABOVE
+  "\000C5": ("\Å", "Aring", "000C5", "197"),
+  // U+000C6 LATIN CAPITAL LETTER AE
+  "\000C6": ("\Æ", "AElig", "000C6", "198"),
+  // U+000C7 LATIN CAPITAL LETTER C WITH CEDILLA
+  "\000C7": ("\Ç", "Ccedil", "000C7", "199"),
+  // U+000C8 LATIN CAPITAL LETTER E WITH GRAVE
+  "\000C8": ("\È", "Egrave", "000C8", "200"),
+  // U+000C9 LATIN CAPITAL LETTER E WITH ACUTE
+  "\000C9": ("\É", "Eacute", "000C9", "201"),
+  // U+000CA LATIN CAPITAL LETTER E WITH CIRCUMFLEX
+  "\000CA": ("\Ê", "Ecirc", "000CA", "202"),
+  // U+000CB LATIN CAPITAL LETTER E WITH DIAERESIS
+  "\000CB": ("\Ë", "Euml", "000CB", "203"),
+  // U+000CC LATIN CAPITAL LETTER I WITH GRAVE
+  "\000CC": ("\Ì", "Igrave", "000CC", "204"),
+  // U+000CD LATIN CAPITAL LETTER I WITH ACUTE
+  "\000CD": ("\Í", "Iacute", "000CD", "205"),
+  // U+000CE LATIN CAPITAL LETTER I WITH CIRCUMFLEX
+  "\000CE": ("\Î", "Icirc", "000CE", "206"),
+  // U+000CF LATIN CAPITAL LETTER I WITH DIAERESIS
+  "\000CF": ("\Ï", "Iuml", "000CF", "207"),
+  // U+000D0 LATIN CAPITAL LETTER ETH
+  "\000D0": ("\Ð", "ETH", "000D0", "208"),
+  // U+000D1 LATIN CAPITAL LETTER N WITH TILDE
+  "\000D1": ("\Ñ", "Ntilde", "000D1", "209"),
+  // U+000D2 LATIN CAPITAL LETTER O WITH GRAVE
+  "\000D2": ("\Ò", "Ograve", "000D2", "210"),
+  // U+000D3 LATIN CAPITAL LETTER O WITH ACUTE
+  "\000D3": ("\Ó", "Oacute", "000D3", "211"),
+  // U+000D4 LATIN CAPITAL LETTER O WITH CIRCUMFLEX
+  "\000D4": ("\Ô", "Ocirc", "000D4", "212"),
+  // U+000D5 LATIN CAPITAL LETTER O WITH TILDE
+  "\000D5": ("\Õ", "Otilde", "000D5", "213"),
+  // U+000D6 LATIN CAPITAL LETTER O WITH DIAERESIS
+  "\000D6": ("\Ö", "Ouml", "000D6", "214"),
+  // U+000D7 MULTIPLICATION SIGN
+  "\000D7": ("\×", "times", "000D7", "215"),
+  // U+000D8 LATIN CAPITAL LETTER O WITH STROKE
+  "\000D8": ("\Ø", "Oslash", "000D8", "216"),
+  // U+000D9 LATIN CAPITAL LETTER U WITH GRAVE
+  "\000D9": ("\Ù", "Ugrave", "000D9", "217"),
+  // U+000DA LATIN CAPITAL LETTER U WITH ACUTE
+  "\000DA": ("\Ú", "Uacute", "000DA", "218"),
+  // U+000DB LATIN CAPITAL LETTER U WITH CIRCUMFLEX
+  "\000DB": ("\Û", "Ucirc", "000DB", "219"),
+  // U+000DC LATIN CAPITAL LETTER U WITH DIAERESIS
+  "\000DC": ("\Ü", "Uuml", "000DC", "220"),
+  // U+000DD LATIN CAPITAL LETTER Y WITH ACUTE
+  "\000DD": ("\Ý", "Yacute", "000DD", "221"),
+  // U+000DE LATIN CAPITAL LETTER THORN
+  "\000DE": ("\Þ", "THORN", "000DE", "222"),
+  // U+000DF LATIN SMALL LETTER SHARP S
+  "\000DF": ("\ß", "szlig", "000DF", "223"),
+  // U+000E0 LATIN SMALL LETTER A WITH GRAVE
+  "\000E0": ("\à", "agrave", "000E0", "224"),
+  // U+000E1 LATIN SMALL LETTER A WITH ACUTE
+  "\000E1": ("\á", "aacute", "000E1", "225"),
+  // U+000E2 LATIN SMALL LETTER A WITH CIRCUMFLEX
+  "\000E2": ("\â", "acirc", "000E2", "226"),
+  // U+000E3 LATIN SMALL LETTER A WITH TILDE
+  "\000E3": ("\ã", "atilde", "000E3", "227"),
+  // U+000E4 LATIN SMALL LETTER A WITH DIAERESIS
+  "\000E4": ("\ä", "auml", "000E4", "228"),
+  // U+000E5 LATIN SMALL LETTER A WITH RING ABOVE
+  "\000E5": ("\å", "aring", "000E5", "229"),
+  // U+000E6 LATIN SMALL LETTER AE
+  "\000E6": ("\æ", "aelig", "000E6", "230"),
+  // U+000E7 LATIN SMALL LETTER C WITH CEDILLA
+  "\000E7": ("\ç", "ccedil", "000E7", "231"),
+  // U+000E8 LATIN SMALL LETTER E WITH GRAVE
+  "\000E8": ("\è", "egrave", "000E8", "232"),
+  // U+000E9 LATIN SMALL LETTER E WITH ACUTE
+  "\000E9": ("\é", "eacute", "000E9", "233"),
+  // U+000EA LATIN SMALL LETTER E WITH CIRCUMFLEX
+  "\000EA": ("\ê", "ecirc", "000EA", "234"),
+  // U+000EB LATIN SMALL LETTER E WITH DIAERESIS
+  "\000EB": ("\ë", "euml", "000EB", "235"),
+  // U+000EC LATIN SMALL LETTER I WITH GRAVE
+  "\000EC": ("\ì", "igrave", "000EC", "236"),
+  // U+000ED LATIN SMALL LETTER I WITH ACUTE
+  "\000ED": ("\í", "iacute", "000ED", "237"),
+  // U+000EE LATIN SMALL LETTER I WITH CIRCUMFLEX
+  "\000EE": ("\î", "icirc", "000EE", "238"),
+  // U+000EF LATIN SMALL LETTER I WITH DIAERESIS
+  "\000EF": ("\ï", "iuml", "000EF", "239"),
+  // U+000F0 LATIN SMALL LETTER ETH
+  "\000F0": ("\ð", "eth", "000F0", "240"),
+  // U+000F1 LATIN SMALL LETTER N WITH TILDE
+  "\000F1": ("\ñ", "ntilde", "000F1", "241"),
+  // U+000F2 LATIN SMALL LETTER O WITH GRAVE
+  "\000F2": ("\ò", "ograve", "000F2", "242"),
+  // U+000F3 LATIN SMALL LETTER O WITH ACUTE
+  "\000F3": ("\ó", "oacute", "000F3", "243"),
+  // U+000F4 LATIN SMALL LETTER O WITH CIRCUMFLEX
+  "\000F4": ("\ô", "ocirc", "000F4", "244"),
+  // U+000F5 LATIN SMALL LETTER O WITH TILDE
+  "\000F5": ("\õ", "otilde", "000F5", "245"),
+  // U+000F6 LATIN SMALL LETTER O WITH DIAERESIS
+  "\000F6": ("\ö", "ouml", "000F6", "246"),
+  // U+000F7 DIVISION SIGN
+  "\000F7": ("\÷", "divide", "div", "000F7", "247"),
+  // U+000F8 LATIN SMALL LETTER O WITH STROKE
+  "\000F8": ("\ø", "oslash", "000F8", "248"),
+  // U+000F9 LATIN SMALL LETTER U WITH GRAVE
+  "\000F9": ("\ù", "ugrave", "000F9", "249"),
+  // U+000FA LATIN SMALL LETTER U WITH ACUTE
+  "\000FA": ("\ú", "uacute", "000FA", "250"),
+  // U+000FB LATIN SMALL LETTER U WITH CIRCUMFLEX
+  "\000FB": ("\û", "ucirc", "000FB", "251"),
+  // U+000FC LATIN SMALL LETTER U WITH DIAERESIS
+  "\000FC": ("\ü", "uuml", "000FC", "252"),
+  // U+000FD LATIN SMALL LETTER Y WITH ACUTE
+  "\000FD": ("\ý", "yacute", "000FD", "253"),
+  // U+000FE LATIN SMALL LETTER THORN
+  "\000FE": ("\þ", "thorn", "000FE", "254"),
+  // U+000FF LATIN SMALL LETTER Y WITH DIAERESIS
+  "\000FF": ("\ÿ", "yuml", "000FF", "255"),
+  // U+00100 LATIN CAPITAL LETTER A WITH MACRON
+  "\00100": ("\Ā", "Amacr", "00100", "256"),
+  // U+00101 LATIN SMALL LETTER A WITH MACRON
+  "\00101": ("\ā", "amacr", "00101", "257"),
+  // U+00102 LATIN CAPITAL LETTER A WITH BREVE
+  "\00102": ("\Ă", "Abreve", "00102", "258"),
+  // U+00103 LATIN SMALL LETTER A WITH BREVE
+  "\00103": ("\ă", "abreve", "00103", "259"),
+  // U+00104 LATIN CAPITAL LETTER A WITH OGONEK
+  "\00104": ("\Ą", "Aogon", "00104", "260"),
+  // U+00105 LATIN SMALL LETTER A WITH OGONEK
+  "\00105": ("\ą", "aogon", "00105", "261"),
+  // U+00106 LATIN CAPITAL LETTER C WITH ACUTE
+  "\00106": ("\Ć", "Cacute", "00106", "262"),
+  // U+00107 LATIN SMALL LETTER C WITH ACUTE
+  "\00107": ("\ć", "cacute", "00107", "263"),
+  // U+00108 LATIN CAPITAL LETTER C WITH CIRCUMFLEX
+  "\00108": ("\Ĉ", "Ccirc", "00108", "264"),
+  // U+00109 LATIN SMALL LETTER C WITH CIRCUMFLEX
+  "\00109": ("\ĉ", "ccirc", "00109", "265"),
+  // U+0010A LATIN CAPITAL LETTER C WITH DOT ABOVE
+  "\0010A": ("\Ċ", "Cdot", "0010A", "266"),
+  // U+0010B LATIN SMALL LETTER C WITH DOT ABOVE
+  "\0010B": ("\ċ", "cdot", "0010B", "267"),
+  // U+0010C LATIN CAPITAL LETTER C WITH CARON
+  "\0010C": ("\Č", "Ccaron", "0010C", "268"),
+  // U+0010D LATIN SMALL LETTER C WITH CARON
+  "\0010D": ("\č", "ccaron", "0010D", "269"),
+  // U+0010E LATIN CAPITAL LETTER D WITH CARON
+  "\0010E": ("\Ď", "Dcaron", "0010E", "270"),
+  // U+0010F LATIN SMALL LETTER D WITH CARON
+  "\0010F": ("\ď", "dcaron", "0010F", "271"),
+  // U+00110 LATIN CAPITAL LETTER D WITH STROKE
+  "\00110": ("\Đ", "Dstrok", "00110", "272"),
+  // U+00111 LATIN SMALL LETTER D WITH STROKE
+  "\00111": ("\đ", "dstrok", "00111", "273"),
+  // U+00112 LATIN CAPITAL LETTER E WITH MACRON
+  "\00112": ("\Ē", "Emacr", "00112", "274"),
+  // U+00113 LATIN SMALL LETTER E WITH MACRON
+  "\00113": ("\ē", "emacr", "00113", "275"),
+  // U+00116 LATIN CAPITAL LETTER E WITH DOT ABOVE
+  "\00116": ("\Ė", "Edot", "00116", "278"),
+  // U+00117 LATIN SMALL LETTER E WITH DOT ABOVE
+  "\00117": ("\ė", "edot", "00117", "279"),
+  // U+00118 LATIN CAPITAL LETTER E WITH OGONEK
+  "\00118": ("\Ę", "Eogon", "00118", "280"),
+  // U+00119 LATIN SMALL LETTER E WITH OGONEK
+  "\00119": ("\ę", "eogon", "00119", "281"),
+  // U+0011A LATIN CAPITAL LETTER E WITH CARON
+  "\0011A": ("\Ě", "Ecaron", "0011A", "282"),
+  // U+0011B LATIN SMALL LETTER E WITH CARON
+  "\0011B": ("\ě", "ecaron", "0011B", "283"),
+  // U+0011C LATIN CAPITAL LETTER G WITH CIRCUMFLEX
+  "\0011C": ("\Ĝ", "Gcirc", "0011C", "284"),
+  // U+0011D LATIN SMALL LETTER G WITH CIRCUMFLEX
+  "\0011D": ("\ĝ", "gcirc", "0011D", "285"),
+  // U+0011E LATIN CAPITAL LETTER G WITH BREVE
+  "\0011E": ("\Ğ", "Gbreve", "0011E", "286"),
+  // U+0011F LATIN SMALL LETTER G WITH BREVE
+  "\0011F": ("\ğ", "gbreve", "0011F", "287"),
+  // U+00120 LATIN CAPITAL LETTER G WITH DOT ABOVE
+  "\00120": ("\Ġ", "Gdot", "00120", "288"),
+  // U+00121 LATIN SMALL LETTER G WITH DOT ABOVE
+  "\00121": ("\ġ", "gdot", "00121", "289"),
+  // U+00122 LATIN CAPITAL LETTER G WITH CEDILLA
+  "\00122": ("\Ģ", "Gcedil", "00122", "290"),
+  // U+00124 LATIN CAPITAL LETTER H WITH CIRCUMFLEX
+  "\00124": ("\Ĥ", "Hcirc", "00124", "292"),
+  // U+00125 LATIN SMALL LETTER H WITH CIRCUMFLEX
+  "\00125": ("\ĥ", "hcirc", "00125", "293"),
+  // U+00126 LATIN CAPITAL LETTER H WITH STROKE
+  "\00126": ("\Ħ", "Hstrok", "00126", "294"),
+  // U+00127 LATIN SMALL LETTER H WITH STROKE
+  "\00127": ("\ħ", "hstrok", "00127", "295"),
+  // U+00128 LATIN CAPITAL LETTER I WITH TILDE
+  "\00128": ("\Ĩ", "Itilde", "00128", "296"),
+  // U+00129 LATIN SMALL LETTER I WITH TILDE
+  "\00129": ("\ĩ", "itilde", "00129", "297"),
+  // U+0012A LATIN CAPITAL LETTER I WITH MACRON
+  "\0012A": ("\Ī", "Imacr", "0012A", "298"),
+  // U+0012B LATIN SMALL LETTER I WITH MACRON
+  "\0012B": ("\ī", "imacr", "0012B", "299"),
+  // U+0012E LATIN CAPITAL LETTER I WITH OGONEK
+  "\0012E": ("\Į", "Iogon", "0012E", "302"),
+  // U+0012F LATIN SMALL LETTER I WITH OGONEK
+  "\0012F": ("\į", "iogon", "0012F", "303"),
+  // U+00130 LATIN CAPITAL LETTER I WITH DOT ABOVE
+  "\00130": ("\İ", "Idot", "00130", "304"),
+  // U+00131 LATIN SMALL LETTER DOTLESS I
+  "\00131": ("\ı", "imath", "inodot", "00131", "305"),
+  // U+00132 LATIN CAPITAL LIGATURE IJ
+  "\00132": ("\Ĳ", "IJlig", "00132", "306"),
+  // U+00133 LATIN SMALL LIGATURE IJ
+  "\00133": ("\ĳ", "ijlig", "00133", "307"),
+  // U+00134 LATIN CAPITAL LETTER J WITH CIRCUMFLEX
+  "\00134": ("\Ĵ", "Jcirc", "00134", "308"),
+  // U+00135 LATIN SMALL LETTER J WITH CIRCUMFLEX
+  "\00135": ("\ĵ", "jcirc", "00135", "309"),
+  // U+00136 LATIN CAPITAL LETTER K WITH CEDILLA
+  "\00136": ("\Ķ", "Kcedil", "00136", "310"),
+  // U+00137 LATIN SMALL LETTER K WITH CEDILLA
+  "\00137": ("\ķ", "kcedil", "00137", "311"),
+  // U+00138 LATIN SMALL LETTER KRA
+  "\00138": ("\ĸ", "kgreen", "00138", "312"),
+  // U+00139 LATIN CAPITAL LETTER L WITH ACUTE
+  "\00139": ("\Ĺ", "Lacute", "00139", "313"),
+  // U+0013A LATIN SMALL LETTER L WITH ACUTE
+  "\0013A": ("\ĺ", "lacute", "0013A", "314"),
+  // U+0013B LATIN CAPITAL LETTER L WITH CEDILLA
+  "\0013B": ("\Ļ", "Lcedil", "0013B", "315"),
+  // U+0013C LATIN SMALL LETTER L WITH CEDILLA
+  "\0013C": ("\ļ", "lcedil", "0013C", "316"),
+  // U+0013D LATIN CAPITAL LETTER L WITH CARON
+  "\0013D": ("\Ľ", "Lcaron", "0013D", "317"),
+  // U+0013E LATIN SMALL LETTER L WITH CARON
+  "\0013E": ("\ľ", "lcaron", "0013E", "318"),
+  // U+0013F LATIN CAPITAL LETTER L WITH MIDDLE DOT
+  "\0013F": ("\Ŀ", "Lmidot", "0013F", "319"),
+  // U+00140 LATIN SMALL LETTER L WITH MIDDLE DOT
+  "\00140": ("\ŀ", "lmidot", "00140", "320"),
+  // U+00141 LATIN CAPITAL LETTER L WITH STROKE
+  "\00141": ("\Ł", "Lstrok", "00141", "321"),
+  // U+00142 LATIN SMALL LETTER L WITH STROKE
+  "\00142": ("\ł", "lstrok", "00142", "322"),
+  // U+00143 LATIN CAPITAL LETTER N WITH ACUTE
+  "\00143": ("\Ń", "Nacute", "00143", "323"),
+  // U+00144 LATIN SMALL LETTER N WITH ACUTE
+  "\00144": ("\ń", "nacute", "00144", "324"),
+  // U+00145 LATIN CAPITAL LETTER N WITH CEDILLA
+  "\00145": ("\Ņ", "Ncedil", "00145", "325"),
+  // U+00146 LATIN SMALL LETTER N WITH CEDILLA
+  "\00146": ("\ņ", "ncedil", "00146", "326"),
+  // U+00147 LATIN CAPITAL LETTER N WITH CARON
+  "\00147": ("\Ň", "Ncaron", "00147", "327"),
+  // U+00148 LATIN SMALL LETTER N WITH CARON
+  "\00148": ("\ň", "ncaron", "00148", "328"),
+  // U+00149 LATIN SMALL LETTER N PRECEDED BY APOSTROPHE
+  "\00149": ("\ŉ", "napos", "00149", "329"),
+  // U+0014A LATIN CAPITAL LETTER ENG
+  "\0014A": ("\Ŋ", "ENG", "0014A", "330"),
+  // U+0014B LATIN SMALL LETTER ENG
+  "\0014B": ("\ŋ", "eng", "0014B", "331"),
+  // U+0014C LATIN CAPITAL LETTER O WITH MACRON
+  "\0014C": ("\Ō", "Omacr", "0014C", "332"),
+  // U+0014D LATIN SMALL LETTER O WITH MACRON
+  "\0014D": ("\ō", "omacr", "0014D", "333"),
+  // U+00150 LATIN CAPITAL LETTER O WITH DOUBLE ACUTE
+  "\00150": ("\Ő", "Odblac", "00150", "336"),
+  // U+00151 LATIN SMALL LETTER O WITH DOUBLE ACUTE
+  "\00151": ("\ő", "odblac", "00151", "337"),
+  // U+00152 LATIN CAPITAL LIGATURE OE
+  "\00152": ("\Œ", "OElig", "00152", "338"),
+  // U+00153 LATIN SMALL LIGATURE OE
+  "\00153": ("\œ", "oelig", "00153", "339"),
+  // U+00154 LATIN CAPITAL LETTER R WITH ACUTE
+  "\00154": ("\Ŕ", "Racute", "00154", "340"),
+  // U+00155 LATIN SMALL LETTER R WITH ACUTE
+  "\00155": ("\ŕ", "racute", "00155", "341"),
+  // U+00156 LATIN CAPITAL LETTER R WITH CEDILLA
+  "\00156": ("\Ŗ", "Rcedil", "00156", "342"),
+  // U+00157 LATIN SMALL LETTER R WITH CEDILLA
+  "\00157": ("\ŗ", "rcedil", "00157", "343"),
+  // U+00158 LATIN CAPITAL LETTER R WITH CARON
+  "\00158": ("\Ř", "Rcaron", "00158", "344"),
+  // U+00159 LATIN SMALL LETTER R WITH CARON
+  "\00159": ("\ř", "rcaron", "00159", "345"),
+  // U+0015A LATIN CAPITAL LETTER S WITH ACUTE
+  "\0015A": ("\Ś", "Sacute", "0015A", "346"),
+  // U+0015B LATIN SMALL LETTER S WITH ACUTE
+  "\0015B": ("\ś", "sacute", "0015B", "347"),
+  // U+0015C LATIN CAPITAL LETTER S WITH CIRCUMFLEX
+  "\0015C": ("\Ŝ", "Scirc", "0015C", "348"),
+  // U+0015D LATIN SMALL LETTER S WITH CIRCUMFLEX
+  "\0015D": ("\ŝ", "scirc", "0015D", "349"),
+  // U+0015E LATIN CAPITAL LETTER S WITH CEDILLA
+  "\0015E": ("\Ş", "Scedil", "0015E", "350"),
+  // U+0015F LATIN SMALL LETTER S WITH CEDILLA
+  "\0015F": ("\ş", "scedil", "0015F", "351"),
+  // U+00160 LATIN CAPITAL LETTER S WITH CARON
+  "\00160": ("\Š", "Scaron", "00160", "352"),
+  // U+00161 LATIN SMALL LETTER S WITH CARON
+  "\00161": ("\š", "scaron", "00161", "353"),
+  // U+00162 LATIN CAPITAL LETTER T WITH CEDILLA
+  "\00162": ("\Ţ", "Tcedil", "00162", "354"),
+  // U+00163 LATIN SMALL LETTER T WITH CEDILLA
+  "\00163": ("\ţ", "tcedil", "00163", "355"),
+  // U+00164 LATIN CAPITAL LETTER T WITH CARON
+  "\00164": ("\Ť", "Tcaron", "00164", "356"),
+  // U+00165 LATIN SMALL LETTER T WITH CARON
+  "\00165": ("\ť", "tcaron", "00165", "357"),
+  // U+00166 LATIN CAPITAL LETTER T WITH STROKE
+  "\00166": ("\Ŧ", "Tstrok", "00166", "358"),
+  // U+00167 LATIN SMALL LETTER T WITH STROKE
+  "\00167": ("\ŧ", "tstrok", "00167", "359"),
+  // U+00168 LATIN CAPITAL LETTER U WITH TILDE
+  "\00168": ("\Ũ", "Utilde", "00168", "360"),
+  // U+00169 LATIN SMALL LETTER U WITH TILDE
+  "\00169": ("\ũ", "utilde", "00169", "361"),
+  // U+0016A LATIN CAPITAL LETTER U WITH MACRON
+  "\0016A": ("\Ū", "Umacr", "0016A", "362"),
+  // U+0016B LATIN SMALL LETTER U WITH MACRON
+  "\0016B": ("\ū", "umacr", "0016B", "363"),
+  // U+0016C LATIN CAPITAL LETTER U WITH BREVE
+  "\0016C": ("\Ŭ", "Ubreve", "0016C", "364"),
+  // U+0016D LATIN SMALL LETTER U WITH BREVE
+  "\0016D": ("\ŭ", "ubreve", "0016D", "365"),
+  // U+0016E LATIN CAPITAL LETTER U WITH RING ABOVE
+  "\0016E": ("\Ů", "Uring", "0016E", "366"),
+  // U+0016F LATIN SMALL LETTER U WITH RING ABOVE
+  "\0016F": ("\ů", "uring", "0016F", "367"),
+  // U+00170 LATIN CAPITAL LETTER U WITH DOUBLE ACUTE
+  "\00170": ("\Ű", "Udblac", "00170", "368"),
+  // U+00171 LATIN SMALL LETTER U WITH DOUBLE ACUTE
+  "\00171": ("\ű", "udblac", "00171", "369"),
+  // U+00172 LATIN CAPITAL LETTER U WITH OGONEK
+  "\00172": ("\Ų", "Uogon", "00172", "370"),
+  // U+00173 LATIN SMALL LETTER U WITH OGONEK
+  "\00173": ("\ų", "uogon", "00173", "371"),
+  // U+00174 LATIN CAPITAL LETTER W WITH CIRCUMFLEX
+  "\00174": ("\Ŵ", "Wcirc", "00174", "372"),
+  // U+00175 LATIN SMALL LETTER W WITH CIRCUMFLEX
+  "\00175": ("\ŵ", "wcirc", "00175", "373"),
+  // U+00176 LATIN CAPITAL LETTER Y WITH CIRCUMFLEX
+  "\00176": ("\Ŷ", "Ycirc", "00176", "374"),
+  // U+00177 LATIN SMALL LETTER Y WITH CIRCUMFLEX
+  "\00177": ("\ŷ", "ycirc", "00177", "375"),
+  // U+00178 LATIN CAPITAL LETTER Y WITH DIAERESIS
+  "\00178": ("\Ÿ", "Yuml", "00178", "376"),
+  // U+00179 LATIN CAPITAL LETTER Z WITH ACUTE
+  "\00179": ("\Ź", "Zacute", "00179", "377"),
+  // U+0017A LATIN SMALL LETTER Z WITH ACUTE
+  "\0017A": ("\ź", "zacute", "0017A", "378"),
+  // U+0017B LATIN CAPITAL LETTER Z WITH DOT ABOVE
+  "\0017B": ("\Ż", "Zdot", "0017B", "379"),
+  // U+0017C LATIN SMALL LETTER Z WITH DOT ABOVE
+  "\0017C": ("\ż", "zdot", "0017C", "380"),
+  // U+0017D LATIN CAPITAL LETTER Z WITH CARON
+  "\0017D": ("\Ž", "Zcaron", "0017D", "381"),
+  // U+0017E LATIN SMALL LETTER Z WITH CARON
+  "\0017E": ("\ž", "zcaron", "0017E", "382"),
+  // U+00192 LATIN SMALL LETTER F WITH HOOK
+  "\00192": ("\ƒ", "fnof", "00192", "402"),
+  // U+001B5 LATIN CAPITAL LETTER Z WITH STROKE
+  "\001B5": ("\Ƶ", "imped", "001B5", "437"),
+  // U+001F5 LATIN SMALL LETTER G WITH ACUTE
+  "\001F5": ("\ǵ", "gacute", "001F5", "501"),
+  // U+00237 LATIN SMALL LETTER DOTLESS J
+  "\00237": ("\ȷ", "jmath", "00237", "567"),
+  // U+002C6 MODIFIER LETTER CIRCUMFLEX ACCENT
+  "\002C6": ("\ˆ", "circ", "002C6", "710"),
+  // U+002C7 CARON
+  "\002C7": ("\ˇ", "caron", "Hacek", "002C7", "711"),
+  // U+002D8 BREVE
+  "\002D8": ("\˘", "breve", "Breve", "002D8", "728"),
+  // U+002D9 DOT ABOVE
+  "\002D9": ("\˙", "dot", "DiacriticalDot", "002D9", "729"),
+  // U+002DA RING ABOVE
+  "\002DA": ("\˚", "ring", "002DA", "730"),
+  // U+002DB OGONEK
+  "\002DB": ("\˛", "ogon", "002DB", "731"),
+  // U+002DC SMALL TILDE
+  "\002DC": ("\˜", "tilde", "DiacriticalTilde", "002DC", "732"),
+  // U+002DD DOUBLE ACUTE ACCENT
+  "\002DD": ("\˝", "dblac", "DiacriticalDoubleAcute", "002DD", "733"),
+  // U+00311 COMBINING INVERTED BREVE
+  "\00311": ("\̑", "DownBreve", "00311", "785"),
+  // U+00332 COMBINING LOW LINE
+  "\00332": ("\̲", "UnderBar", "00332", "818"),
+  // U+00391 GREEK CAPITAL LETTER ALPHA
+  "\00391": ("\Α", "Alpha", "00391", "913"),
+  // U+00392 GREEK CAPITAL LETTER BETA
+  "\00392": ("\Β", "Beta", "00392", "914"),
+  // U+00393 GREEK CAPITAL LETTER GAMMA
+  "\00393": ("\Γ", "Gamma", "00393", "915"),
+  // U+00394 GREEK CAPITAL LETTER DELTA
+  "\00394": ("\Δ", "Delta", "00394", "916"),
+  // U+00395 GREEK CAPITAL LETTER EPSILON
+  "\00395": ("\Ε", "Epsilon", "00395", "917"),
+  // U+00396 GREEK CAPITAL LETTER ZETA
+  "\00396": ("\Ζ", "Zeta", "00396", "918"),
+  // U+00397 GREEK CAPITAL LETTER ETA
+  "\00397": ("\Η", "Eta", "00397", "919"),
+  // U+00398 GREEK CAPITAL LETTER THETA
+  "\00398": ("\Θ", "Theta", "00398", "920"),
+  // U+00399 GREEK CAPITAL LETTER IOTA
+  "\00399": ("\Ι", "Iota", "00399", "921"),
+  // U+0039A GREEK CAPITAL LETTER KAPPA
+  "\0039A": ("\Κ", "Kappa", "0039A", "922"),
+  // U+0039B GREEK CAPITAL LETTER LAMDA
+  "\0039B": ("\Λ", "Lambda", "0039B", "923"),
+  // U+0039C GREEK CAPITAL LETTER MU
+  "\0039C": ("\Μ", "Mu", "0039C", "924"),
+  // U+0039D GREEK CAPITAL LETTER NU
+  "\0039D": ("\Ν", "Nu", "0039D", "925"),
+  // U+0039E GREEK CAPITAL LETTER XI
+  "\0039E": ("\Ξ", "Xi", "0039E", "926"),
+  // U+0039F GREEK CAPITAL LETTER OMICRON
+  "\0039F": ("\Ο", "Omicron", "0039F", "927"),
+  // U+003A0 GREEK CAPITAL LETTER PI
+  "\003A0": ("\Π", "Pi", "003A0", "928"),
+  // U+003A1 GREEK CAPITAL LETTER RHO
+  "\003A1": ("\Ρ", "Rho", "003A1", "929"),
+  // U+003A3 GREEK CAPITAL LETTER SIGMA
+  "\003A3": ("\Σ", "Sigma", "003A3", "931"),
+  // U+003A4 GREEK CAPITAL LETTER TAU
+  "\003A4": ("\Τ", "Tau", "003A4", "932"),
+  // U+003A5 GREEK CAPITAL LETTER UPSILON
+  "\003A5": ("\Υ", "Upsilon", "003A5", "933"),
+  // U+003A6 GREEK CAPITAL LETTER PHI
+  "\003A6": ("\Φ", "Phi", "003A6", "934"),
+  // U+003A7 GREEK CAPITAL LETTER CHI
+  "\003A7": ("\Χ", "Chi", "003A7", "935"),
+  // U+003A8 GREEK CAPITAL LETTER PSI
+  "\003A8": ("\Ψ", "Psi", "003A8", "936"),
+  // U+003A9 GREEK CAPITAL LETTER OMEGA
+  "\003A9": ("\Ω", "Omega", "003A9", "937"),
+  // U+003B1 GREEK SMALL LETTER ALPHA
+  "\003B1": ("\α", "alpha", "003B1", "945"),
+  // U+003B2 GREEK SMALL LETTER BETA
+  "\003B2": ("\β", "beta", "003B2", "946"),
+  // U+003B3 GREEK SMALL LETTER GAMMA
+  "\003B3": ("\γ", "gamma", "003B3", "947"),
+  // U+003B4 GREEK SMALL LETTER DELTA
+  "\003B4": ("\δ", "delta", "003B4", "948"),
+  // U+003B5 GREEK SMALL LETTER EPSILON
+  "\003B5": ("\ε", "epsiv", "varepsilon", "epsilon", "003B5", "949"),
+  // U+003B6 GREEK SMALL LETTER ZETA
+  "\003B6": ("\ζ", "zeta", "003B6", "950"),
+  // U+003B7 GREEK SMALL LETTER ETA
+  "\003B7": ("\η", "eta", "003B7", "951"),
+  // U+003B8 GREEK SMALL LETTER THETA
+  "\003B8": ("\θ", "theta", "003B8", "952"),
+  // U+003B9 GREEK SMALL LETTER IOTA
+  "\003B9": ("\ι", "iota", "003B9", "953"),
+  // U+003BA GREEK SMALL LETTER KAPPA
+  "\003BA": ("\κ", "kappa", "003BA", "954"),
+  // U+003BB GREEK SMALL LETTER LAMDA
+  "\003BB": ("\λ", "lambda", "003BB", "955"),
+  // U+003BC GREEK SMALL LETTER MU
+  "\003BC": ("\μ", "mu", "003BC", "956"),
+  // U+003BD GREEK SMALL LETTER NU
+  "\003BD": ("\ν", "nu", "003BD", "957"),
+  // U+003BE GREEK SMALL LETTER XI
+  "\003BE": ("\ξ", "xi", "003BE", "958"),
+  // U+003BF GREEK SMALL LETTER OMICRON
+  "\003BF": ("\ο", "omicron", "003BF", "959"),
+  // U+003C0 GREEK SMALL LETTER PI
+  "\003C0": ("\π", "pi", "003C0", "960"),
+  // U+003C1 GREEK SMALL LETTER RHO
+  "\003C1": ("\ρ", "rho", "003C1", "961"),
+  // U+003C2 GREEK SMALL LETTER FINAL SIGMA
+  "\003C2": ("\ς", "sigmav", "varsigma", "sigmaf", "003C2", "962"),
+  // U+003C3 GREEK SMALL LETTER SIGMA
+  "\003C3": ("\σ", "sigma", "003C3", "963"),
+  // U+003C4 GREEK SMALL LETTER TAU
+  "\003C4": ("\τ", "tau", "003C4", "964"),
+  // U+003C5 GREEK SMALL LETTER UPSILON
+  "\003C5": ("\υ", "upsi", "upsilon", "003C5", "965"),
+  // U+003C6 GREEK SMALL LETTER PHI
+  "\003C6": ("\φ", "phi", "phiv", "varphi", "003C6", "966"),
+  // U+003C7 GREEK SMALL LETTER CHI
+  "\003C7": ("\χ", "chi", "003C7", "967"),
+  // U+003C8 GREEK SMALL LETTER PSI
+  "\003C8": ("\ψ", "psi", "003C8", "968"),
+  // U+003C9 GREEK SMALL LETTER OMEGA
+  "\003C9": ("\ω", "omega", "003C9", "969"),
+  // U+003D1 GREEK THETA SYMBOL
+  "\003D1": ("\ϑ", "thetav", "vartheta", "thetasym", "003D1", "977"),
+  // U+003D2 GREEK UPSILON WITH HOOK SYMBOL
+  "\003D2": ("\ϒ", "Upsi", "upsih", "003D2", "978"),
+  // U+003D5 GREEK PHI SYMBOL
+  "\003D5": ("\ϕ", "straightphi", "003D5", "981"),
+  // U+003D6 GREEK PI SYMBOL
+  "\003D6": ("\ϖ", "piv", "varpi", "003D6", "982"),
+  // U+003DC GREEK LETTER DIGAMMA
+  "\003DC": ("\Ϝ", "Gammad", "003DC", "988"),
+  // U+003DD GREEK SMALL LETTER DIGAMMA
+  "\003DD": ("\ϝ", "gammad", "digamma", "003DD", "989"),
+  // U+003F0 GREEK KAPPA SYMBOL
+  "\003F0": ("\ϰ", "kappav", "varkappa", "003F0", "1008"),
+  // U+003F1 GREEK RHO SYMBOL
+  "\003F1": ("\ϱ", "rhov", "varrho", "003F1", "1009"),
+  // U+003F5 GREEK LUNATE EPSILON SYMBOL
+  "\003F5": ("\ϵ", "epsi", "straightepsilon", "003F5", "1013"),
+  // U+003F6 GREEK REVERSED LUNATE EPSILON SYMBOL
+  "\003F6": ("\϶", "bepsi", "backepsilon", "003F6", "1014"),
+  // U+00401 CYRILLIC CAPITAL LETTER IO
+  "\00401": ("\Ё", "IOcy", "00401", "1025"),
+  // U+00402 CYRILLIC CAPITAL LETTER DJE
+  "\00402": ("\Ђ", "DJcy", "00402", "1026"),
+  // U+00403 CYRILLIC CAPITAL LETTER GJE
+  "\00403": ("\Ѓ", "GJcy", "00403", "1027"),
+  // U+00404 CYRILLIC CAPITAL LETTER UKRAINIAN IE
+  "\00404": ("\Є", "Jukcy", "00404", "1028"),
+  // U+00405 CYRILLIC CAPITAL LETTER DZE
+  "\00405": ("\Ѕ", "DScy", "00405", "1029"),
+  // U+00406 CYRILLIC CAPITAL LETTER BYELORUSSIAN-UKRAINIAN I
+  "\00406": ("\І", "Iukcy", "00406", "1030"),
+  // U+00407 CYRILLIC CAPITAL LETTER YI
+  "\00407": ("\Ї", "YIcy", "00407", "1031"),
+  // U+00408 CYRILLIC CAPITAL LETTER JE
+  "\00408": ("\Ј", "Jsercy", "00408", "1032"),
+  // U+00409 CYRILLIC CAPITAL LETTER LJE
+  "\00409": ("\Љ", "LJcy", "00409", "1033"),
+  // U+0040A CYRILLIC CAPITAL LETTER NJE
+  "\0040A": ("\Њ", "NJcy", "0040A", "1034"),
+  // U+0040B CYRILLIC CAPITAL LETTER TSHE
+  "\0040B": ("\Ћ", "TSHcy", "0040B", "1035"),
+  // U+0040C CYRILLIC CAPITAL LETTER KJE
+  "\0040C": ("\Ќ", "KJcy", "0040C", "1036"),
+  // U+0040E CYRILLIC CAPITAL LETTER SHORT U
+  "\0040E": ("\Ў", "Ubrcy", "0040E", "1038"),
+  // U+0040F CYRILLIC CAPITAL LETTER DZHE
+  "\0040F": ("\Џ", "DZcy", "0040F", "1039"),
+  // U+00410 CYRILLIC CAPITAL LETTER A
+  "\00410": ("\А", "Acy", "00410", "1040"),
+  // U+00411 CYRILLIC CAPITAL LETTER BE
+  "\00411": ("\Б", "Bcy", "00411", "1041"),
+  // U+00412 CYRILLIC CAPITAL LETTER VE
+  "\00412": ("\В", "Vcy", "00412", "1042"),
+  // U+00413 CYRILLIC CAPITAL LETTER GHE
+  "\00413": ("\Г", "Gcy", "00413", "1043"),
+  // U+00414 CYRILLIC CAPITAL LETTER DE
+  "\00414": ("\Д", "Dcy", "00414", "1044"),
+  // U+00415 CYRILLIC CAPITAL LETTER IE
+  "\00415": ("\Е", "IEcy", "00415", "1045"),
+  // U+00416 CYRILLIC CAPITAL LETTER ZHE
+  "\00416": ("\Ж", "ZHcy", "00416", "1046"),
+  // U+00417 CYRILLIC CAPITAL LETTER ZE
+  "\00417": ("\З", "Zcy", "00417", "1047"),
+  // U+00418 CYRILLIC CAPITAL LETTER I
+  "\00418": ("\И", "Icy", "00418", "1048"),
+  // U+00419 CYRILLIC CAPITAL LETTER SHORT I
+  "\00419": ("\Й", "Jcy", "00419", "1049"),
+  // U+0041A CYRILLIC CAPITAL LETTER KA
+  "\0041A": ("\К", "Kcy", "0041A", "1050"),
+  // U+0041B CYRILLIC CAPITAL LETTER EL
+  "\0041B": ("\Л", "Lcy", "0041B", "1051"),
+  // U+0041C CYRILLIC CAPITAL LETTER EM
+  "\0041C": ("\М", "Mcy", "0041C", "1052"),
+  // U+0041D CYRILLIC CAPITAL LETTER EN
+  "\0041D": ("\Н", "Ncy", "0041D", "1053"),
+  // U+0041E CYRILLIC CAPITAL LETTER O
+  "\0041E": ("\О", "Ocy", "0041E", "1054"),
+  // U+0041F CYRILLIC CAPITAL LETTER PE
+  "\0041F": ("\П", "Pcy", "0041F", "1055"),
+  // U+00420 CYRILLIC CAPITAL LETTER ER
+  "\00420": ("\Р", "Rcy", "00420", "1056"),
+  // U+00421 CYRILLIC CAPITAL LETTER ES
+  "\00421": ("\С", "Scy", "00421", "1057"),
+  // U+00422 CYRILLIC CAPITAL LETTER TE
+  "\00422": ("\Т", "Tcy", "00422", "1058"),
+  // U+00423 CYRILLIC CAPITAL LETTER U
+  "\00423": ("\У", "Ucy", "00423", "1059"),
+  // U+00424 CYRILLIC CAPITAL LETTER EF
+  "\00424": ("\Ф", "Fcy", "00424", "1060"),
+  // U+00425 CYRILLIC CAPITAL LETTER HA
+  "\00425": ("\Х", "KHcy", "00425", "1061"),
+  // U+00426 CYRILLIC CAPITAL LETTER TSE
+  "\00426": ("\Ц", "TScy", "00426", "1062"),
+  // U+00427 CYRILLIC CAPITAL LETTER CHE
+  "\00427": ("\Ч", "CHcy", "00427", "1063"),
+  // U+00428 CYRILLIC CAPITAL LETTER SHA
+  "\00428": ("\Ш", "SHcy", "00428", "1064"),
+  // U+00429 CYRILLIC CAPITAL LETTER SHCHA
+  "\00429": ("\Щ", "SHCHcy", "00429", "1065"),
+  // U+0042A CYRILLIC CAPITAL LETTER HARD SIGN
+  "\0042A": ("\Ъ", "HARDcy", "0042A", "1066"),
+  // U+0042B CYRILLIC CAPITAL LETTER YERU
+  "\0042B": ("\Ы", "Ycy", "0042B", "1067"),
+  // U+0042C CYRILLIC CAPITAL LETTER SOFT SIGN
+  "\0042C": ("\Ь", "SOFTcy", "0042C", "1068"),
+  // U+0042D CYRILLIC CAPITAL LETTER E
+  "\0042D": ("\Э", "Ecy", "0042D", "1069"),
+  // U+0042E CYRILLIC CAPITAL LETTER YU
+  "\0042E": ("\Ю", "YUcy", "0042E", "1070"),
+  // U+0042F CYRILLIC CAPITAL LETTER YA
+  "\0042F": ("\Я", "YAcy", "0042F", "1071"),
+  // U+00430 CYRILLIC SMALL LETTER A
+  "\00430": ("\а", "acy", "00430", "1072"),
+  // U+00431 CYRILLIC SMALL LETTER BE
+  "\00431": ("\б", "bcy", "00431", "1073"),
+  // U+00432 CYRILLIC SMALL LETTER VE
+  "\00432": ("\в", "vcy", "00432", "1074"),
+  // U+00433 CYRILLIC SMALL LETTER GHE
+  "\00433": ("\г", "gcy", "00433", "1075"),
+  // U+00434 CYRILLIC SMALL LETTER DE
+  "\00434": ("\д", "dcy", "00434", "1076"),
+  // U+00435 CYRILLIC SMALL LETTER IE
+  "\00435": ("\е", "iecy", "00435", "1077"),
+  // U+00436 CYRILLIC SMALL LETTER ZHE
+  "\00436": ("\ж", "zhcy", "00436", "1078"),
+  // U+00437 CYRILLIC SMALL LETTER ZE
+  "\00437": ("\з", "zcy", "00437", "1079"),
+  // U+00438 CYRILLIC SMALL LETTER I
+  "\00438": ("\и", "icy", "00438", "1080"),
+  // U+00439 CYRILLIC SMALL LETTER SHORT I
+  "\00439": ("\й", "jcy", "00439", "1081"),
+  // U+0043A CYRILLIC SMALL LETTER KA
+  "\0043A": ("\к", "kcy", "0043A", "1082"),
+  // U+0043B CYRILLIC SMALL LETTER EL
+  "\0043B": ("\л", "lcy", "0043B", "1083"),
+  // U+0043C CYRILLIC SMALL LETTER EM
+  "\0043C": ("\м", "mcy", "0043C", "1084"),
+  // U+0043D CYRILLIC SMALL LETTER EN
+  "\0043D": ("\н", "ncy", "0043D", "1085"),
+  // U+0043E CYRILLIC SMALL LETTER O
+  "\0043E": ("\о", "ocy", "0043E", "1086"),
+  // U+0043F CYRILLIC SMALL LETTER PE
+  "\0043F": ("\п", "pcy", "0043F", "1087"),
+  // U+00440 CYRILLIC SMALL LETTER ER
+  "\00440": ("\р", "rcy", "00440", "1088"),
+  // U+00441 CYRILLIC SMALL LETTER ES
+  "\00441": ("\с", "scy", "00441", "1089"),
+  // U+00442 CYRILLIC SMALL LETTER TE
+  "\00442": ("\т", "tcy", "00442", "1090"),
+  // U+00443 CYRILLIC SMALL LETTER U
+  "\00443": ("\у", "ucy", "00443", "1091"),
+  // U+00444 CYRILLIC SMALL LETTER EF
+  "\00444": ("\ф", "fcy", "00444", "1092"),
+  // U+00445 CYRILLIC SMALL LETTER HA
+  "\00445": ("\х", "khcy", "00445", "1093"),
+  // U+00446 CYRILLIC SMALL LETTER TSE
+  "\00446": ("\ц", "tscy", "00446", "1094"),
+  // U+00447 CYRILLIC SMALL LETTER CHE
+  "\00447": ("\ч", "chcy", "00447", "1095"),
+  // U+00448 CYRILLIC SMALL LETTER SHA
+  "\00448": ("\ш", "shcy", "00448", "1096"),
+  // U+00449 CYRILLIC SMALL LETTER SHCHA
+  "\00449": ("\щ", "shchcy", "00449", "1097"),
+  // U+0044A CYRILLIC SMALL LETTER HARD SIGN
+  "\0044A": ("\ъ", "hardcy", "0044A", "1098"),
+  // U+0044B CYRILLIC SMALL LETTER YERU
+  "\0044B": ("\ы", "ycy", "0044B", "1099"),
+  // U+0044C CYRILLIC SMALL LETTER SOFT SIGN
+  "\0044C": ("\ь", "softcy", "0044C", "1100"),
+  // U+0044D CYRILLIC SMALL LETTER E
+  "\0044D": ("\э", "ecy", "0044D", "1101"),
+  // U+0044E CYRILLIC SMALL LETTER YU
+  "\0044E": ("\ю", "yucy", "0044E", "1102"),
+  // U+0044F CYRILLIC SMALL LETTER YA
+  "\0044F": ("\я", "yacy", "0044F", "1103"),
+  // U+00451 CYRILLIC SMALL LETTER IO
+  "\00451": ("\ё", "iocy", "00451", "1105"),
+  // U+00452 CYRILLIC SMALL LETTER DJE
+  "\00452": ("\ђ", "djcy", "00452", "1106"),
+  // U+00453 CYRILLIC SMALL LETTER GJE
+  "\00453": ("\ѓ", "gjcy", "00453", "1107"),
+  // U+00454 CYRILLIC SMALL LETTER UKRAINIAN IE
+  "\00454": ("\є", "jukcy", "00454", "1108"),
+  // U+00455 CYRILLIC SMALL LETTER DZE
+  "\00455": ("\ѕ", "dscy", "00455", "1109"),
+  // U+00456 CYRILLIC SMALL LETTER BYELORUSSIAN-UKRAINIAN I
+  "\00456": ("\і", "iukcy", "00456", "1110"),
+  // U+00457 CYRILLIC SMALL LETTER YI
+  "\00457": ("\ї", "yicy", "00457", "1111"),
+  // U+00458 CYRILLIC SMALL LETTER JE
+  "\00458": ("\ј", "jsercy", "00458", "1112"),
+  // U+00459 CYRILLIC SMALL LETTER LJE
+  "\00459": ("\љ", "ljcy", "00459", "1113"),
+  // U+0045A CYRILLIC SMALL LETTER NJE
+  "\0045A": ("\њ", "njcy", "0045A", "1114"),
+  // U+0045B CYRILLIC SMALL LETTER TSHE
+  "\0045B": ("\ћ", "tshcy", "0045B", "1115"),
+  // U+0045C CYRILLIC SMALL LETTER KJE
+  "\0045C": ("\ќ", "kjcy", "0045C", "1116"),
+  // U+0045E CYRILLIC SMALL LETTER SHORT U
+  "\0045E": ("\ў", "ubrcy", "0045E", "1118"),
+  // U+0045F CYRILLIC SMALL LETTER DZHE
+  "\0045F": ("\џ", "dzcy", "0045F", "1119"),
+  // U+02002 EN SPACE
+  "\02002": ("\ ", "ensp", "02002", "8194"),
+  // U+02003 EM SPACE
+  "\02003": ("\ ", "emsp", "02003", "8195"),
+  // U+02004 THREE-PER-EM SPACE
+  "\02004": ("\ ", "emsp13", "02004", "8196"),
+  // U+02005 FOUR-PER-EM SPACE
+  "\02005": ("\ ", "emsp14", "02005", "8197"),
+  // U+02007 FIGURE SPACE
+  "\02007": ("\ ", "numsp", "02007", "8199"),
+  // U+02008 PUNCTUATION SPACE
+  "\02008": ("\ ", "puncsp", "02008", "8200"),
+  // U+02009 THIN SPACE
+  "\02009": ("\ ", "thinsp", "ThinSpace", "02009", "8201"),
+  // U+0200A HAIR SPACE
+  "\0200A": ("\ ", "hairsp", "VeryThinSpace", "0200A", "8202"),
+  // U+0200B ZERO WIDTH SPACE
+  "\0200B": ("\​", "ZeroWidthSpace", "NegativeVeryThinSpace", "NegativeThinSpace", "NegativeMediumSpace", "NegativeThickSpace", "0200B", "8203"),
+  // U+0200C ZERO WIDTH NON-JOINER
+  "\0200C": ("\‌", "zwnj", "0200C", "8204"),
+  // U+0200D ZERO WIDTH JOINER
+  "\0200D": ("\‍", "zwj", "0200D", "8205"),
+  // U+0200E LEFT-TO-RIGHT MARK
+  "\0200E": ("\‎", "lrm", "0200E", "8206"),
+  // U+0200F RIGHT-TO-LEFT MARK
+  "\0200F": ("\‏", "rlm", "0200F", "8207"),
+  // U+02010 HYPHEN
+  "\02010": ("\‐", "hyphen", "dash", "02010", "8208"),
+  // U+02013 EN DASH
+  "\02013": ("\–", "ndash", "02013", "8211"),
+  // U+02014 EM DASH
+  "\02014": ("\—", "mdash", "02014", "8212"),
+  // U+02015 HORIZONTAL BAR
+  "\02015": ("\―", "horbar", "02015", "8213"),
+  // U+02016 DOUBLE VERTICAL LINE
+  "\02016": ("\‖", "Verbar", "Vert", "02016", "8214"),
+  // U+02018 LEFT SINGLE QUOTATION MARK
+  "\02018": ("\‘", "lsquo", "OpenCurlyQuote", "02018", "8216"),
+  // U+02019 RIGHT SINGLE QUOTATION MARK
+  "\02019": ("\’", "rsquo", "rsquor", "CloseCurlyQuote", "02019", "8217"),
+  // U+0201A SINGLE LOW-9 QUOTATION MARK
+  "\0201A": ("\‚", "lsquor", "sbquo", "0201A", "8218"),
+  // U+0201C LEFT DOUBLE QUOTATION MARK
+  "\0201C": ("\“", "ldquo", "OpenCurlyDoubleQuote", "0201C", "8220"),
+  // U+0201D RIGHT DOUBLE QUOTATION MARK
+  "\0201D": ("\”", "rdquo", "rdquor", "CloseCurlyDoubleQuote", "0201D", "8221"),
+  // U+0201E DOUBLE LOW-9 QUOTATION MARK
+  "\0201E": ("\„", "ldquor", "bdquo", "0201E", "8222"),
+  // U+02020 DAGGER
+  "\02020": ("\†", "dagger", "02020", "8224"),
+  // U+02021 DOUBLE DAGGER
+  "\02021": ("\‡", "Dagger", "ddagger", "02021", "8225"),
+  // U+02022 BULLET
+  "\02022": ("\•", "bull", "bullet", "02022", "8226"),
+  // U+02025 TWO DOT LEADER
+  "\02025": ("\‥", "nldr", "02025", "8229"),
+  // U+02026 HORIZONTAL ELLIPSIS
+  "\02026": ("\…", "hellip", "mldr", "02026", "8230"),
+  // U+02030 PER MILLE SIGN
+  "\02030": ("\‰", "permil", "02030", "8240"),
+  // U+02031 PER TEN THOUSAND SIGN
+  "\02031": ("\‱", "pertenk", "02031", "8241"),
+  // U+02032 PRIME
+  "\02032": ("\′", "prime", "02032", "8242"),
+  // U+02033 DOUBLE PRIME
+  "\02033": ("\″", "Prime", "02033", "8243"),
+  // U+02034 TRIPLE PRIME
+  "\02034": ("\‴", "tprime", "02034", "8244"),
+  // U+02035 REVERSED PRIME
+  "\02035": ("\‵", "bprime", "backprime", "02035", "8245"),
+  // U+02039 SINGLE LEFT-POINTING ANGLE QUOTATION MARK
+  "\02039": ("\‹", "lsaquo", "02039", "8249"),
+  // U+0203A SINGLE RIGHT-POINTING ANGLE QUOTATION MARK
+  "\0203A": ("\›", "rsaquo", "0203A", "8250"),
+  // U+0203E OVERLINE
+  "\0203E": ("\‾", "oline", "0203E", "8254"),
+  // U+02041 CARET INSERTION POINT
+  "\02041": ("\⁁", "caret", "02041", "8257"),
+  // U+02043 HYPHEN BULLET
+  "\02043": ("\⁃", "hybull", "02043", "8259"),
+  // U+02044 FRACTION SLASH
+  "\02044": ("\⁄", "frasl", "02044", "8260"),
+  // U+0204F REVERSED SEMICOLON
+  "\0204F": ("\⁏", "bsemi", "0204F", "8271"),
+  // U+02057 QUADRUPLE PRIME
+  "\02057": ("\⁗", "qprime", "02057", "8279"),
+  // U+0205F MEDIUM MATHEMATICAL SPACE
+  "\0205F": ("\ ", "MediumSpace", "0205F", "8287"),
+  // U+02060 WORD JOINER
+  "\02060": ("\⁠", "NoBreak", "02060", "8288"),
+  // U+02061 FUNCTION APPLICATION
+  "\02061": ("\⁡", "ApplyFunction", "af", "02061", "8289"),
+  // U+02062 INVISIBLE TIMES
+  "\02062": ("\⁢", "InvisibleTimes", "it", "02062", "8290"),
+  // U+02063 INVISIBLE SEPARATOR
+  "\02063": ("\⁣", "InvisibleComma", "ic", "02063", "8291"),
+  // U+020AC EURO SIGN
+  "\020AC": ("\€", "euro", "020AC", "8364"),
+  // U+020DB COMBINING THREE DOTS ABOVE
+  "\020DB": ("\⃛", "tdot", "TripleDot", "020DB", "8411"),
+  // U+020DC COMBINING FOUR DOTS ABOVE
+  "\020DC": ("\⃜", "DotDot", "020DC", "8412"),
+  // U+02102 DOUBLE-STRUCK CAPITAL C
+  "\02102": ("\ℂ", "Copf", "complexes", "02102", "8450"),
+  // U+02105 CARE OF
+  "\02105": ("\℅", "incare", "02105", "8453"),
+  // U+0210A SCRIPT SMALL G
+  "\0210A": ("\ℊ", "gscr", "0210A", "8458"),
+  // U+0210B SCRIPT CAPITAL H
+  "\0210B": ("\ℋ", "hamilt", "HilbertSpace", "Hscr", "0210B", "8459"),
+  // U+0210C BLACK-LETTER CAPITAL H
+  "\0210C": ("\ℌ", "Hfr", "Poincareplane", "0210C", "8460"),
+  // U+0210D DOUBLE-STRUCK CAPITAL H
+  "\0210D": ("\ℍ", "quaternions", "Hopf", "0210D", "8461"),
+  // U+0210E PLANCK CONSTANT
+  "\0210E": ("\ℎ", "planckh", "0210E", "8462"),
+  // U+0210F PLANCK CONSTANT OVER TWO PI
+  "\0210F": ("\ℏ", "planck", "hbar", "plankv", "hslash", "0210F", "8463"),
+  // U+02110 SCRIPT CAPITAL I
+  "\02110": ("\ℐ", "Iscr", "imagline", "02110", "8464"),
+  // U+02111 BLACK-LETTER CAPITAL I
+  "\02111": ("\ℑ", "image", "Im", "imagpart", "Ifr", "02111", "8465"),
+  // U+02112 SCRIPT CAPITAL L
+  "\02112": ("\ℒ", "Lscr", "lagran", "Laplacetrf", "02112", "8466"),
+  // U+02113 SCRIPT SMALL L
+  "\02113": ("\ℓ", "ell", "02113", "8467"),
+  // U+02115 DOUBLE-STRUCK CAPITAL N
+  "\02115": ("\ℕ", "Nopf", "naturals", "02115", "8469"),
+  // U+02116 NUMERO SIGN
+  "\02116": ("\№", "numero", "02116", "8470"),
+  // U+02117 SOUND RECORDING COPYRIGHT
+  "\02117": ("\℗", "copysr", "02117", "8471"),
+  // U+02118 SCRIPT CAPITAL P
+  "\02118": ("\℘", "weierp", "wp", "02118", "8472"),
+  // U+02119 DOUBLE-STRUCK CAPITAL P
+  "\02119": ("\ℙ", "Popf", "primes", "02119", "8473"),
+  // U+0211A DOUBLE-STRUCK CAPITAL Q
+  "\0211A": ("\ℚ", "rationals", "Qopf", "0211A", "8474"),
+  // U+0211B SCRIPT CAPITAL R
+  "\0211B": ("\ℛ", "Rscr", "realine", "0211B", "8475"),
+  // U+0211C BLACK-LETTER CAPITAL R
+  "\0211C": ("\ℜ", "real", "Re", "realpart", "Rfr", "0211C", "8476"),
+  // U+0211D DOUBLE-STRUCK CAPITAL R
+  "\0211D": ("\ℝ", "reals", "Ropf", "0211D", "8477"),
+  // U+0211E PRESCRIPTION TAKE
+  "\0211E": ("\℞", "rx", "0211E", "8478"),
+  // U+02122 TRADE MARK SIGN
+  "\02122": ("\™", "trade", "TRADE", "02122", "8482"),
+  // U+02124 DOUBLE-STRUCK CAPITAL Z
+  "\02124": ("\ℤ", "integers", "Zopf", "02124", "8484"),
+  // U+02126 OHM SIGN
+  "\02126": ("\Ω", "ohm", "02126", "8486"),
+  // U+02127 INVERTED OHM SIGN
+  "\02127": ("\℧", "mho", "02127", "8487"),
+  // U+02128 BLACK-LETTER CAPITAL Z
+  "\02128": ("\ℨ", "Zfr", "zeetrf", "02128", "8488"),
+  // U+02129 TURNED GREEK SMALL LETTER IOTA
+  "\02129": ("\℩", "iiota", "02129", "8489"),
+  // U+0212B ANGSTROM SIGN
+  "\0212B": ("\Å", "angst", "0212B", "8491"),
+  // U+0212C SCRIPT CAPITAL B
+  "\0212C": ("\ℬ", "bernou", "Bernoullis", "Bscr", "0212C", "8492"),
+  // U+0212D BLACK-LETTER CAPITAL C
+  "\0212D": ("\ℭ", "Cfr", "Cayleys", "0212D", "8493"),
+  // U+0212F SCRIPT SMALL E
+  "\0212F": ("\ℯ", "escr", "0212F", "8495"),
+  // U+02130 SCRIPT CAPITAL E
+  "\02130": ("\ℰ", "Escr", "expectation", "02130", "8496"),
+  // U+02131 SCRIPT CAPITAL F
+  "\02131": ("\ℱ", "Fscr", "Fouriertrf", "02131", "8497"),
+  // U+02133 SCRIPT CAPITAL M
+  "\02133": ("\ℳ", "phmmat", "Mellintrf", "Mscr", "02133", "8499"),
+  // U+02134 SCRIPT SMALL O
+  "\02134": ("\ℴ", "order", "orderof", "oscr", "02134", "8500"),
+  // U+02135 ALEF SYMBOL
+  "\02135": ("\ℵ", "alefsym", "aleph", "02135", "8501"),
+  // U+02136 BET SYMBOL
+  "\02136": ("\ℶ", "beth", "02136", "8502"),
+  // U+02137 GIMEL SYMBOL
+  "\02137": ("\ℷ", "gimel", "02137", "8503"),
+  // U+02138 DALET SYMBOL
+  "\02138": ("\ℸ", "daleth", "02138", "8504"),
+  // U+02145 DOUBLE-STRUCK ITALIC CAPITAL D
+  "\02145": ("\ⅅ", "CapitalDifferentialD", "DD", "02145", "8517"),
+  // U+02146 DOUBLE-STRUCK ITALIC SMALL D
+  "\02146": ("\ⅆ", "DifferentialD", "dd", "02146", "8518"),
+  // U+02147 DOUBLE-STRUCK ITALIC SMALL E
+  "\02147": ("\ⅇ", "ExponentialE", "exponentiale", "ee", "02147", "8519"),
+  // U+02148 DOUBLE-STRUCK ITALIC SMALL I
+  "\02148": ("\ⅈ", "ImaginaryI", "ii", "02148", "8520"),
+  // U+02153 VULGAR FRACTION ONE THIRD
+  "\02153": ("\⅓", "frac13", "02153", "8531"),
+  // U+02154 VULGAR FRACTION TWO THIRDS
+  "\02154": ("\⅔", "frac23", "02154", "8532"),
+  // U+02155 VULGAR FRACTION ONE FIFTH
+  "\02155": ("\⅕", "frac15", "02155", "8533"),
+  // U+02156 VULGAR FRACTION TWO FIFTHS
+  "\02156": ("\⅖", "frac25", "02156", "8534"),
+  // U+02157 VULGAR FRACTION THREE FIFTHS
+  "\02157": ("\⅗", "frac35", "02157", "8535"),
+  // U+02158 VULGAR FRACTION FOUR FIFTHS
+  "\02158": ("\⅘", "frac45", "02158", "8536"),
+  // U+02159 VULGAR FRACTION ONE SIXTH
+  "\02159": ("\⅙", "frac16", "02159", "8537"),
+  // U+0215A VULGAR FRACTION FIVE SIXTHS
+  "\0215A": ("\⅚", "frac56", "0215A", "8538"),
+  // U+0215B VULGAR FRACTION ONE EIGHTH
+  "\0215B": ("\⅛", "frac18", "0215B", "8539"),
+  // U+0215C VULGAR FRACTION THREE EIGHTHS
+  "\0215C": ("\⅜", "frac38", "0215C", "8540"),
+  // U+0215D VULGAR FRACTION FIVE EIGHTHS
+  "\0215D": ("\⅝", "frac58", "0215D", "8541"),
+  // U+0215E VULGAR FRACTION SEVEN EIGHTHS
+  "\0215E": ("\⅞", "frac78", "0215E", "8542"),
+  // U+02190 LEFTWARDS ARROW
+  "\02190": ("\←", "larr", "leftarrow", "LeftArrow", "slarr", "ShortLeftArrow", "02190", "8592"),
+  // U+02191 UPWARDS ARROW
+  "\02191": ("\↑", "uarr", "uparrow", "UpArrow", "ShortUpArrow", "02191", "8593"),
+  // U+02192 RIGHTWARDS ARROW
+  "\02192": ("\→", "rarr", "rightarrow", "RightArrow", "srarr", "ShortRightArrow", "02192", "8594"),
+  // U+02193 DOWNWARDS ARROW
+  "\02193": ("\↓", "darr", "downarrow", "DownArrow", "ShortDownArrow", "02193", "8595"),
+  // U+02194 LEFT RIGHT ARROW
+  "\02194": ("\↔", "harr", "leftrightarrow", "LeftRightArrow", "02194", "8596"),
+  // U+02195 UP DOWN ARROW
+  "\02195": ("\↕", "varr", "updownarrow", "UpDownArrow", "02195", "8597"),
+  // U+02196 NORTH WEST ARROW
+  "\02196": ("\↖", "nwarr", "UpperLeftArrow", "nwarrow", "02196", "8598"),
+  // U+02197 NORTH EAST ARROW
+  "\02197": ("\↗", "nearr", "UpperRightArrow", "nearrow", "02197", "8599"),
+  // U+02198 SOUTH EAST ARROW
+  "\02198": ("\↘", "searr", "searrow", "LowerRightArrow", "02198", "8600"),
+  // U+02199 SOUTH WEST ARROW
+  "\02199": ("\↙", "swarr", "swarrow", "LowerLeftArrow", "02199", "8601"),
+  // U+0219A LEFTWARDS ARROW WITH STROKE
+  "\0219A": ("\↚", "nlarr", "nleftarrow", "0219A", "8602"),
+  // U+0219B RIGHTWARDS ARROW WITH STROKE
+  "\0219B": ("\↛", "nrarr", "nrightarrow", "0219B", "8603"),
+  // U+0219D RIGHTWARDS WAVE ARROW
+  "\0219D": ("\↝", "rarrw", "rightsquigarrow", "0219D", "8605"),
+  // U+0219E LEFTWARDS TWO HEADED ARROW
+  "\0219E": ("\↞", "Larr", "twoheadleftarrow", "0219E", "8606"),
+  // U+0219F UPWARDS TWO HEADED ARROW
+  "\0219F": ("\↟", "Uarr", "0219F", "8607"),
+  // U+021A0 RIGHTWARDS TWO HEADED ARROW
+  "\021A0": ("\↠", "Rarr", "twoheadrightarrow", "021A0", "8608"),
+  // U+021A1 DOWNWARDS TWO HEADED ARROW
+  "\021A1": ("\↡", "Darr", "021A1", "8609"),
+  // U+021A2 LEFTWARDS ARROW WITH TAIL
+  "\021A2": ("\↢", "larrtl", "leftarrowtail", "021A2", "8610"),
+  // U+021A3 RIGHTWARDS ARROW WITH TAIL
+  "\021A3": ("\↣", "rarrtl", "rightarrowtail", "021A3", "8611"),
+  // U+021A4 LEFTWARDS ARROW FROM BAR
+  "\021A4": ("\↤", "LeftTeeArrow", "mapstoleft", "021A4", "8612"),
+  // U+021A5 UPWARDS ARROW FROM BAR
+  "\021A5": ("\↥", "UpTeeArrow", "mapstoup", "021A5", "8613"),
+  // U+021A6 RIGHTWARDS ARROW FROM BAR
+  "\021A6": ("\↦", "map", "RightTeeArrow", "mapsto", "021A6", "8614"),
+  // U+021A7 DOWNWARDS ARROW FROM BAR
+  "\021A7": ("\↧", "DownTeeArrow", "mapstodown", "021A7", "8615"),
+  // U+021A9 LEFTWARDS ARROW WITH HOOK
+  "\021A9": ("\↩", "larrhk", "hookleftarrow", "021A9", "8617"),
+  // U+021AA RIGHTWARDS ARROW WITH HOOK
+  "\021AA": ("\↪", "rarrhk", "hookrightarrow", "021AA", "8618"),
+  // U+021AB LEFTWARDS ARROW WITH LOOP
+  "\021AB": ("\↫", "larrlp", "looparrowleft", "021AB", "8619"),
+  // U+021AC RIGHTWARDS ARROW WITH LOOP
+  "\021AC": ("\↬", "rarrlp", "looparrowright", "021AC", "8620"),
+  // U+021AD LEFT RIGHT WAVE ARROW
+  "\021AD": ("\↭", "harrw", "leftrightsquigarrow", "021AD", "8621"),
+  // U+021AE LEFT RIGHT ARROW WITH STROKE
+  "\021AE": ("\↮", "nharr", "nleftrightarrow", "021AE", "8622"),
+  // U+021B0 UPWARDS ARROW WITH TIP LEFTWARDS
+  "\021B0": ("\↰", "lsh", "Lsh", "021B0", "8624"),
+  // U+021B1 UPWARDS ARROW WITH TIP RIGHTWARDS
+  "\021B1": ("\↱", "rsh", "Rsh", "021B1", "8625"),
+  // U+021B2 DOWNWARDS ARROW WITH TIP LEFTWARDS
+  "\021B2": ("\↲", "ldsh", "021B2", "8626"),
+  // U+021B3 DOWNWARDS ARROW WITH TIP RIGHTWARDS
+  "\021B3": ("\↳", "rdsh", "021B3", "8627"),
+  // U+021B5 DOWNWARDS ARROW WITH CORNER LEFTWARDS
+  "\021B5": ("\↵", "crarr", "021B5", "8629"),
+  // U+021B6 ANTICLOCKWISE TOP SEMICIRCLE ARROW
+  "\021B6": ("\↶", "cularr", "curvearrowleft", "021B6", "8630"),
+  // U+021B7 CLOCKWISE TOP SEMICIRCLE ARROW
+  "\021B7": ("\↷", "curarr", "curvearrowright", "021B7", "8631"),
+  // U+021BA ANTICLOCKWISE OPEN CIRCLE ARROW
+  "\021BA": ("\↺", "olarr", "circlearrowleft", "021BA", "8634"),
+  // U+021BB CLOCKWISE OPEN CIRCLE ARROW
+  "\021BB": ("\↻", "orarr", "circlearrowright", "021BB", "8635"),
+  // U+021BC LEFTWARDS HARPOON WITH BARB UPWARDS
+  "\021BC": ("\↼", "lharu", "LeftVector", "leftharpoonup", "021BC", "8636"),
+  // U+021BD LEFTWARDS HARPOON WITH BARB DOWNWARDS
+  "\021BD": ("\↽", "lhard", "leftharpoondown", "DownLeftVector", "021BD", "8637"),
+  // U+021BE UPWARDS HARPOON WITH BARB RIGHTWARDS
+  "\021BE": ("\↾", "uharr", "upharpoonright", "RightUpVector", "021BE", "8638"),
+  // U+021BF UPWARDS HARPOON WITH BARB LEFTWARDS
+  "\021BF": ("\↿", "uharl", "upharpoonleft", "LeftUpVector", "021BF", "8639"),
+  // U+021C0 RIGHTWARDS HARPOON WITH BARB UPWARDS
+  "\021C0": ("\⇀", "rharu", "RightVector", "rightharpoonup", "021C0", "8640"),
+  // U+021C1 RIGHTWARDS HARPOON WITH BARB DOWNWARDS
+  "\021C1": ("\⇁", "rhard", "rightharpoondown", "DownRightVector", "021C1", "8641"),
+  // U+021C2 DOWNWARDS HARPOON WITH BARB RIGHTWARDS
+  "\021C2": ("\⇂", "dharr", "RightDownVector", "downharpoonright", "021C2", "8642"),
+  // U+021C3 DOWNWARDS HARPOON WITH BARB LEFTWARDS
+  "\021C3": ("\⇃", "dharl", "LeftDownVector", "downharpoonleft", "021C3", "8643"),
+  // U+021C4 RIGHTWARDS ARROW OVER LEFTWARDS ARROW
+  "\021C4": ("\⇄", "rlarr", "rightleftarrows", "RightArrowLeftArrow", "021C4", "8644"),
+  // U+021C5 UPWARDS ARROW LEFTWARDS OF DOWNWARDS ARROW
+  "\021C5": ("\⇅", "udarr", "UpArrowDownArrow", "021C5", "8645"),
+  // U+021C6 LEFTWARDS ARROW OVER RIGHTWARDS ARROW
+  "\021C6": ("\⇆", "lrarr", "leftrightarrows", "LeftArrowRightArrow", "021C6", "8646"),
+  // U+021C7 LEFTWARDS PAIRED ARROWS
+  "\021C7": ("\⇇", "llarr", "leftleftarrows", "021C7", "8647"),
+  // U+021C8 UPWARDS PAIRED ARROWS
+  "\021C8": ("\⇈", "uuarr", "upuparrows", "021C8", "8648"),
+  // U+021C9 RIGHTWARDS PAIRED ARROWS
+  "\021C9": ("\⇉", "rrarr", "rightrightarrows", "021C9", "8649"),
+  // U+021CA DOWNWARDS PAIRED ARROWS
+  "\021CA": ("\⇊", "ddarr", "downdownarrows", "021CA", "8650"),
+  // U+021CB LEFTWARDS HARPOON OVER RIGHTWARDS HARPOON
+  "\021CB": ("\⇋", "lrhar", "ReverseEquilibrium", "leftrightharpoons", "021CB", "8651"),
+  // U+021CC RIGHTWARDS HARPOON OVER LEFTWARDS HARPOON
+  "\021CC": ("\⇌", "rlhar", "rightleftharpoons", "Equilibrium", "021CC", "8652"),
+  // U+021CD LEFTWARDS DOUBLE ARROW WITH STROKE
+  "\021CD": ("\⇍", "nlArr", "nLeftarrow", "021CD", "8653"),
+  // U+021CE LEFT RIGHT DOUBLE ARROW WITH STROKE
+  "\021CE": ("\⇎", "nhArr", "nLeftrightarrow", "021CE", "8654"),
+  // U+021CF RIGHTWARDS DOUBLE ARROW WITH STROKE
+  "\021CF": ("\⇏", "nrArr", "nRightarrow", "021CF", "8655"),
+  // U+021D0 LEFTWARDS DOUBLE ARROW
+  "\021D0": ("\⇐", "lArr", "Leftarrow", "DoubleLeftArrow", "021D0", "8656"),
+  // U+021D1 UPWARDS DOUBLE ARROW
+  "\021D1": ("\⇑", "uArr", "Uparrow", "DoubleUpArrow", "021D1", "8657"),
+  // U+021D2 RIGHTWARDS DOUBLE ARROW
+  "\021D2": ("\⇒", "rArr", "Rightarrow", "Implies", "DoubleRightArrow", "021D2", "8658"),
+  // U+021D3 DOWNWARDS DOUBLE ARROW
+  "\021D3": ("\⇓", "dArr", "Downarrow", "DoubleDownArrow", "021D3", "8659"),
+  // U+021D4 LEFT RIGHT DOUBLE ARROW
+  "\021D4": ("\⇔", "hArr", "Leftrightarrow", "DoubleLeftRightArrow", "iff", "021D4", "8660"),
+  // U+021D5 UP DOWN DOUBLE ARROW
+  "\021D5": ("\⇕", "vArr", "Updownarrow", "DoubleUpDownArrow", "021D5", "8661"),
+  // U+021D6 NORTH WEST DOUBLE ARROW
+  "\021D6": ("\⇖", "nwArr", "021D6", "8662"),
+  // U+021D7 NORTH EAST DOUBLE ARROW
+  "\021D7": ("\⇗", "neArr", "021D7", "8663"),
+  // U+021D8 SOUTH EAST DOUBLE ARROW
+  "\021D8": ("\⇘", "seArr", "021D8", "8664"),
+  // U+021D9 SOUTH WEST DOUBLE ARROW
+  "\021D9": ("\⇙", "swArr", "021D9", "8665"),
+  // U+021DA LEFTWARDS TRIPLE ARROW
+  "\021DA": ("\⇚", "lAarr", "Lleftarrow", "021DA", "8666"),
+  // U+021DB RIGHTWARDS TRIPLE ARROW
+  "\021DB": ("\⇛", "rAarr", "Rrightarrow", "021DB", "8667"),
+  // U+021DD RIGHTWARDS SQUIGGLE ARROW
+  "\021DD": ("\⇝", "zigrarr", "021DD", "8669"),
+  // U+021E4 LEFTWARDS ARROW TO BAR
+  "\021E4": ("\⇤", "larrb", "LeftArrowBar", "021E4", "8676"),
+  // U+021E5 RIGHTWARDS ARROW TO BAR
+  "\021E5": ("\⇥", "rarrb", "RightArrowBar", "021E5", "8677"),
+  // U+021F5 DOWNWARDS ARROW LEFTWARDS OF UPWARDS ARROW
+  "\021F5": ("\⇵", "duarr", "DownArrowUpArrow", "021F5", "8693"),
+  // U+021FD LEFTWARDS OPEN-HEADED ARROW
+  "\021FD": ("\⇽", "loarr", "021FD", "8701"),
+  // U+021FE RIGHTWARDS OPEN-HEADED ARROW
+  "\021FE": ("\⇾", "roarr", "021FE", "8702"),
+  // U+021FF LEFT RIGHT OPEN-HEADED ARROW
+  "\021FF": ("\⇿", "hoarr", "021FF", "8703"),
+  // U+02200 FOR ALL
+  "\02200": ("\∀", "forall", "ForAll", "02200", "8704"),
+  // U+02201 COMPLEMENT
+  "\02201": ("\∁", "comp", "complement", "02201", "8705"),
+  // U+02202 PARTIAL DIFFERENTIAL
+  "\02202": ("\∂", "part", "PartialD", "02202", "8706"),
+  // U+02203 THERE EXISTS
+  "\02203": ("\∃", "exist", "Exists", "02203", "8707"),
+  // U+02204 THERE DOES NOT EXIST
+  "\02204": ("\∄", "nexist", "NotExists", "nexists", "02204", "8708"),
+  // U+02205 EMPTY SET
+  "\02205": ("\∅", "empty", "emptyset", "emptyv", "varnothing", "02205", "8709"),
+  // U+02207 NABLA
+  "\02207": ("\∇", "nabla", "Del", "02207", "8711"),
+  // U+02208 ELEMENT OF
+  "\02208": ("\∈", "isin", "isinv", "Element", "in", "02208", "8712"),
+  // U+02209 NOT AN ELEMENT OF
+  "\02209": ("\∉", "notin", "NotElement", "notinva", "02209", "8713"),
+  // U+0220B CONTAINS AS MEMBER
+  "\0220B": ("\∋", "niv", "ReverseElement", "ni", "SuchThat", "0220B", "8715"),
+  // U+0220C DOES NOT CONTAIN AS MEMBER
+  "\0220C": ("\∌", "notni", "notniva", "NotReverseElement", "0220C", "8716"),
+  // U+0220F N-ARY PRODUCT
+  "\0220F": ("\∏", "prod", "Product", "0220F", "8719"),
+  // U+02210 N-ARY COPRODUCT
+  "\02210": ("\∐", "coprod", "Coproduct", "02210", "8720"),
+  // U+02211 N-ARY SUMMATION
+  "\02211": ("\∑", "sum", "Sum", "02211", "8721"),
+  // U+02212 MINUS SIGN
+  "\02212": ("\−", "minus", "02212", "8722"),
+  // U+02213 MINUS-OR-PLUS SIGN
+  "\02213": ("\∓", "mnplus", "mp", "MinusPlus", "02213", "8723"),
+  // U+02214 DOT PLUS
+  "\02214": ("\∔", "plusdo", "dotplus", "02214", "8724"),
+  // U+02216 SET MINUS
+  "\02216": ("\∖", "setmn", "setminus", "Backslash", "ssetmn", "smallsetminus", "02216", "8726"),
+  // U+02217 ASTERISK OPERATOR
+  "\02217": ("\∗", "lowast", "02217", "8727"),
+  // U+02218 RING OPERATOR
+  "\02218": ("\∘", "compfn", "SmallCircle", "02218", "8728"),
+  // U+0221A SQUARE ROOT
+  "\0221A": ("\√", "radic", "Sqrt", "0221A", "8730"),
+  // U+0221D PROPORTIONAL TO
+  "\0221D": ("\∝", "prop", "propto", "Proportional", "vprop", "varpropto", "0221D", "8733"),
+  // U+0221E INFINITY
+  "\0221E": ("\∞", "infin", "0221E", "8734"),
+  // U+0221F RIGHT ANGLE
+  "\0221F": ("\∟", "angrt", "0221F", "8735"),
+  // U+02220 ANGLE
+  "\02220": ("\∠", "ang", "angle", "02220", "8736"),
+  // U+02221 MEASURED ANGLE
+  "\02221": ("\∡", "angmsd", "measuredangle", "02221", "8737"),
+  // U+02222 SPHERICAL ANGLE
+  "\02222": ("\∢", "angsph", "02222", "8738"),
+  // U+02223 DIVIDES
+  "\02223": ("\∣", "mid", "VerticalBar", "smid", "shortmid", "02223", "8739"),
+  // U+02224 DOES NOT DIVIDE
+  "\02224": ("\∤", "nmid", "NotVerticalBar", "nsmid", "nshortmid", "02224", "8740"),
+  // U+02225 PARALLEL TO
+  "\02225": ("\∥", "par", "parallel", "DoubleVerticalBar", "spar", "shortparallel", "02225", "8741"),
+  // U+02226 NOT PARALLEL TO
+  "\02226": ("\∦", "npar", "nparallel", "NotDoubleVerticalBar", "nspar", "nshortparallel", "02226", "8742"),
+  // U+02227 LOGICAL AND
+  "\02227": ("\∧", "and", "wedge", "02227", "8743"),
+  // U+02228 LOGICAL OR
+  "\02228": ("\∨", "or", "vee", "02228", "8744"),
+  // U+02229 INTERSECTION
+  "\02229": ("\∩", "cap", "02229", "8745"),
+  // U+0222A UNION
+  "\0222A": ("\∪", "cup", "0222A", "8746"),
+  // U+0222B INTEGRAL
+  "\0222B": ("\∫", "int", "Integral", "0222B", "8747"),
+  // U+0222C DOUBLE INTEGRAL
+  "\0222C": ("\∬", "Int", "0222C", "8748"),
+  // U+0222D TRIPLE INTEGRAL
+  "\0222D": ("\∭", "tint", "iiint", "0222D", "8749"),
+  // U+0222E CONTOUR INTEGRAL
+  "\0222E": ("\∮", "conint", "oint", "ContourIntegral", "0222E", "8750"),
+  // U+0222F SURFACE INTEGRAL
+  "\0222F": ("\∯", "Conint", "DoubleContourIntegral", "0222F", "8751"),
+  // U+02230 VOLUME INTEGRAL
+  "\02230": ("\∰", "Cconint", "02230", "8752"),
+  // U+02231 CLOCKWISE INTEGRAL
+  "\02231": ("\∱", "cwint", "02231", "8753"),
+  // U+02232 CLOCKWISE CONTOUR INTEGRAL
+  "\02232": ("\∲", "cwconint", "ClockwiseContourIntegral", "02232", "8754"),
+  // U+02233 ANTICLOCKWISE CONTOUR INTEGRAL
+  "\02233": ("\∳", "awconint", "CounterClockwiseContourIntegral", "02233", "8755"),
+  // U+02234 THEREFORE
+  "\02234": ("\∴", "there4", "therefore", "Therefore", "02234", "8756"),
+  // U+02235 BECAUSE
+  "\02235": ("\∵", "becaus", "because", "Because", "02235", "8757"),
+  // U+02236 RATIO
+  "\02236": ("\∶", "ratio", "02236", "8758"),
+  // U+02237 PROPORTION
+  "\02237": ("\∷", "Colon", "Proportion", "02237", "8759"),
+  // U+02238 DOT MINUS
+  "\02238": ("\∸", "minusd", "dotminus", "02238", "8760"),
+  // U+0223A GEOMETRIC PROPORTION
+  "\0223A": ("\∺", "mDDot", "0223A", "8762"),
+  // U+0223B HOMOTHETIC
+  "\0223B": ("\∻", "homtht", "0223B", "8763"),
+  // U+0223C TILDE OPERATOR
+  "\0223C": ("\∼", "sim", "Tilde", "thksim", "thicksim", "0223C", "8764"),
+  // U+0223D REVERSED TILDE
+  "\0223D": ("\∽", "bsim", "backsim", "0223D", "8765"),
+  // U+0223E INVERTED LAZY S
+  "\0223E": ("\∾", "ac", "mstpos", "0223E", "8766"),
+  // U+0223F SINE WAVE
+  "\0223F": ("\∿", "acd", "0223F", "8767"),
+  // U+02240 WREATH PRODUCT
+  "\02240": ("\≀", "wreath", "VerticalTilde", "wr", "02240", "8768"),
+  // U+02241 NOT TILDE
+  "\02241": ("\≁", "nsim", "NotTilde", "02241", "8769"),
+  // U+02242 MINUS TILDE
+  "\02242": ("\≂", "esim", "EqualTilde", "eqsim", "02242", "8770"),
+  // U+02243 ASYMPTOTICALLY EQUAL TO
+  "\02243": ("\≃", "sime", "TildeEqual", "simeq", "02243", "8771"),
+  // U+02244 NOT ASYMPTOTICALLY EQUAL TO
+  "\02244": ("\≄", "nsime", "nsimeq", "NotTildeEqual", "02244", "8772"),
+  // U+02245 APPROXIMATELY EQUAL TO
+  "\02245": ("\≅", "cong", "TildeFullEqual", "02245", "8773"),
+  // U+02246 APPROXIMATELY BUT NOT ACTUALLY EQUAL TO
+  "\02246": ("\≆", "simne", "02246", "8774"),
+  // U+02247 NEITHER APPROXIMATELY NOR ACTUALLY EQUAL TO
+  "\02247": ("\≇", "ncong", "NotTildeFullEqual", "02247", "8775"),
+  // U+02248 ALMOST EQUAL TO
+  "\02248": ("\≈", "asymp", "ap", "TildeTilde", "approx", "thkap", "thickapprox", "02248", "8776"),
+  // U+02249 NOT ALMOST EQUAL TO
+  "\02249": ("\≉", "nap", "NotTildeTilde", "napprox", "02249", "8777"),
+  // U+0224A ALMOST EQUAL OR EQUAL TO
+  "\0224A": ("\≊", "ape", "approxeq", "0224A", "8778"),
+  // U+0224B TRIPLE TILDE
+  "\0224B": ("\≋", "apid", "0224B", "8779"),
+  // U+0224C ALL EQUAL TO
+  "\0224C": ("\≌", "bcong", "backcong", "0224C", "8780"),
+  // U+0224D EQUIVALENT TO
+  "\0224D": ("\≍", "asympeq", "CupCap", "0224D", "8781"),
+  // U+0224E GEOMETRICALLY EQUIVALENT TO
+  "\0224E": ("\≎", "bump", "HumpDownHump", "Bumpeq", "0224E", "8782"),
+  // U+0224F DIFFERENCE BETWEEN
+  "\0224F": ("\≏", "bumpe", "HumpEqual", "bumpeq", "0224F", "8783"),
+  // U+02250 APPROACHES THE LIMIT
+  "\02250": ("\≐", "esdot", "DotEqual", "doteq", "02250", "8784"),
+  // U+02251 GEOMETRICALLY EQUAL TO
+  "\02251": ("\≑", "eDot", "doteqdot", "02251", "8785"),
+  // U+02252 APPROXIMATELY EQUAL TO OR THE IMAGE OF
+  "\02252": ("\≒", "efDot", "fallingdotseq", "02252", "8786"),
+  // U+02253 IMAGE OF OR APPROXIMATELY EQUAL TO
+  "\02253": ("\≓", "erDot", "risingdotseq", "02253", "8787"),
+  // U+02254 COLON EQUALS
+  "\02254": ("\≔", "colone", "coloneq", "Assign", "02254", "8788"),
+  // U+02255 EQUALS COLON
+  "\02255": ("\≕", "ecolon", "eqcolon", "02255", "8789"),
+  // U+02256 RING IN EQUAL TO
+  "\02256": ("\≖", "ecir", "eqcirc", "02256", "8790"),
+  // U+02257 RING EQUAL TO
+  "\02257": ("\≗", "cire", "circeq", "02257", "8791"),
+  // U+02259 ESTIMATES
+  "\02259": ("\≙", "wedgeq", "02259", "8793"),
+  // U+0225A EQUIANGULAR TO
+  "\0225A": ("\≚", "veeeq", "0225A", "8794"),
+  // U+0225C DELTA EQUAL TO
+  "\0225C": ("\≜", "trie", "triangleq", "0225C", "8796"),
+  // U+0225F QUESTIONED EQUAL TO
+  "\0225F": ("\≟", "equest", "questeq", "0225F", "8799"),
+  // U+02260 NOT EQUAL TO
+  "\02260": ("\≠", "ne", "NotEqual", "02260", "8800"),
+  // U+02261 IDENTICAL TO
+  "\02261": ("\≡", "equiv", "Congruent", "02261", "8801"),
+  // U+02262 NOT IDENTICAL TO
+  "\02262": ("\≢", "nequiv", "NotCongruent", "02262", "8802"),
+  // U+02264 LESS-THAN OR EQUAL TO
+  "\02264": ("\≤", "le", "leq", "02264", "8804"),
+  // U+02265 GREATER-THAN OR EQUAL TO
+  "\02265": ("\≥", "ge", "GreaterEqual", "geq", "02265", "8805"),
+  // U+02266 LESS-THAN OVER EQUAL TO
+  "\02266": ("\≦", "lE", "LessFullEqual", "leqq", "02266", "8806"),
+  // U+02267 GREATER-THAN OVER EQUAL TO
+  "\02267": ("\≧", "gE", "GreaterFullEqual", "geqq", "02267", "8807"),
+  // U+02268 LESS-THAN BUT NOT EQUAL TO
+  "\02268": ("\≨", "lnE", "lneqq", "02268", "8808"),
+  // U+02269 GREATER-THAN BUT NOT EQUAL TO
+  "\02269": ("\≩", "gnE", "gneqq", "02269", "8809"),
+  // U+0226A MUCH LESS-THAN
+  "\0226A": ("\≪", "Lt", "NestedLessLess", "ll", "0226A", "8810"),
+  // U+0226B MUCH GREATER-THAN
+  "\0226B": ("\≫", "Gt", "NestedGreaterGreater", "gg", "0226B", "8811"),
+  // U+0226C BETWEEN
+  "\0226C": ("\≬", "twixt", "between", "0226C", "8812"),
+  // U+0226D NOT EQUIVALENT TO
+  "\0226D": ("\≭", "NotCupCap", "0226D", "8813"),
+  // U+0226E NOT LESS-THAN
+  "\0226E": ("\≮", "nlt", "NotLess", "nless", "0226E", "8814"),
+  // U+0226F NOT GREATER-THAN
+  "\0226F": ("\≯", "ngt", "NotGreater", "ngtr", "0226F", "8815"),
+  // U+02270 NEITHER LESS-THAN NOR EQUAL TO
+  "\02270": ("\≰", "nle", "NotLessEqual", "nleq", "02270", "8816"),
+  // U+02271 NEITHER GREATER-THAN NOR EQUAL TO
+  "\02271": ("\≱", "nge", "NotGreaterEqual", "ngeq", "02271", "8817"),
+  // U+02272 LESS-THAN OR EQUIVALENT TO
+  "\02272": ("\≲", "lsim", "LessTilde", "lesssim", "02272", "8818"),
+  // U+02273 GREATER-THAN OR EQUIVALENT TO
+  "\02273": ("\≳", "gsim", "gtrsim", "GreaterTilde", "02273", "8819"),
+  // U+02274 NEITHER LESS-THAN NOR EQUIVALENT TO
+  "\02274": ("\≴", "nlsim", "NotLessTilde", "02274", "8820"),
+  // U+02275 NEITHER GREATER-THAN NOR EQUIVALENT TO
+  "\02275": ("\≵", "ngsim", "NotGreaterTilde", "02275", "8821"),
+  // U+02276 LESS-THAN OR GREATER-THAN
+  "\02276": ("\≶", "lg", "lessgtr", "LessGreater", "02276", "8822"),
+  // U+02277 GREATER-THAN OR LESS-THAN
+  "\02277": ("\≷", "gl", "gtrless", "GreaterLess", "02277", "8823"),
+  // U+02278 NEITHER LESS-THAN NOR GREATER-THAN
+  "\02278": ("\≸", "ntlg", "NotLessGreater", "02278", "8824"),
+  // U+02279 NEITHER GREATER-THAN NOR LESS-THAN
+  "\02279": ("\≹", "ntgl", "NotGreaterLess", "02279", "8825"),
+  // U+0227A PRECEDES
+  "\0227A": ("\≺", "pr", "Precedes", "prec", "0227A", "8826"),
+  // U+0227B SUCCEEDS
+  "\0227B": ("\≻", "sc", "Succeeds", "succ", "0227B", "8827"),
+  // U+0227C PRECEDES OR EQUAL TO
+  "\0227C": ("\≼", "prcue", "PrecedesSlantEqual", "preccurlyeq", "0227C", "8828"),
+  // U+0227D SUCCEEDS OR EQUAL TO
+  "\0227D": ("\≽", "sccue", "SucceedsSlantEqual", "succcurlyeq", "0227D", "8829"),
+  // U+0227E PRECEDES OR EQUIVALENT TO
+  "\0227E": ("\≾", "prsim", "precsim", "PrecedesTilde", "0227E", "8830"),
+  // U+0227F SUCCEEDS OR EQUIVALENT TO
+  "\0227F": ("\≿", "scsim", "succsim", "SucceedsTilde", "0227F", "8831"),
+  // U+02280 DOES NOT PRECEDE
+  "\02280": ("\⊀", "npr", "nprec", "NotPrecedes", "02280", "8832"),
+  // U+02281 DOES NOT SUCCEED
+  "\02281": ("\⊁", "nsc", "nsucc", "NotSucceeds", "02281", "8833"),
+  // U+02282 SUBSET OF
+  "\02282": ("\⊂", "sub", "subset", "02282", "8834"),
+  // U+02283 SUPERSET OF
+  "\02283": ("\⊃", "sup", "supset", "Superset", "02283", "8835"),
+  // U+02284 NOT A SUBSET OF
+  "\02284": ("\⊄", "nsub", "02284", "8836"),
+  // U+02285 NOT A SUPERSET OF
+  "\02285": ("\⊅", "nsup", "02285", "8837"),
+  // U+02286 SUBSET OF OR EQUAL TO
+  "\02286": ("\⊆", "sube", "SubsetEqual", "subseteq", "02286", "8838"),
+  // U+02287 SUPERSET OF OR EQUAL TO
+  "\02287": ("\⊇", "supe", "supseteq", "SupersetEqual", "02287", "8839"),
+  // U+02288 NEITHER A SUBSET OF NOR EQUAL TO
+  "\02288": ("\⊈", "nsube", "nsubseteq", "NotSubsetEqual", "02288", "8840"),
+  // U+02289 NEITHER A SUPERSET OF NOR EQUAL TO
+  "\02289": ("\⊉", "nsupe", "nsupseteq", "NotSupersetEqual", "02289", "8841"),
+  // U+0228A SUBSET OF WITH NOT EQUAL TO
+  "\0228A": ("\⊊", "subne", "subsetneq", "0228A", "8842"),
+  // U+0228B SUPERSET OF WITH NOT EQUAL TO
+  "\0228B": ("\⊋", "supne", "supsetneq", "0228B", "8843"),
+  // U+0228D MULTISET MULTIPLICATION
+  "\0228D": ("\⊍", "cupdot", "0228D", "8845"),
+  // U+0228E MULTISET UNION
+  "\0228E": ("\⊎", "uplus", "UnionPlus", "0228E", "8846"),
+  // U+0228F SQUARE IMAGE OF
+  "\0228F": ("\⊏", "sqsub", "SquareSubset", "sqsubset", "0228F", "8847"),
+  // U+02290 SQUARE ORIGINAL OF
+  "\02290": ("\⊐", "sqsup", "SquareSuperset", "sqsupset", "02290", "8848"),
+  // U+02291 SQUARE IMAGE OF OR EQUAL TO
+  "\02291": ("\⊑", "sqsube", "SquareSubsetEqual", "sqsubseteq", "02291", "8849"),
+  // U+02292 SQUARE ORIGINAL OF OR EQUAL TO
+  "\02292": ("\⊒", "sqsupe", "SquareSupersetEqual", "sqsupseteq", "02292", "8850"),
+  // U+02293 SQUARE CAP
+  "\02293": ("\⊓", "sqcap", "SquareIntersection", "02293", "8851"),
+  // U+02294 SQUARE CUP
+  "\02294": ("\⊔", "sqcup", "SquareUnion", "02294", "8852"),
+  // U+02295 CIRCLED PLUS
+  "\02295": ("\⊕", "oplus", "CirclePlus", "02295", "8853"),
+  // U+02296 CIRCLED MINUS
+  "\02296": ("\⊖", "ominus", "CircleMinus", "02296", "8854"),
+  // U+02297 CIRCLED TIMES
+  "\02297": ("\⊗", "otimes", "CircleTimes", "02297", "8855"),
+  // U+02298 CIRCLED DIVISION SLASH
+  "\02298": ("\⊘", "osol", "02298", "8856"),
+  // U+02299 CIRCLED DOT OPERATOR
+  "\02299": ("\⊙", "odot", "CircleDot", "02299", "8857"),
+  // U+0229A CIRCLED RING OPERATOR
+  "\0229A": ("\⊚", "ocir", "circledcirc", "0229A", "8858"),
+  // U+0229B CIRCLED ASTERISK OPERATOR
+  "\0229B": ("\⊛", "oast", "circledast", "0229B", "8859"),
+  // U+0229D CIRCLED DASH
+  "\0229D": ("\⊝", "odash", "circleddash", "0229D", "8861"),
+  // U+0229E SQUARED PLUS
+  "\0229E": ("\⊞", "plusb", "boxplus", "0229E", "8862"),
+  // U+0229F SQUARED MINUS
+  "\0229F": ("\⊟", "minusb", "boxminus", "0229F", "8863"),
+  // U+022A0 SQUARED TIMES
+  "\022A0": ("\⊠", "timesb", "boxtimes", "022A0", "8864"),
+  // U+022A1 SQUARED DOT OPERATOR
+  "\022A1": ("\⊡", "sdotb", "dotsquare", "022A1", "8865"),
+  // U+022A2 RIGHT TACK
+  "\022A2": ("\⊢", "vdash", "RightTee", "022A2", "8866"),
+  // U+022A3 LEFT TACK
+  "\022A3": ("\⊣", "dashv", "LeftTee", "022A3", "8867"),
+  // U+022A4 DOWN TACK
+  "\022A4": ("\⊤", "top", "DownTee", "022A4", "8868"),
+  // U+022A5 UP TACK
+  "\022A5": ("\⊥", "bottom", "bot", "perp", "UpTee", "022A5", "8869"),
+  // U+022A7 MODELS
+  "\022A7": ("\⊧", "models", "022A7", "8871"),
+  // U+022A8 TRUE
+  "\022A8": ("\⊨", "vDash", "DoubleRightTee", "022A8", "8872"),
+  // U+022A9 FORCES
+  "\022A9": ("\⊩", "Vdash", "022A9", "8873"),
+  // U+022AA TRIPLE VERTICAL BAR RIGHT TURNSTILE
+  "\022AA": ("\⊪", "Vvdash", "022AA", "8874"),
+  // U+022AB DOUBLE VERTICAL BAR DOUBLE RIGHT TURNSTILE
+  "\022AB": ("\⊫", "VDash", "022AB", "8875"),
+  // U+022AC DOES NOT PROVE
+  "\022AC": ("\⊬", "nvdash", "022AC", "8876"),
+  // U+022AD NOT TRUE
+  "\022AD": ("\⊭", "nvDash", "022AD", "8877"),
+  // U+022AE DOES NOT FORCE
+  "\022AE": ("\⊮", "nVdash", "022AE", "8878"),
+  // U+022AF NEGATED DOUBLE VERTICAL BAR DOUBLE RIGHT TURNSTILE
+  "\022AF": ("\⊯", "nVDash", "022AF", "8879"),
+  // U+022B0 PRECEDES UNDER RELATION
+  "\022B0": ("\⊰", "prurel", "022B0", "8880"),
+  // U+022B2 NORMAL SUBGROUP OF
+  "\022B2": ("\⊲", "vltri", "vartriangleleft", "LeftTriangle", "022B2", "8882"),
+  // U+022B3 CONTAINS AS NORMAL SUBGROUP
+  "\022B3": ("\⊳", "vrtri", "vartriangleright", "RightTriangle", "022B3", "8883"),
+  // U+022B4 NORMAL SUBGROUP OF OR EQUAL TO
+  "\022B4": ("\⊴", "ltrie", "trianglelefteq", "LeftTriangleEqual", "022B4", "8884"),
+  // U+022B5 CONTAINS AS NORMAL SUBGROUP OR EQUAL TO
+  "\022B5": ("\⊵", "rtrie", "trianglerighteq", "RightTriangleEqual", "022B5", "8885"),
+  // U+022B6 ORIGINAL OF
+  "\022B6": ("\⊶", "origof", "022B6", "8886"),
+  // U+022B7 IMAGE OF
+  "\022B7": ("\⊷", "imof", "022B7", "8887"),
+  // U+022B8 MULTIMAP
+  "\022B8": ("\⊸", "mumap", "multimap", "022B8", "8888"),
+  // U+022B9 HERMITIAN CONJUGATE MATRIX
+  "\022B9": ("\⊹", "hercon", "022B9", "8889"),
+  // U+022BA INTERCALATE
+  "\022BA": ("\⊺", "intcal", "intercal", "022BA", "8890"),
+  // U+022BB XOR
+  "\022BB": ("\⊻", "veebar", "022BB", "8891"),
+  // U+022BD NOR
+  "\022BD": ("\⊽", "barvee", "022BD", "8893"),
+  // U+022BE RIGHT ANGLE WITH ARC
+  "\022BE": ("\⊾", "angrtvb", "022BE", "8894"),
+  // U+022BF RIGHT TRIANGLE
+  "\022BF": ("\⊿", "lrtri", "022BF", "8895"),
+  // U+022C0 N-ARY LOGICAL AND
+  "\022C0": ("\⋀", "xwedge", "Wedge", "bigwedge", "022C0", "8896"),
+  // U+022C1 N-ARY LOGICAL OR
+  "\022C1": ("\⋁", "xvee", "Vee", "bigvee", "022C1", "8897"),
+  // U+022C2 N-ARY INTERSECTION
+  "\022C2": ("\⋂", "xcap", "Intersection", "bigcap", "022C2", "8898"),
+  // U+022C3 N-ARY UNION
+  "\022C3": ("\⋃", "xcup", "Union", "bigcup", "022C3", "8899"),
+  // U+022C4 DIAMOND OPERATOR
+  "\022C4": ("\⋄", "diam", "diamond", "Diamond", "022C4", "8900"),
+  // U+022C5 DOT OPERATOR
+  "\022C5": ("\⋅", "sdot", "022C5", "8901"),
+  // U+022C6 STAR OPERATOR
+  "\022C6": ("\⋆", "sstarf", "Star", "022C6", "8902"),
+  // U+022C7 DIVISION TIMES
+  "\022C7": ("\⋇", "divonx", "divideontimes", "022C7", "8903"),
+  // U+022C8 BOWTIE
+  "\022C8": ("\⋈", "bowtie", "022C8", "8904"),
+  // U+022C9 LEFT NORMAL FACTOR SEMIDIRECT PRODUCT
+  "\022C9": ("\⋉", "ltimes", "022C9", "8905"),
+  // U+022CA RIGHT NORMAL FACTOR SEMIDIRECT PRODUCT
+  "\022CA": ("\⋊", "rtimes", "022CA", "8906"),
+  // U+022CB LEFT SEMIDIRECT PRODUCT
+  "\022CB": ("\⋋", "lthree", "leftthreetimes", "022CB", "8907"),
+  // U+022CC RIGHT SEMIDIRECT PRODUCT
+  "\022CC": ("\⋌", "rthree", "rightthreetimes", "022CC", "8908"),
+  // U+022CD REVERSED TILDE EQUALS
+  "\022CD": ("\⋍", "bsime", "backsimeq", "022CD", "8909"),
+  // U+022CE CURLY LOGICAL OR
+  "\022CE": ("\⋎", "cuvee", "curlyvee", "022CE", "8910"),
+  // U+022CF CURLY LOGICAL AND
+  "\022CF": ("\⋏", "cuwed", "curlywedge", "022CF", "8911"),
+  // U+022D0 DOUBLE SUBSET
+  "\022D0": ("\⋐", "Sub", "Subset", "022D0", "8912"),
+  // U+022D1 DOUBLE SUPERSET
+  "\022D1": ("\⋑", "Sup", "Supset", "022D1", "8913"),
+  // U+022D2 DOUBLE INTERSECTION
+  "\022D2": ("\⋒", "Cap", "022D2", "8914"),
+  // U+022D3 DOUBLE UNION
+  "\022D3": ("\⋓", "Cup", "022D3", "8915"),
+  // U+022D4 PITCHFORK
+  "\022D4": ("\⋔", "fork", "pitchfork", "022D4", "8916"),
+  // U+022D5 EQUAL AND PARALLEL TO
+  "\022D5": ("\⋕", "epar", "022D5", "8917"),
+  // U+022D6 LESS-THAN WITH DOT
+  "\022D6": ("\⋖", "ltdot", "lessdot", "022D6", "8918"),
+  // U+022D7 GREATER-THAN WITH DOT
+  "\022D7": ("\⋗", "gtdot", "gtrdot", "022D7", "8919"),
+  // U+022D8 VERY MUCH LESS-THAN
+  "\022D8": ("\⋘", "Ll", "022D8", "8920"),
+  // U+022D9 VERY MUCH GREATER-THAN
+  "\022D9": ("\⋙", "Gg", "ggg", "022D9", "8921"),
+  // U+022DA LESS-THAN EQUAL TO OR GREATER-THAN
+  "\022DA": ("\⋚", "leg", "LessEqualGreater", "lesseqgtr", "022DA", "8922"),
+  // U+022DB GREATER-THAN EQUAL TO OR LESS-THAN
+  "\022DB": ("\⋛", "gel", "gtreqless", "GreaterEqualLess", "022DB", "8923"),
+  // U+022DE EQUAL TO OR PRECEDES
+  "\022DE": ("\⋞", "cuepr", "curlyeqprec", "022DE", "8926"),
+  // U+022DF EQUAL TO OR SUCCEEDS
+  "\022DF": ("\⋟", "cuesc", "curlyeqsucc", "022DF", "8927"),
+  // U+022E0 DOES NOT PRECEDE OR EQUAL
+  "\022E0": ("\⋠", "nprcue", "NotPrecedesSlantEqual", "022E0", "8928"),
+  // U+022E1 DOES NOT SUCCEED OR EQUAL
+  "\022E1": ("\⋡", "nsccue", "NotSucceedsSlantEqual", "022E1", "8929"),
+  // U+022E2 NOT SQUARE IMAGE OF OR EQUAL TO
+  "\022E2": ("\⋢", "nsqsube", "NotSquareSubsetEqual", "022E2", "8930"),
+  // U+022E3 NOT SQUARE ORIGINAL OF OR EQUAL TO
+  "\022E3": ("\⋣", "nsqsupe", "NotSquareSupersetEqual", "022E3", "8931"),
+  // U+022E6 LESS-THAN BUT NOT EQUIVALENT TO
+  "\022E6": ("\⋦", "lnsim", "022E6", "8934"),
+  // U+022E7 GREATER-THAN BUT NOT EQUIVALENT TO
+  "\022E7": ("\⋧", "gnsim", "022E7", "8935"),
+  // U+022E8 PRECEDES BUT NOT EQUIVALENT TO
+  "\022E8": ("\⋨", "prnsim", "precnsim", "022E8", "8936"),
+  // U+022E9 SUCCEEDS BUT NOT EQUIVALENT TO
+  "\022E9": ("\⋩", "scnsim", "succnsim", "022E9", "8937"),
+  // U+022EA NOT NORMAL SUBGROUP OF
+  "\022EA": ("\⋪", "nltri", "ntriangleleft", "NotLeftTriangle", "022EA", "8938"),
+  // U+022EB DOES NOT CONTAIN AS NORMAL SUBGROUP
+  "\022EB": ("\⋫", "nrtri", "ntriangleright", "NotRightTriangle", "022EB", "8939"),
+  // U+022EC NOT NORMAL SUBGROUP OF OR EQUAL TO
+  "\022EC": ("\⋬", "nltrie", "ntrianglelefteq", "NotLeftTriangleEqual", "022EC", "8940"),
+  // U+022ED DOES NOT CONTAIN AS NORMAL SUBGROUP OR EQUAL
+  "\022ED": ("\⋭", "nrtrie", "ntrianglerighteq", "NotRightTriangleEqual", "022ED", "8941"),
+  // U+022EE VERTICAL ELLIPSIS
+  "\022EE": ("\⋮", "vellip", "022EE", "8942"),
+  // U+022EF MIDLINE HORIZONTAL ELLIPSIS
+  "\022EF": ("\⋯", "ctdot", "022EF", "8943"),
+  // U+022F0 UP RIGHT DIAGONAL ELLIPSIS
+  "\022F0": ("\⋰", "utdot", "022F0", "8944"),
+  // U+022F1 DOWN RIGHT DIAGONAL ELLIPSIS
+  "\022F1": ("\⋱", "dtdot", "022F1", "8945"),
+  // U+022F2 ELEMENT OF WITH LONG HORIZONTAL STROKE
+  "\022F2": ("\⋲", "disin", "022F2", "8946"),
+  // U+022F3 ELEMENT OF WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "\022F3": ("\⋳", "isinsv", "022F3", "8947"),
+  // U+022F4 SMALL ELEMENT OF WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "\022F4": ("\⋴", "isins", "022F4", "8948"),
+  // U+022F5 ELEMENT OF WITH DOT ABOVE
+  "\022F5": ("\⋵", "isindot", "022F5", "8949"),
+  // U+022F6 ELEMENT OF WITH OVERBAR
+  "\022F6": ("\⋶", "notinvc", "022F6", "8950"),
+  // U+022F7 SMALL ELEMENT OF WITH OVERBAR
+  "\022F7": ("\⋷", "notinvb", "022F7", "8951"),
+  // U+022F9 ELEMENT OF WITH TWO HORIZONTAL STROKES
+  "\022F9": ("\⋹", "isinE", "022F9", "8953"),
+  // U+022FA CONTAINS WITH LONG HORIZONTAL STROKE
+  "\022FA": ("\⋺", "nisd", "022FA", "8954"),
+  // U+022FB CONTAINS WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "\022FB": ("\⋻", "xnis", "022FB", "8955"),
+  // U+022FC SMALL CONTAINS WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "\022FC": ("\⋼", "nis", "022FC", "8956"),
+  // U+022FD CONTAINS WITH OVERBAR
+  "\022FD": ("\⋽", "notnivc", "022FD", "8957"),
+  // U+022FE SMALL CONTAINS WITH OVERBAR
+  "\022FE": ("\⋾", "notnivb", "022FE", "8958"),
+  // U+02305 PROJECTIVE
+  "\02305": ("\⌅", "barwed", "barwedge", "02305", "8965"),
+  // U+02306 PERSPECTIVE
+  "\02306": ("\⌆", "Barwed", "doublebarwedge", "02306", "8966"),
+  // U+02308 LEFT CEILING
+  "\02308": ("\⌈", "lceil", "LeftCeiling", "02308", "8968"),
+  // U+02309 RIGHT CEILING
+  "\02309": ("\⌉", "rceil", "RightCeiling", "02309", "8969"),
+  // U+0230A LEFT FLOOR
+  "\0230A": ("\⌊", "lfloor", "LeftFloor", "0230A", "8970"),
+  // U+0230B RIGHT FLOOR
+  "\0230B": ("\⌋", "rfloor", "RightFloor", "0230B", "8971"),
+  // U+0230C BOTTOM RIGHT CROP
+  "\0230C": ("\⌌", "drcrop", "0230C", "8972"),
+  // U+0230D BOTTOM LEFT CROP
+  "\0230D": ("\⌍", "dlcrop", "0230D", "8973"),
+  // U+0230E TOP RIGHT CROP
+  "\0230E": ("\⌎", "urcrop", "0230E", "8974"),
+  // U+0230F TOP LEFT CROP
+  "\0230F": ("\⌏", "ulcrop", "0230F", "8975"),
+  // U+02310 REVERSED NOT SIGN
+  "\02310": ("\⌐", "bnot", "02310", "8976"),
+  // U+02312 ARC
+  "\02312": ("\⌒", "profline", "02312", "8978"),
+  // U+02313 SEGMENT
+  "\02313": ("\⌓", "profsurf", "02313", "8979"),
+  // U+02315 TELEPHONE RECORDER
+  "\02315": ("\⌕", "telrec", "02315", "8981"),
+  // U+02316 POSITION INDICATOR
+  "\02316": ("\⌖", "target", "02316", "8982"),
+  // U+0231C TOP LEFT CORNER
+  "\0231C": ("\⌜", "ulcorn", "ulcorner", "0231C", "8988"),
+  // U+0231D TOP RIGHT CORNER
+  "\0231D": ("\⌝", "urcorn", "urcorner", "0231D", "8989"),
+  // U+0231E BOTTOM LEFT CORNER
+  "\0231E": ("\⌞", "dlcorn", "llcorner", "0231E", "8990"),
+  // U+0231F BOTTOM RIGHT CORNER
+  "\0231F": ("\⌟", "drcorn", "lrcorner", "0231F", "8991"),
+  // U+02322 FROWN
+  "\02322": ("\⌢", "frown", "sfrown", "02322", "8994"),
+  // U+02323 SMILE
+  "\02323": ("\⌣", "smile", "ssmile", "02323", "8995"),
+  // U+0232D CYLINDRICITY
+  "\0232D": ("\⌭", "cylcty", "0232D", "9005"),
+  // U+0232E ALL AROUND-PROFILE
+  "\0232E": ("\⌮", "profalar", "0232E", "9006"),
+  // U+02336 APL FUNCTIONAL SYMBOL I-BEAM
+  "\02336": ("\⌶", "topbot", "02336", "9014"),
+  // U+0233D APL FUNCTIONAL SYMBOL CIRCLE STILE
+  "\0233D": ("\⌽", "ovbar", "0233D", "9021"),
+  // U+0233F APL FUNCTIONAL SYMBOL SLASH BAR
+  "\0233F": ("\⌿", "solbar", "0233F", "9023"),
+  // U+0237C RIGHT ANGLE WITH DOWNWARDS ZIGZAG ARROW
+  "\0237C": ("\⍼", "angzarr", "0237C", "9084"),
+  // U+023B0 UPPER LEFT OR LOWER RIGHT CURLY BRACKET SECTION
+  "\023B0": ("\⎰", "lmoust", "lmoustache", "023B0", "9136"),
+  // U+023B1 UPPER RIGHT OR LOWER LEFT CURLY BRACKET SECTION
+  "\023B1": ("\⎱", "rmoust", "rmoustache", "023B1", "9137"),
+  // U+023B4 TOP SQUARE BRACKET
+  "\023B4": ("\⎴", "tbrk", "OverBracket", "023B4", "9140"),
+  // U+023B5 BOTTOM SQUARE BRACKET
+  "\023B5": ("\⎵", "bbrk", "UnderBracket", "023B5", "9141"),
+  // U+023B6 BOTTOM SQUARE BRACKET OVER TOP SQUARE BRACKET
+  "\023B6": ("\⎶", "bbrktbrk", "023B6", "9142"),
+  // U+023DC TOP PARENTHESIS
+  "\023DC": ("\⏜", "OverParenthesis", "023DC", "9180"),
+  // U+023DD BOTTOM PARENTHESIS
+  "\023DD": ("\⏝", "UnderParenthesis", "023DD", "9181"),
+  // U+023DE TOP CURLY BRACKET
+  "\023DE": ("\⏞", "OverBrace", "023DE", "9182"),
+  // U+023DF BOTTOM CURLY BRACKET
+  "\023DF": ("\⏟", "UnderBrace", "023DF", "9183"),
+  // U+023E2 WHITE TRAPEZIUM
+  "\023E2": ("\⏢", "trpezium", "023E2", "9186"),
+  // U+023E7 ELECTRICAL INTERSECTION
+  "\023E7": ("\⏧", "elinters", "023E7", "9191"),
+  // U+02423 OPEN BOX
+  "\02423": ("\␣", "blank", "02423", "9251"),
+  // U+024C8 CIRCLED LATIN CAPITAL LETTER S
+  "\024C8": ("\Ⓢ", "oS", "circledS", "024C8", "9416"),
+  // U+02500 BOX DRAWINGS LIGHT HORIZONTAL
+  "\02500": ("\─", "boxh", "HorizontalLine", "02500", "9472"),
+  // U+02502 BOX DRAWINGS LIGHT VERTICAL
+  "\02502": ("\│", "boxv", "02502", "9474"),
+  // U+0250C BOX DRAWINGS LIGHT DOWN AND RIGHT
+  "\0250C": ("\┌", "boxdr", "0250C", "9484"),
+  // U+02510 BOX DRAWINGS LIGHT DOWN AND LEFT
+  "\02510": ("\┐", "boxdl", "02510", "9488"),
+  // U+02514 BOX DRAWINGS LIGHT UP AND RIGHT
+  "\02514": ("\└", "boxur", "02514", "9492"),
+  // U+02518 BOX DRAWINGS LIGHT UP AND LEFT
+  "\02518": ("\┘", "boxul", "02518", "9496"),
+  // U+0251C BOX DRAWINGS LIGHT VERTICAL AND RIGHT
+  "\0251C": ("\├", "boxvr", "0251C", "9500"),
+  // U+02524 BOX DRAWINGS LIGHT VERTICAL AND LEFT
+  "\02524": ("\┤", "boxvl", "02524", "9508"),
+  // U+0252C BOX DRAWINGS LIGHT DOWN AND HORIZONTAL
+  "\0252C": ("\┬", "boxhd", "0252C", "9516"),
+  // U+02534 BOX DRAWINGS LIGHT UP AND HORIZONTAL
+  "\02534": ("\┴", "boxhu", "02534", "9524"),
+  // U+0253C BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL
+  "\0253C": ("\┼", "boxvh", "0253C", "9532"),
+  // U+02550 BOX DRAWINGS DOUBLE HORIZONTAL
+  "\02550": ("\═", "boxH", "02550", "9552"),
+  // U+02551 BOX DRAWINGS DOUBLE VERTICAL
+  "\02551": ("\║", "boxV", "02551", "9553"),
+  // U+02552 BOX DRAWINGS DOWN SINGLE AND RIGHT DOUBLE
+  "\02552": ("\╒", "boxdR", "02552", "9554"),
+  // U+02553 BOX DRAWINGS DOWN DOUBLE AND RIGHT SINGLE
+  "\02553": ("\╓", "boxDr", "02553", "9555"),
+  // U+02554 BOX DRAWINGS DOUBLE DOWN AND RIGHT
+  "\02554": ("\╔", "boxDR", "02554", "9556"),
+  // U+02555 BOX DRAWINGS DOWN SINGLE AND LEFT DOUBLE
+  "\02555": ("\╕", "boxdL", "02555", "9557"),
+  // U+02556 BOX DRAWINGS DOWN DOUBLE AND LEFT SINGLE
+  "\02556": ("\╖", "boxDl", "02556", "9558"),
+  // U+02557 BOX DRAWINGS DOUBLE DOWN AND LEFT
+  "\02557": ("\╗", "boxDL", "02557", "9559"),
+  // U+02558 BOX DRAWINGS UP SINGLE AND RIGHT DOUBLE
+  "\02558": ("\╘", "boxuR", "02558", "9560"),
+  // U+02559 BOX DRAWINGS UP DOUBLE AND RIGHT SINGLE
+  "\02559": ("\╙", "boxUr", "02559", "9561"),
+  // U+0255A BOX DRAWINGS DOUBLE UP AND RIGHT
+  "\0255A": ("\╚", "boxUR", "0255A", "9562"),
+  // U+0255B BOX DRAWINGS UP SINGLE AND LEFT DOUBLE
+  "\0255B": ("\╛", "boxuL", "0255B", "9563"),
+  // U+0255C BOX DRAWINGS UP DOUBLE AND LEFT SINGLE
+  "\0255C": ("\╜", "boxUl", "0255C", "9564"),
+  // U+0255D BOX DRAWINGS DOUBLE UP AND LEFT
+  "\0255D": ("\╝", "boxUL", "0255D", "9565"),
+  // U+0255E BOX DRAWINGS VERTICAL SINGLE AND RIGHT DOUBLE
+  "\0255E": ("\╞", "boxvR", "0255E", "9566"),
+  // U+0255F BOX DRAWINGS VERTICAL DOUBLE AND RIGHT SINGLE
+  "\0255F": ("\╟", "boxVr", "0255F", "9567"),
+  // U+02560 BOX DRAWINGS DOUBLE VERTICAL AND RIGHT
+  "\02560": ("\╠", "boxVR", "02560", "9568"),
+  // U+02561 BOX DRAWINGS VERTICAL SINGLE AND LEFT DOUBLE
+  "\02561": ("\╡", "boxvL", "02561", "9569"),
+  // U+02562 BOX DRAWINGS VERTICAL DOUBLE AND LEFT SINGLE
+  "\02562": ("\╢", "boxVl", "02562", "9570"),
+  // U+02563 BOX DRAWINGS DOUBLE VERTICAL AND LEFT
+  "\02563": ("\╣", "boxVL", "02563", "9571"),
+  // U+02564 BOX DRAWINGS DOWN SINGLE AND HORIZONTAL DOUBLE
+  "\02564": ("\╤", "boxHd", "02564", "9572"),
+  // U+02565 BOX DRAWINGS DOWN DOUBLE AND HORIZONTAL SINGLE
+  "\02565": ("\╥", "boxhD", "02565", "9573"),
+  // U+02566 BOX DRAWINGS DOUBLE DOWN AND HORIZONTAL
+  "\02566": ("\╦", "boxHD", "02566", "9574"),
+  // U+02567 BOX DRAWINGS UP SINGLE AND HORIZONTAL DOUBLE
+  "\02567": ("\╧", "boxHu", "02567", "9575"),
+  // U+02568 BOX DRAWINGS UP DOUBLE AND HORIZONTAL SINGLE
+  "\02568": ("\╨", "boxhU", "02568", "9576"),
+  // U+02569 BOX DRAWINGS DOUBLE UP AND HORIZONTAL
+  "\02569": ("\╩", "boxHU", "02569", "9577"),
+  // U+0256A BOX DRAWINGS VERTICAL SINGLE AND HORIZONTAL DOUBLE
+  "\0256A": ("\╪", "boxvH", "0256A", "9578"),
+  // U+0256B BOX DRAWINGS VERTICAL DOUBLE AND HORIZONTAL SINGLE
+  "\0256B": ("\╫", "boxVh", "0256B", "9579"),
+  // U+0256C BOX DRAWINGS DOUBLE VERTICAL AND HORIZONTAL
+  "\0256C": ("\╬", "boxVH", "0256C", "9580"),
+  // U+02580 UPPER HALF BLOCK
+  "\02580": ("\▀", "uhblk", "02580", "9600"),
+  // U+02584 LOWER HALF BLOCK
+  "\02584": ("\▄", "lhblk", "02584", "9604"),
+  // U+02588 FULL BLOCK
+  "\02588": ("\█", "block", "02588", "9608"),
+  // U+02591 LIGHT SHADE
+  "\02591": ("\░", "blk14", "02591", "9617"),
+  // U+02592 MEDIUM SHADE
+  "\02592": ("\▒", "blk12", "02592", "9618"),
+  // U+02593 DARK SHADE
+  "\02593": ("\▓", "blk34", "02593", "9619"),
+  // U+025A1 WHITE SQUARE
+  "\025A1": ("\□", "squ", "square", "Square", "025A1", "9633"),
+  // U+025AA BLACK SMALL SQUARE
+  "\025AA": ("\▪", "squf", "squarf", "blacksquare", "FilledVerySmallSquare", "025AA", "9642"),
+  // U+025AB WHITE SMALL SQUARE
+  "\025AB": ("\▫", "EmptyVerySmallSquare", "025AB", "9643"),
+  // U+025AD WHITE RECTANGLE
+  "\025AD": ("\▭", "rect", "025AD", "9645"),
+  // U+025AE BLACK VERTICAL RECTANGLE
+  "\025AE": ("\▮", "marker", "025AE", "9646"),
+  // U+025B1 WHITE PARALLELOGRAM
+  "\025B1": ("\▱", "fltns", "025B1", "9649"),
+  // U+025B3 WHITE UP-POINTING TRIANGLE
+  "\025B3": ("\△", "xutri", "bigtriangleup", "025B3", "9651"),
+  // U+025B4 BLACK UP-POINTING SMALL TRIANGLE
+  "\025B4": ("\▴", "utrif", "blacktriangle", "025B4", "9652"),
+  // U+025B5 WHITE UP-POINTING SMALL TRIANGLE
+  "\025B5": ("\▵", "utri", "triangle", "025B5", "9653"),
+  // U+025B8 BLACK RIGHT-POINTING SMALL TRIANGLE
+  "\025B8": ("\▸", "rtrif", "blacktriangleright", "025B8", "9656"),
+  // U+025B9 WHITE RIGHT-POINTING SMALL TRIANGLE
+  "\025B9": ("\▹", "rtri", "triangleright", "025B9", "9657"),
+  // U+025BD WHITE DOWN-POINTING TRIANGLE
+  "\025BD": ("\▽", "xdtri", "bigtriangledown", "025BD", "9661"),
+  // U+025BE BLACK DOWN-POINTING SMALL TRIANGLE
+  "\025BE": ("\▾", "dtrif", "blacktriangledown", "025BE", "9662"),
+  // U+025BF WHITE DOWN-POINTING SMALL TRIANGLE
+  "\025BF": ("\▿", "dtri", "triangledown", "025BF", "9663"),
+  // U+025C2 BLACK LEFT-POINTING SMALL TRIANGLE
+  "\025C2": ("\◂", "ltrif", "blacktriangleleft", "025C2", "9666"),
+  // U+025C3 WHITE LEFT-POINTING SMALL TRIANGLE
+  "\025C3": ("\◃", "ltri", "triangleleft", "025C3", "9667"),
+  // U+025CA LOZENGE
+  "\025CA": ("\◊", "loz", "lozenge", "025CA", "9674"),
+  // U+025CB WHITE CIRCLE
+  "\025CB": ("\○", "cir", "025CB", "9675"),
+  // U+025EC WHITE UP-POINTING TRIANGLE WITH DOT
+  "\025EC": ("\◬", "tridot", "025EC", "9708"),
+  // U+025EF LARGE CIRCLE
+  "\025EF": ("\◯", "xcirc", "bigcirc", "025EF", "9711"),
+  // U+025F8 UPPER LEFT TRIANGLE
+  "\025F8": ("\◸", "ultri", "025F8", "9720"),
+  // U+025F9 UPPER RIGHT TRIANGLE
+  "\025F9": ("\◹", "urtri", "025F9", "9721"),
+  // U+025FA LOWER LEFT TRIANGLE
+  "\025FA": ("\◺", "lltri", "025FA", "9722"),
+  // U+025FB WHITE MEDIUM SQUARE
+  "\025FB": ("\◻", "EmptySmallSquare", "025FB", "9723"),
+  // U+025FC BLACK MEDIUM SQUARE
+  "\025FC": ("\◼", "FilledSmallSquare", "025FC", "9724"),
+  // U+02605 BLACK STAR
+  "\02605": ("\★", "starf", "bigstar", "02605", "9733"),
+  // U+02606 WHITE STAR
+  "\02606": ("\☆", "star", "02606", "9734"),
+  // U+0260E BLACK TELEPHONE
+  "\0260E": ("\☎", "phone", "0260E", "9742"),
+  // U+02640 FEMALE SIGN
+  "\02640": ("\♀", "female", "02640", "9792"),
+  // U+02642 MALE SIGN
+  "\02642": ("\♂", "male", "02642", "9794"),
+  // U+02660 BLACK SPADE SUIT
+  "\02660": ("\♠", "spades", "spadesuit", "02660", "9824"),
+  // U+02663 BLACK CLUB SUIT
+  "\02663": ("\♣", "clubs", "clubsuit", "02663", "9827"),
+  // U+02665 BLACK HEART SUIT
+  "\02665": ("\♥", "hearts", "heartsuit", "02665", "9829"),
+  // U+02666 BLACK DIAMOND SUIT
+  "\02666": ("\♦", "diams", "diamondsuit", "02666", "9830"),
+  // U+0266A EIGHTH NOTE
+  "\0266A": ("\♪", "sung", "0266A", "9834"),
+  // U+0266D MUSIC FLAT SIGN
+  "\0266D": ("\♭", "flat", "0266D", "9837"),
+  // U+0266E MUSIC NATURAL SIGN
+  "\0266E": ("\♮", "natur", "natural", "0266E", "9838"),
+  // U+0266F MUSIC SHARP SIGN
+  "\0266F": ("\♯", "sharp", "0266F", "9839"),
+  // U+02713 CHECK MARK
+  "\02713": ("\✓", "check", "checkmark", "02713", "10003"),
+  // U+02717 BALLOT X
+  "\02717": ("\✗", "cross", "02717", "10007"),
+  // U+02720 MALTESE CROSS
+  "\02720": ("\✠", "malt", "maltese", "02720", "10016"),
+  // U+02736 SIX POINTED BLACK STAR
+  "\02736": ("\✶", "sext", "02736", "10038"),
+  // U+02758 LIGHT VERTICAL BAR
+  "\02758": ("\❘", "VerticalSeparator", "02758", "10072"),
+  // U+02772 LIGHT LEFT TORTOISE SHELL BRACKET ORNAMENT
+  "\02772": ("\❲", "lbbrk", "02772", "10098"),
+  // U+02773 LIGHT RIGHT TORTOISE SHELL BRACKET ORNAMENT
+  "\02773": ("\❳", "rbbrk", "02773", "10099"),
+  // U+027E6 MATHEMATICAL LEFT WHITE SQUARE BRACKET
+  "\027E6": ("\⟦", "lobrk", "LeftDoubleBracket", "027E6", "10214"),
+  // U+027E7 MATHEMATICAL RIGHT WHITE SQUARE BRACKET
+  "\027E7": ("\⟧", "robrk", "RightDoubleBracket", "027E7", "10215"),
+  // U+027E8 MATHEMATICAL LEFT ANGLE BRACKET
+  "\027E8": ("\⟨", "lang", "LeftAngleBracket", "langle", "027E8", "10216"),
+  // U+027E9 MATHEMATICAL RIGHT ANGLE BRACKET
+  "\027E9": ("\⟩", "rang", "RightAngleBracket", "rangle", "027E9", "10217"),
+  // U+027EA MATHEMATICAL LEFT DOUBLE ANGLE BRACKET
+  "\027EA": ("\⟪", "Lang", "027EA", "10218"),
+  // U+027EB MATHEMATICAL RIGHT DOUBLE ANGLE BRACKET
+  "\027EB": ("\⟫", "Rang", "027EB", "10219"),
+  // U+027EC MATHEMATICAL LEFT WHITE TORTOISE SHELL BRACKET
+  "\027EC": ("\⟬", "loang", "027EC", "10220"),
+  // U+027ED MATHEMATICAL RIGHT WHITE TORTOISE SHELL BRACKET
+  "\027ED": ("\⟭", "roang", "027ED", "10221"),
+  // U+027F5 LONG LEFTWARDS ARROW
+  "\027F5": ("\⟵", "xlarr", "longleftarrow", "LongLeftArrow", "027F5", "10229"),
+  // U+027F6 LONG RIGHTWARDS ARROW
+  "\027F6": ("\⟶", "xrarr", "longrightarrow", "LongRightArrow", "027F6", "10230"),
+  // U+027F7 LONG LEFT RIGHT ARROW
+  "\027F7": ("\⟷", "xharr", "longleftrightarrow", "LongLeftRightArrow", "027F7", "10231"),
+  // U+027F8 LONG LEFTWARDS DOUBLE ARROW
+  "\027F8": ("\⟸", "xlArr", "Longleftarrow", "DoubleLongLeftArrow", "027F8", "10232"),
+  // U+027F9 LONG RIGHTWARDS DOUBLE ARROW
+  "\027F9": ("\⟹", "xrArr", "Longrightarrow", "DoubleLongRightArrow", "027F9", "10233"),
+  // U+027FA LONG LEFT RIGHT DOUBLE ARROW
+  "\027FA": ("\⟺", "xhArr", "Longleftrightarrow", "DoubleLongLeftRightArrow", "027FA", "10234"),
+  // U+027FC LONG RIGHTWARDS ARROW FROM BAR
+  "\027FC": ("\⟼", "xmap", "longmapsto", "027FC", "10236"),
+  // U+027FF LONG RIGHTWARDS SQUIGGLE ARROW
+  "\027FF": ("\⟿", "dzigrarr", "027FF", "10239"),
+  // U+02902 LEFTWARDS DOUBLE ARROW WITH VERTICAL STROKE
+  "\02902": ("\⤂", "nvlArr", "02902", "10498"),
+  // U+02903 RIGHTWARDS DOUBLE ARROW WITH VERTICAL STROKE
+  "\02903": ("\⤃", "nvrArr", "02903", "10499"),
+  // U+02904 LEFT RIGHT DOUBLE ARROW WITH VERTICAL STROKE
+  "\02904": ("\⤄", "nvHarr", "02904", "10500"),
+  // U+02905 RIGHTWARDS TWO-HEADED ARROW FROM BAR
+  "\02905": ("\⤅", "Map", "02905", "10501"),
+  // U+0290C LEFTWARDS DOUBLE DASH ARROW
+  "\0290C": ("\⤌", "lbarr", "0290C", "10508"),
+  // U+0290D RIGHTWARDS DOUBLE DASH ARROW
+  "\0290D": ("\⤍", "rbarr", "bkarow", "0290D", "10509"),
+  // U+0290E LEFTWARDS TRIPLE DASH ARROW
+  "\0290E": ("\⤎", "lBarr", "0290E", "10510"),
+  // U+0290F RIGHTWARDS TRIPLE DASH ARROW
+  "\0290F": ("\⤏", "rBarr", "dbkarow", "0290F", "10511"),
+  // U+02910 RIGHTWARDS TWO-HEADED TRIPLE DASH ARROW
+  "\02910": ("\⤐", "RBarr", "drbkarow", "02910", "10512"),
+  // U+02911 RIGHTWARDS ARROW WITH DOTTED STEM
+  "\02911": ("\⤑", "DDotrahd", "02911", "10513"),
+  // U+02912 UPWARDS ARROW TO BAR
+  "\02912": ("\⤒", "UpArrowBar", "02912", "10514"),
+  // U+02913 DOWNWARDS ARROW TO BAR
+  "\02913": ("\⤓", "DownArrowBar", "02913", "10515"),
+  // U+02916 RIGHTWARDS TWO-HEADED ARROW WITH TAIL
+  "\02916": ("\⤖", "Rarrtl", "02916", "10518"),
+  // U+02919 LEFTWARDS ARROW-TAIL
+  "\02919": ("\⤙", "latail", "02919", "10521"),
+  // U+0291A RIGHTWARDS ARROW-TAIL
+  "\0291A": ("\⤚", "ratail", "0291A", "10522"),
+  // U+0291B LEFTWARDS DOUBLE ARROW-TAIL
+  "\0291B": ("\⤛", "lAtail", "0291B", "10523"),
+  // U+0291C RIGHTWARDS DOUBLE ARROW-TAIL
+  "\0291C": ("\⤜", "rAtail", "0291C", "10524"),
+  // U+0291D LEFTWARDS ARROW TO BLACK DIAMOND
+  "\0291D": ("\⤝", "larrfs", "0291D", "10525"),
+  // U+0291E RIGHTWARDS ARROW TO BLACK DIAMOND
+  "\0291E": ("\⤞", "rarrfs", "0291E", "10526"),
+  // U+0291F LEFTWARDS ARROW FROM BAR TO BLACK DIAMOND
+  "\0291F": ("\⤟", "larrbfs", "0291F", "10527"),
+  // U+02920 RIGHTWARDS ARROW FROM BAR TO BLACK DIAMOND
+  "\02920": ("\⤠", "rarrbfs", "02920", "10528"),
+  // U+02923 NORTH WEST ARROW WITH HOOK
+  "\02923": ("\⤣", "nwarhk", "02923", "10531"),
+  // U+02924 NORTH EAST ARROW WITH HOOK
+  "\02924": ("\⤤", "nearhk", "02924", "10532"),
+  // U+02925 SOUTH EAST ARROW WITH HOOK
+  "\02925": ("\⤥", "searhk", "hksearow", "02925", "10533"),
+  // U+02926 SOUTH WEST ARROW WITH HOOK
+  "\02926": ("\⤦", "swarhk", "hkswarow", "02926", "10534"),
+  // U+02927 NORTH WEST ARROW AND NORTH EAST ARROW
+  "\02927": ("\⤧", "nwnear", "02927", "10535"),
+  // U+02928 NORTH EAST ARROW AND SOUTH EAST ARROW
+  "\02928": ("\⤨", "nesear", "toea", "02928", "10536"),
+  // U+02929 SOUTH EAST ARROW AND SOUTH WEST ARROW
+  "\02929": ("\⤩", "seswar", "tosa", "02929", "10537"),
+  // U+0292A SOUTH WEST ARROW AND NORTH WEST ARROW
+  "\0292A": ("\⤪", "swnwar", "0292A", "10538"),
+  // U+02933 WAVE ARROW POINTING DIRECTLY RIGHT
+  "\02933": ("\⤳", "rarrc", "02933", "10547"),
+  // U+02935 ARROW POINTING RIGHTWARDS THEN CURVING DOWNWARDS
+  "\02935": ("\⤵", "cudarrr", "02935", "10549"),
+  // U+02936 ARROW POINTING DOWNWARDS THEN CURVING LEFTWARDS
+  "\02936": ("\⤶", "ldca", "02936", "10550"),
+  // U+02937 ARROW POINTING DOWNWARDS THEN CURVING RIGHTWARDS
+  "\02937": ("\⤷", "rdca", "02937", "10551"),
+  // U+02938 RIGHT-SIDE ARC CLOCKWISE ARROW
+  "\02938": ("\⤸", "cudarrl", "02938", "10552"),
+  // U+02939 LEFT-SIDE ARC ANTICLOCKWISE ARROW
+  "\02939": ("\⤹", "larrpl", "02939", "10553"),
+  // U+0293C TOP ARC CLOCKWISE ARROW WITH MINUS
+  "\0293C": ("\⤼", "curarrm", "0293C", "10556"),
+  // U+0293D TOP ARC ANTICLOCKWISE ARROW WITH PLUS
+  "\0293D": ("\⤽", "cularrp", "0293D", "10557"),
+  // U+02945 RIGHTWARDS ARROW WITH PLUS BELOW
+  "\02945": ("\⥅", "rarrpl", "02945", "10565"),
+  // U+02948 LEFT RIGHT ARROW THROUGH SMALL CIRCLE
+  "\02948": ("\⥈", "harrcir", "02948", "10568"),
+  // U+02949 UPWARDS TWO-HEADED ARROW FROM SMALL CIRCLE
+  "\02949": ("\⥉", "Uarrocir", "02949", "10569"),
+  // U+0294A LEFT BARB UP RIGHT BARB DOWN HARPOON
+  "\0294A": ("\⥊", "lurdshar", "0294A", "10570"),
+  // U+0294B LEFT BARB DOWN RIGHT BARB UP HARPOON
+  "\0294B": ("\⥋", "ldrushar", "0294B", "10571"),
+  // U+0294E LEFT BARB UP RIGHT BARB UP HARPOON
+  "\0294E": ("\⥎", "LeftRightVector", "0294E", "10574"),
+  // U+0294F UP BARB RIGHT DOWN BARB RIGHT HARPOON
+  "\0294F": ("\⥏", "RightUpDownVector", "0294F", "10575"),
+  // U+02950 LEFT BARB DOWN RIGHT BARB DOWN HARPOON
+  "\02950": ("\⥐", "DownLeftRightVector", "02950", "10576"),
+  // U+02951 UP BARB LEFT DOWN BARB LEFT HARPOON
+  "\02951": ("\⥑", "LeftUpDownVector", "02951", "10577"),
+  // U+02952 LEFTWARDS HARPOON WITH BARB UP TO BAR
+  "\02952": ("\⥒", "LeftVectorBar", "02952", "10578"),
+  // U+02953 RIGHTWARDS HARPOON WITH BARB UP TO BAR
+  "\02953": ("\⥓", "RightVectorBar", "02953", "10579"),
+  // U+02954 UPWARDS HARPOON WITH BARB RIGHT TO BAR
+  "\02954": ("\⥔", "RightUpVectorBar", "02954", "10580"),
+  // U+02955 DOWNWARDS HARPOON WITH BARB RIGHT TO BAR
+  "\02955": ("\⥕", "RightDownVectorBar", "02955", "10581"),
+  // U+02956 LEFTWARDS HARPOON WITH BARB DOWN TO BAR
+  "\02956": ("\⥖", "DownLeftVectorBar", "02956", "10582"),
+  // U+02957 RIGHTWARDS HARPOON WITH BARB DOWN TO BAR
+  "\02957": ("\⥗", "DownRightVectorBar", "02957", "10583"),
+  // U+02958 UPWARDS HARPOON WITH BARB LEFT TO BAR
+  "\02958": ("\⥘", "LeftUpVectorBar", "02958", "10584"),
+  // U+02959 DOWNWARDS HARPOON WITH BARB LEFT TO BAR
+  "\02959": ("\⥙", "LeftDownVectorBar", "02959", "10585"),
+  // U+0295A LEFTWARDS HARPOON WITH BARB UP FROM BAR
+  "\0295A": ("\⥚", "LeftTeeVector", "0295A", "10586"),
+  // U+0295B RIGHTWARDS HARPOON WITH BARB UP FROM BAR
+  "\0295B": ("\⥛", "RightTeeVector", "0295B", "10587"),
+  // U+0295C UPWARDS HARPOON WITH BARB RIGHT FROM BAR
+  "\0295C": ("\⥜", "RightUpTeeVector", "0295C", "10588"),
+  // U+0295D DOWNWARDS HARPOON WITH BARB RIGHT FROM BAR
+  "\0295D": ("\⥝", "RightDownTeeVector", "0295D", "10589"),
+  // U+0295E LEFTWARDS HARPOON WITH BARB DOWN FROM BAR
+  "\0295E": ("\⥞", "DownLeftTeeVector", "0295E", "10590"),
+  // U+0295F RIGHTWARDS HARPOON WITH BARB DOWN FROM BAR
+  "\0295F": ("\⥟", "DownRightTeeVector", "0295F", "10591"),
+  // U+02960 UPWARDS HARPOON WITH BARB LEFT FROM BAR
+  "\02960": ("\⥠", "LeftUpTeeVector", "02960", "10592"),
+  // U+02961 DOWNWARDS HARPOON WITH BARB LEFT FROM BAR
+  "\02961": ("\⥡", "LeftDownTeeVector", "02961", "10593"),
+  // U+02962 LEFTWARDS HARPOON WITH BARB UP ABOVE LEFTWARDS HARPOON WITH BARB DOWN
+  "\02962": ("\⥢", "lHar", "02962", "10594"),
+  // U+02963 UPWARDS HARPOON WITH BARB LEFT BESIDE UPWARDS HARPOON WITH BARB RIGHT
+  "\02963": ("\⥣", "uHar", "02963", "10595"),
+  // U+02964 RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN
+  "\02964": ("\⥤", "rHar", "02964", "10596"),
+  // U+02965 DOWNWARDS HARPOON WITH BARB LEFT BESIDE DOWNWARDS HARPOON WITH BARB RIGHT
+  "\02965": ("\⥥", "dHar", "02965", "10597"),
+  // U+02966 LEFTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB UP
+  "\02966": ("\⥦", "luruhar", "02966", "10598"),
+  // U+02967 LEFTWARDS HARPOON WITH BARB DOWN ABOVE RIGHTWARDS HARPOON WITH BARB DOWN
+  "\02967": ("\⥧", "ldrdhar", "02967", "10599"),
+  // U+02968 RIGHTWARDS HARPOON WITH BARB UP ABOVE LEFTWARDS HARPOON WITH BARB UP
+  "\02968": ("\⥨", "ruluhar", "02968", "10600"),
+  // U+02969 RIGHTWARDS HARPOON WITH BARB DOWN ABOVE LEFTWARDS HARPOON WITH BARB DOWN
+  "\02969": ("\⥩", "rdldhar", "02969", "10601"),
+  // U+0296A LEFTWARDS HARPOON WITH BARB UP ABOVE LONG DASH
+  "\0296A": ("\⥪", "lharul", "0296A", "10602"),
+  // U+0296B LEFTWARDS HARPOON WITH BARB DOWN BELOW LONG DASH
+  "\0296B": ("\⥫", "llhard", "0296B", "10603"),
+  // U+0296C RIGHTWARDS HARPOON WITH BARB UP ABOVE LONG DASH
+  "\0296C": ("\⥬", "rharul", "0296C", "10604"),
+  // U+0296D RIGHTWARDS HARPOON WITH BARB DOWN BELOW LONG DASH
+  "\0296D": ("\⥭", "lrhard", "0296D", "10605"),
+  // U+0296E UPWARDS HARPOON WITH BARB LEFT BESIDE DOWNWARDS HARPOON WITH BARB RIGHT
+  "\0296E": ("\⥮", "udhar", "UpEquilibrium", "0296E", "10606"),
+  // U+0296F DOWNWARDS HARPOON WITH BARB LEFT BESIDE UPWARDS HARPOON WITH BARB RIGHT
+  "\0296F": ("\⥯", "duhar", "ReverseUpEquilibrium", "0296F", "10607"),
+  // U+02970 RIGHT DOUBLE ARROW WITH ROUNDED HEAD
+  "\02970": ("\⥰", "RoundImplies", "02970", "10608"),
+  // U+02971 EQUALS SIGN ABOVE RIGHTWARDS ARROW
+  "\02971": ("\⥱", "erarr", "02971", "10609"),
+  // U+02972 TILDE OPERATOR ABOVE RIGHTWARDS ARROW
+  "\02972": ("\⥲", "simrarr", "02972", "10610"),
+  // U+02973 LEFTWARDS ARROW ABOVE TILDE OPERATOR
+  "\02973": ("\⥳", "larrsim", "02973", "10611"),
+  // U+02974 RIGHTWARDS ARROW ABOVE TILDE OPERATOR
+  "\02974": ("\⥴", "rarrsim", "02974", "10612"),
+  // U+02975 RIGHTWARDS ARROW ABOVE ALMOST EQUAL TO
+  "\02975": ("\⥵", "rarrap", "02975", "10613"),
+  // U+02976 LESS-THAN ABOVE LEFTWARDS ARROW
+  "\02976": ("\⥶", "ltlarr", "02976", "10614"),
+  // U+02978 GREATER-THAN ABOVE RIGHTWARDS ARROW
+  "\02978": ("\⥸", "gtrarr", "02978", "10616"),
+  // U+02979 SUBSET ABOVE RIGHTWARDS ARROW
+  "\02979": ("\⥹", "subrarr", "02979", "10617"),
+  // U+0297B SUPERSET ABOVE LEFTWARDS ARROW
+  "\0297B": ("\⥻", "suplarr", "0297B", "10619"),
+  // U+0297C LEFT FISH TAIL
+  "\0297C": ("\⥼", "lfisht", "0297C", "10620"),
+  // U+0297D RIGHT FISH TAIL
+  "\0297D": ("\⥽", "rfisht", "0297D", "10621"),
+  // U+0297E UP FISH TAIL
+  "\0297E": ("\⥾", "ufisht", "0297E", "10622"),
+  // U+0297F DOWN FISH TAIL
+  "\0297F": ("\⥿", "dfisht", "0297F", "10623"),
+  // U+02985 LEFT WHITE PARENTHESIS
+  "\02985": ("\⦅", "lopar", "02985", "10629"),
+  // U+02986 RIGHT WHITE PARENTHESIS
+  "\02986": ("\⦆", "ropar", "02986", "10630"),
+  // U+0298B LEFT SQUARE BRACKET WITH UNDERBAR
+  "\0298B": ("\⦋", "lbrke", "0298B", "10635"),
+  // U+0298C RIGHT SQUARE BRACKET WITH UNDERBAR
+  "\0298C": ("\⦌", "rbrke", "0298C", "10636"),
+  // U+0298D LEFT SQUARE BRACKET WITH TICK IN TOP CORNER
+  "\0298D": ("\⦍", "lbrkslu", "0298D", "10637"),
+  // U+0298E RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER
+  "\0298E": ("\⦎", "rbrksld", "0298E", "10638"),
+  // U+0298F LEFT SQUARE BRACKET WITH TICK IN BOTTOM CORNER
+  "\0298F": ("\⦏", "lbrksld", "0298F", "10639"),
+  // U+02990 RIGHT SQUARE BRACKET WITH TICK IN TOP CORNER
+  "\02990": ("\⦐", "rbrkslu", "02990", "10640"),
+  // U+02991 LEFT ANGLE BRACKET WITH DOT
+  "\02991": ("\⦑", "langd", "02991", "10641"),
+  // U+02992 RIGHT ANGLE BRACKET WITH DOT
+  "\02992": ("\⦒", "rangd", "02992", "10642"),
+  // U+02993 LEFT ARC LESS-THAN BRACKET
+  "\02993": ("\⦓", "lparlt", "02993", "10643"),
+  // U+02994 RIGHT ARC GREATER-THAN BRACKET
+  "\02994": ("\⦔", "rpargt", "02994", "10644"),
+  // U+02995 DOUBLE LEFT ARC GREATER-THAN BRACKET
+  "\02995": ("\⦕", "gtlPar", "02995", "10645"),
+  // U+02996 DOUBLE RIGHT ARC LESS-THAN BRACKET
+  "\02996": ("\⦖", "ltrPar", "02996", "10646"),
+  // U+0299A VERTICAL ZIGZAG LINE
+  "\0299A": ("\⦚", "vzigzag", "0299A", "10650"),
+  // U+0299C RIGHT ANGLE VARIANT WITH SQUARE
+  "\0299C": ("\⦜", "vangrt", "0299C", "10652"),
+  // U+0299D MEASURED RIGHT ANGLE WITH DOT
+  "\0299D": ("\⦝", "angrtvbd", "0299D", "10653"),
+  // U+029A4 ANGLE WITH UNDERBAR
+  "\029A4": ("\⦤", "ange", "029A4", "10660"),
+  // U+029A5 REVERSED ANGLE WITH UNDERBAR
+  "\029A5": ("\⦥", "range", "029A5", "10661"),
+  // U+029A6 OBLIQUE ANGLE OPENING UP
+  "\029A6": ("\⦦", "dwangle", "029A6", "10662"),
+  // U+029A7 OBLIQUE ANGLE OPENING DOWN
+  "\029A7": ("\⦧", "uwangle", "029A7", "10663"),
+  // U+029A8 MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP AND RIGHT
+  "\029A8": ("\⦨", "angmsdaa", "029A8", "10664"),
+  // U+029A9 MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP AND LEFT
+  "\029A9": ("\⦩", "angmsdab", "029A9", "10665"),
+  // U+029AA MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING DOWN AND RIGHT
+  "\029AA": ("\⦪", "angmsdac", "029AA", "10666"),
+  // U+029AB MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING DOWN AND LEFT
+  "\029AB": ("\⦫", "angmsdad", "029AB", "10667"),
+  // U+029AC MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING RIGHT AND UP
+  "\029AC": ("\⦬", "angmsdae", "029AC", "10668"),
+  // U+029AD MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING LEFT AND UP
+  "\029AD": ("\⦭", "angmsdaf", "029AD", "10669"),
+  // U+029AE MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING RIGHT AND DOWN
+  "\029AE": ("\⦮", "angmsdag", "029AE", "10670"),
+  // U+029AF MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING LEFT AND DOWN
+  "\029AF": ("\⦯", "angmsdah", "029AF", "10671"),
+  // U+029B0 REVERSED EMPTY SET
+  "\029B0": ("\⦰", "bemptyv", "029B0", "10672"),
+  // U+029B1 EMPTY SET WITH OVERBAR
+  "\029B1": ("\⦱", "demptyv", "029B1", "10673"),
+  // U+029B2 EMPTY SET WITH SMALL CIRCLE ABOVE
+  "\029B2": ("\⦲", "cemptyv", "029B2", "10674"),
+  // U+029B3 EMPTY SET WITH RIGHT ARROW ABOVE
+  "\029B3": ("\⦳", "raemptyv", "029B3", "10675"),
+  // U+029B4 EMPTY SET WITH LEFT ARROW ABOVE
+  "\029B4": ("\⦴", "laemptyv", "029B4", "10676"),
+  // U+029B5 CIRCLE WITH HORIZONTAL BAR
+  "\029B5": ("\⦵", "ohbar", "029B5", "10677"),
+  // U+029B6 CIRCLED VERTICAL BAR
+  "\029B6": ("\⦶", "omid", "029B6", "10678"),
+  // U+029B7 CIRCLED PARALLEL
+  "\029B7": ("\⦷", "opar", "029B7", "10679"),
+  // U+029B9 CIRCLED PERPENDICULAR
+  "\029B9": ("\⦹", "operp", "029B9", "10681"),
+  // U+029BB CIRCLE WITH SUPERIMPOSED X
+  "\029BB": ("\⦻", "olcross", "029BB", "10683"),
+  // U+029BC CIRCLED ANTICLOCKWISE-ROTATED DIVISION SIGN
+  "\029BC": ("\⦼", "odsold", "029BC", "10684"),
+  // U+029BE CIRCLED WHITE BULLET
+  "\029BE": ("\⦾", "olcir", "029BE", "10686"),
+  // U+029BF CIRCLED BULLET
+  "\029BF": ("\⦿", "ofcir", "029BF", "10687"),
+  // U+029C0 CIRCLED LESS-THAN
+  "\029C0": ("\⧀", "olt", "029C0", "10688"),
+  // U+029C1 CIRCLED GREATER-THAN
+  "\029C1": ("\⧁", "ogt", "029C1", "10689"),
+  // U+029C2 CIRCLE WITH SMALL CIRCLE TO THE RIGHT
+  "\029C2": ("\⧂", "cirscir", "029C2", "10690"),
+  // U+029C3 CIRCLE WITH TWO HORIZONTAL STROKES TO THE RIGHT
+  "\029C3": ("\⧃", "cirE", "029C3", "10691"),
+  // U+029C4 SQUARED RISING DIAGONAL SLASH
+  "\029C4": ("\⧄", "solb", "029C4", "10692"),
+  // U+029C5 SQUARED FALLING DIAGONAL SLASH
+  "\029C5": ("\⧅", "bsolb", "029C5", "10693"),
+  // U+029C9 TWO JOINED SQUARES
+  "\029C9": ("\⧉", "boxbox", "029C9", "10697"),
+  // U+029CD TRIANGLE WITH SERIFS AT BOTTOM
+  "\029CD": ("\⧍", "trisb", "029CD", "10701"),
+  // U+029CE RIGHT TRIANGLE ABOVE LEFT TRIANGLE
+  "\029CE": ("\⧎", "rtriltri", "029CE", "10702"),
+  // U+029CF LEFT TRIANGLE BESIDE VERTICAL BAR
+  "\029CF": ("\⧏", "LeftTriangleBar", "029CF", "10703"),
+  // U+029D0 VERTICAL BAR BESIDE RIGHT TRIANGLE
+  "\029D0": ("\⧐", "RightTriangleBar", "029D0", "10704"),
+  // U+029DA LEFT DOUBLE WIGGLY FENCE
+  "\029DA": ("\⧚", "race", "029DA", "10714"),
+  // U+029DC INCOMPLETE INFINITY
+  "\029DC": ("\⧜", "iinfin", "029DC", "10716"),
+  // U+029DD TIE OVER INFINITY
+  "\029DD": ("\⧝", "infintie", "029DD", "10717"),
+  // U+029DE INFINITY NEGATED WITH VERTICAL BAR
+  "\029DE": ("\⧞", "nvinfin", "029DE", "10718"),
+  // U+029E3 EQUALS SIGN AND SLANTED PARALLEL
+  "\029E3": ("\⧣", "eparsl", "029E3", "10723"),
+  // U+029E4 EQUALS SIGN AND SLANTED PARALLEL WITH TILDE ABOVE
+  "\029E4": ("\⧤", "smeparsl", "029E4", "10724"),
+  // U+029E5 IDENTICAL TO AND SLANTED PARALLEL
+  "\029E5": ("\⧥", "eqvparsl", "029E5", "10725"),
+  // U+029EB BLACK LOZENGE
+  "\029EB": ("\⧫", "lozf", "blacklozenge", "029EB", "10731"),
+  // U+029F4 RULE-DELAYED
+  "\029F4": ("\⧴", "RuleDelayed", "029F4", "10740"),
+  // U+029F6 SOLIDUS WITH OVERBAR
+  "\029F6": ("\⧶", "dsol", "029F6", "10742"),
+  // U+02A00 N-ARY CIRCLED DOT OPERATOR
+  "\02A00": ("\⨀", "xodot", "bigodot", "02A00", "10752"),
+  // U+02A01 N-ARY CIRCLED PLUS OPERATOR
+  "\02A01": ("\⨁", "xoplus", "bigoplus", "02A01", "10753"),
+  // U+02A02 N-ARY CIRCLED TIMES OPERATOR
+  "\02A02": ("\⨂", "xotime", "bigotimes", "02A02", "10754"),
+  // U+02A04 N-ARY UNION OPERATOR WITH PLUS
+  "\02A04": ("\⨄", "xuplus", "biguplus", "02A04", "10756"),
+  // U+02A06 N-ARY SQUARE UNION OPERATOR
+  "\02A06": ("\⨆", "xsqcup", "bigsqcup", "02A06", "10758"),
+  // U+02A0C QUADRUPLE INTEGRAL OPERATOR
+  "\02A0C": ("\⨌", "qint", "iiiint", "02A0C", "10764"),
+  // U+02A0D FINITE PART INTEGRAL
+  "\02A0D": ("\⨍", "fpartint", "02A0D", "10765"),
+  // U+02A10 CIRCULATION FUNCTION
+  "\02A10": ("\⨐", "cirfnint", "02A10", "10768"),
+  // U+02A11 ANTICLOCKWISE INTEGRATION
+  "\02A11": ("\⨑", "awint", "02A11", "10769"),
+  // U+02A12 LINE INTEGRATION WITH RECTANGULAR PATH AROUND POLE
+  "\02A12": ("\⨒", "rppolint", "02A12", "10770"),
+  // U+02A13 LINE INTEGRATION WITH SEMICIRCULAR PATH AROUND POLE
+  "\02A13": ("\⨓", "scpolint", "02A13", "10771"),
+  // U+02A14 LINE INTEGRATION NOT INCLUDING THE POLE
+  "\02A14": ("\⨔", "npolint", "02A14", "10772"),
+  // U+02A15 INTEGRAL AROUND A POINT OPERATOR
+  "\02A15": ("\⨕", "pointint", "02A15", "10773"),
+  // U+02A16 QUATERNION INTEGRAL OPERATOR
+  "\02A16": ("\⨖", "quatint", "02A16", "10774"),
+  // U+02A17 INTEGRAL WITH LEFTWARDS ARROW WITH HOOK
+  "\02A17": ("\⨗", "intlarhk", "02A17", "10775"),
+  // U+02A22 PLUS SIGN WITH SMALL CIRCLE ABOVE
+  "\02A22": ("\⨢", "pluscir", "02A22", "10786"),
+  // U+02A23 PLUS SIGN WITH CIRCUMFLEX ACCENT ABOVE
+  "\02A23": ("\⨣", "plusacir", "02A23", "10787"),
+  // U+02A24 PLUS SIGN WITH TILDE ABOVE
+  "\02A24": ("\⨤", "simplus", "02A24", "10788"),
+  // U+02A25 PLUS SIGN WITH DOT BELOW
+  "\02A25": ("\⨥", "plusdu", "02A25", "10789"),
+  // U+02A26 PLUS SIGN WITH TILDE BELOW
+  "\02A26": ("\⨦", "plussim", "02A26", "10790"),
+  // U+02A27 PLUS SIGN WITH SUBSCRIPT TWO
+  "\02A27": ("\⨧", "plustwo", "02A27", "10791"),
+  // U+02A29 MINUS SIGN WITH COMMA ABOVE
+  "\02A29": ("\⨩", "mcomma", "02A29", "10793"),
+  // U+02A2A MINUS SIGN WITH DOT BELOW
+  "\02A2A": ("\⨪", "minusdu", "02A2A", "10794"),
+  // U+02A2D PLUS SIGN IN LEFT HALF CIRCLE
+  "\02A2D": ("\⨭", "loplus", "02A2D", "10797"),
+  // U+02A2E PLUS SIGN IN RIGHT HALF CIRCLE
+  "\02A2E": ("\⨮", "roplus", "02A2E", "10798"),
+  // U+02A2F VECTOR OR CROSS PRODUCT
+  "\02A2F": ("\⨯", "Cross", "02A2F", "10799"),
+  // U+02A30 MULTIPLICATION SIGN WITH DOT ABOVE
+  "\02A30": ("\⨰", "timesd", "02A30", "10800"),
+  // U+02A31 MULTIPLICATION SIGN WITH UNDERBAR
+  "\02A31": ("\⨱", "timesbar", "02A31", "10801"),
+  // U+02A33 SMASH PRODUCT
+  "\02A33": ("\⨳", "smashp", "02A33", "10803"),
+  // U+02A34 MULTIPLICATION SIGN IN LEFT HALF CIRCLE
+  "\02A34": ("\⨴", "lotimes", "02A34", "10804"),
+  // U+02A35 MULTIPLICATION SIGN IN RIGHT HALF CIRCLE
+  "\02A35": ("\⨵", "rotimes", "02A35", "10805"),
+  // U+02A36 CIRCLED MULTIPLICATION SIGN WITH CIRCUMFLEX ACCENT
+  "\02A36": ("\⨶", "otimesas", "02A36", "10806"),
+  // U+02A37 MULTIPLICATION SIGN IN DOUBLE CIRCLE
+  "\02A37": ("\⨷", "Otimes", "02A37", "10807"),
+  // U+02A38 CIRCLED DIVISION SIGN
+  "\02A38": ("\⨸", "odiv", "02A38", "10808"),
+  // U+02A39 PLUS SIGN IN TRIANGLE
+  "\02A39": ("\⨹", "triplus", "02A39", "10809"),
+  // U+02A3A MINUS SIGN IN TRIANGLE
+  "\02A3A": ("\⨺", "triminus", "02A3A", "10810"),
+  // U+02A3B MULTIPLICATION SIGN IN TRIANGLE
+  "\02A3B": ("\⨻", "tritime", "02A3B", "10811"),
+  // U+02A3C INTERIOR PRODUCT
+  "\02A3C": ("\⨼", "iprod", "intprod", "02A3C", "10812"),
+  // U+02A3F AMALGAMATION OR COPRODUCT
+  "\02A3F": ("\⨿", "amalg", "02A3F", "10815"),
+  // U+02A40 INTERSECTION WITH DOT
+  "\02A40": ("\⩀", "capdot", "02A40", "10816"),
+  // U+02A42 UNION WITH OVERBAR
+  "\02A42": ("\⩂", "ncup", "02A42", "10818"),
+  // U+02A43 INTERSECTION WITH OVERBAR
+  "\02A43": ("\⩃", "ncap", "02A43", "10819"),
+  // U+02A44 INTERSECTION WITH LOGICAL AND
+  "\02A44": ("\⩄", "capand", "02A44", "10820"),
+  // U+02A45 UNION WITH LOGICAL OR
+  "\02A45": ("\⩅", "cupor", "02A45", "10821"),
+  // U+02A46 UNION ABOVE INTERSECTION
+  "\02A46": ("\⩆", "cupcap", "02A46", "10822"),
+  // U+02A47 INTERSECTION ABOVE UNION
+  "\02A47": ("\⩇", "capcup", "02A47", "10823"),
+  // U+02A48 UNION ABOVE BAR ABOVE INTERSECTION
+  "\02A48": ("\⩈", "cupbrcap", "02A48", "10824"),
+  // U+02A49 INTERSECTION ABOVE BAR ABOVE UNION
+  "\02A49": ("\⩉", "capbrcup", "02A49", "10825"),
+  // U+02A4A UNION BESIDE AND JOINED WITH UNION
+  "\02A4A": ("\⩊", "cupcup", "02A4A", "10826"),
+  // U+02A4B INTERSECTION BESIDE AND JOINED WITH INTERSECTION
+  "\02A4B": ("\⩋", "capcap", "02A4B", "10827"),
+  // U+02A4C CLOSED UNION WITH SERIFS
+  "\02A4C": ("\⩌", "ccups", "02A4C", "10828"),
+  // U+02A4D CLOSED INTERSECTION WITH SERIFS
+  "\02A4D": ("\⩍", "ccaps", "02A4D", "10829"),
+  // U+02A50 CLOSED UNION WITH SERIFS AND SMASH PRODUCT
+  "\02A50": ("\⩐", "ccupssm", "02A50", "10832"),
+  // U+02A53 DOUBLE LOGICAL AND
+  "\02A53": ("\⩓", "And", "02A53", "10835"),
+  // U+02A54 DOUBLE LOGICAL OR
+  "\02A54": ("\⩔", "Or", "02A54", "10836"),
+  // U+02A55 TWO INTERSECTING LOGICAL AND
+  "\02A55": ("\⩕", "andand", "02A55", "10837"),
+  // U+02A56 TWO INTERSECTING LOGICAL OR
+  "\02A56": ("\⩖", "oror", "02A56", "10838"),
+  // U+02A57 SLOPING LARGE OR
+  "\02A57": ("\⩗", "orslope", "02A57", "10839"),
+  // U+02A58 SLOPING LARGE AND
+  "\02A58": ("\⩘", "andslope", "02A58", "10840"),
+  // U+02A5A LOGICAL AND WITH MIDDLE STEM
+  "\02A5A": ("\⩚", "andv", "02A5A", "10842"),
+  // U+02A5B LOGICAL OR WITH MIDDLE STEM
+  "\02A5B": ("\⩛", "orv", "02A5B", "10843"),
+  // U+02A5C LOGICAL AND WITH HORIZONTAL DASH
+  "\02A5C": ("\⩜", "andd", "02A5C", "10844"),
+  // U+02A5D LOGICAL OR WITH HORIZONTAL DASH
+  "\02A5D": ("\⩝", "ord", "02A5D", "10845"),
+  // U+02A5F LOGICAL AND WITH UNDERBAR
+  "\02A5F": ("\⩟", "wedbar", "02A5F", "10847"),
+  // U+02A66 EQUALS SIGN WITH DOT BELOW
+  "\02A66": ("\⩦", "sdote", "02A66", "10854"),
+  // U+02A6A TILDE OPERATOR WITH DOT ABOVE
+  "\02A6A": ("\⩪", "simdot", "02A6A", "10858"),
+  // U+02A6D CONGRUENT WITH DOT ABOVE
+  "\02A6D": ("\⩭", "congdot", "02A6D", "10861"),
+  // U+02A6E EQUALS WITH ASTERISK
+  "\02A6E": ("\⩮", "easter", "02A6E", "10862"),
+  // U+02A6F ALMOST EQUAL TO WITH CIRCUMFLEX ACCENT
+  "\02A6F": ("\⩯", "apacir", "02A6F", "10863"),
+  // U+02A70 APPROXIMATELY EQUAL OR EQUAL TO
+  "\02A70": ("\⩰", "apE", "02A70", "10864"),
+  // U+02A71 EQUALS SIGN ABOVE PLUS SIGN
+  "\02A71": ("\⩱", "eplus", "02A71", "10865"),
+  // U+02A72 PLUS SIGN ABOVE EQUALS SIGN
+  "\02A72": ("\⩲", "pluse", "02A72", "10866"),
+  // U+02A73 EQUALS SIGN ABOVE TILDE OPERATOR
+  "\02A73": ("\⩳", "Esim", "02A73", "10867"),
+  // U+02A74 DOUBLE COLON EQUAL
+  "\02A74": ("\⩴", "Colone", "02A74", "10868"),
+  // U+02A75 TWO CONSECUTIVE EQUALS SIGNS
+  "\02A75": ("\⩵", "Equal", "02A75", "10869"),
+  // U+02A77 EQUALS SIGN WITH TWO DOTS ABOVE AND TWO DOTS BELOW
+  "\02A77": ("\⩷", "eDDot", "ddotseq", "02A77", "10871"),
+  // U+02A78 EQUIVALENT WITH FOUR DOTS ABOVE
+  "\02A78": ("\⩸", "equivDD", "02A78", "10872"),
+  // U+02A79 LESS-THAN WITH CIRCLE INSIDE
+  "\02A79": ("\⩹", "ltcir", "02A79", "10873"),
+  // U+02A7A GREATER-THAN WITH CIRCLE INSIDE
+  "\02A7A": ("\⩺", "gtcir", "02A7A", "10874"),
+  // U+02A7B LESS-THAN WITH QUESTION MARK ABOVE
+  "\02A7B": ("\⩻", "ltquest", "02A7B", "10875"),
+  // U+02A7C GREATER-THAN WITH QUESTION MARK ABOVE
+  "\02A7C": ("\⩼", "gtquest", "02A7C", "10876"),
+  // U+02A7D LESS-THAN OR SLANTED EQUAL TO
+  "\02A7D": ("\⩽", "les", "LessSlantEqual", "leqslant", "02A7D", "10877"),
+  // U+02A7E GREATER-THAN OR SLANTED EQUAL TO
+  "\02A7E": ("\⩾", "ges", "GreaterSlantEqual", "geqslant", "02A7E", "10878"),
+  // U+02A7F LESS-THAN OR SLANTED EQUAL TO WITH DOT INSIDE
+  "\02A7F": ("\⩿", "lesdot", "02A7F", "10879"),
+  // U+02A80 GREATER-THAN OR SLANTED EQUAL TO WITH DOT INSIDE
+  "\02A80": ("\⪀", "gesdot", "02A80", "10880"),
+  // U+02A81 LESS-THAN OR SLANTED EQUAL TO WITH DOT ABOVE
+  "\02A81": ("\⪁", "lesdoto", "02A81", "10881"),
+  // U+02A82 GREATER-THAN OR SLANTED EQUAL TO WITH DOT ABOVE
+  "\02A82": ("\⪂", "gesdoto", "02A82", "10882"),
+  // U+02A83 LESS-THAN OR SLANTED EQUAL TO WITH DOT ABOVE RIGHT
+  "\02A83": ("\⪃", "lesdotor", "02A83", "10883"),
+  // U+02A84 GREATER-THAN OR SLANTED EQUAL TO WITH DOT ABOVE LEFT
+  "\02A84": ("\⪄", "gesdotol", "02A84", "10884"),
+  // U+02A85 LESS-THAN OR APPROXIMATE
+  "\02A85": ("\⪅", "lap", "lessapprox", "02A85", "10885"),
+  // U+02A86 GREATER-THAN OR APPROXIMATE
+  "\02A86": ("\⪆", "gap", "gtrapprox", "02A86", "10886"),
+  // U+02A87 LESS-THAN AND SINGLE-LINE NOT EQUAL TO
+  "\02A87": ("\⪇", "lne", "lneq", "02A87", "10887"),
+  // U+02A88 GREATER-THAN AND SINGLE-LINE NOT EQUAL TO
+  "\02A88": ("\⪈", "gne", "gneq", "02A88", "10888"),
+  // U+02A89 LESS-THAN AND NOT APPROXIMATE
+  "\02A89": ("\⪉", "lnap", "lnapprox", "02A89", "10889"),
+  // U+02A8A GREATER-THAN AND NOT APPROXIMATE
+  "\02A8A": ("\⪊", "gnap", "gnapprox", "02A8A", "10890"),
+  // U+02A8B LESS-THAN ABOVE DOUBLE-LINE EQUAL ABOVE GREATER-THAN
+  "\02A8B": ("\⪋", "lEg", "lesseqqgtr", "02A8B", "10891"),
+  // U+02A8C GREATER-THAN ABOVE DOUBLE-LINE EQUAL ABOVE LESS-THAN
+  "\02A8C": ("\⪌", "gEl", "gtreqqless", "02A8C", "10892"),
+  // U+02A8D LESS-THAN ABOVE SIMILAR OR EQUAL
+  "\02A8D": ("\⪍", "lsime", "02A8D", "10893"),
+  // U+02A8E GREATER-THAN ABOVE SIMILAR OR EQUAL
+  "\02A8E": ("\⪎", "gsime", "02A8E", "10894"),
+  // U+02A8F LESS-THAN ABOVE SIMILAR ABOVE GREATER-THAN
+  "\02A8F": ("\⪏", "lsimg", "02A8F", "10895"),
+  // U+02A90 GREATER-THAN ABOVE SIMILAR ABOVE LESS-THAN
+  "\02A90": ("\⪐", "gsiml", "02A90", "10896"),
+  // U+02A91 LESS-THAN ABOVE GREATER-THAN ABOVE DOUBLE-LINE EQUAL
+  "\02A91": ("\⪑", "lgE", "02A91", "10897"),
+  // U+02A92 GREATER-THAN ABOVE LESS-THAN ABOVE DOUBLE-LINE EQUAL
+  "\02A92": ("\⪒", "glE", "02A92", "10898"),
+  // U+02A93 LESS-THAN ABOVE SLANTED EQUAL ABOVE GREATER-THAN ABOVE SLANTED EQUAL
+  "\02A93": ("\⪓", "lesges", "02A93", "10899"),
+  // U+02A94 GREATER-THAN ABOVE SLANTED EQUAL ABOVE LESS-THAN ABOVE SLANTED EQUAL
+  "\02A94": ("\⪔", "gesles", "02A94", "10900"),
+  // U+02A95 SLANTED EQUAL TO OR LESS-THAN
+  "\02A95": ("\⪕", "els", "eqslantless", "02A95", "10901"),
+  // U+02A96 SLANTED EQUAL TO OR GREATER-THAN
+  "\02A96": ("\⪖", "egs", "eqslantgtr", "02A96", "10902"),
+  // U+02A97 SLANTED EQUAL TO OR LESS-THAN WITH DOT INSIDE
+  "\02A97": ("\⪗", "elsdot", "02A97", "10903"),
+  // U+02A98 SLANTED EQUAL TO OR GREATER-THAN WITH DOT INSIDE
+  "\02A98": ("\⪘", "egsdot", "02A98", "10904"),
+  // U+02A99 DOUBLE-LINE EQUAL TO OR LESS-THAN
+  "\02A99": ("\⪙", "el", "02A99", "10905"),
+  // U+02A9A DOUBLE-LINE EQUAL TO OR GREATER-THAN
+  "\02A9A": ("\⪚", "eg", "02A9A", "10906"),
+  // U+02A9D SIMILAR OR LESS-THAN
+  "\02A9D": ("\⪝", "siml", "02A9D", "10909"),
+  // U+02A9E SIMILAR OR GREATER-THAN
+  "\02A9E": ("\⪞", "simg", "02A9E", "10910"),
+  // U+02A9F SIMILAR ABOVE LESS-THAN ABOVE EQUALS SIGN
+  "\02A9F": ("\⪟", "simlE", "02A9F", "10911"),
+  // U+02AA0 SIMILAR ABOVE GREATER-THAN ABOVE EQUALS SIGN
+  "\02AA0": ("\⪠", "simgE", "02AA0", "10912"),
+  // U+02AA1 DOUBLE NESTED LESS-THAN
+  "\02AA1": ("\⪡", "LessLess", "02AA1", "10913"),
+  // U+02AA2 DOUBLE NESTED GREATER-THAN
+  "\02AA2": ("\⪢", "GreaterGreater", "02AA2", "10914"),
+  // U+02AA4 GREATER-THAN OVERLAPPING LESS-THAN
+  "\02AA4": ("\⪤", "glj", "02AA4", "10916"),
+  // U+02AA5 GREATER-THAN BESIDE LESS-THAN
+  "\02AA5": ("\⪥", "gla", "02AA5", "10917"),
+  // U+02AA6 LESS-THAN CLOSED BY CURVE
+  "\02AA6": ("\⪦", "ltcc", "02AA6", "10918"),
+  // U+02AA7 GREATER-THAN CLOSED BY CURVE
+  "\02AA7": ("\⪧", "gtcc", "02AA7", "10919"),
+  // U+02AA8 LESS-THAN CLOSED BY CURVE ABOVE SLANTED EQUAL
+  "\02AA8": ("\⪨", "lescc", "02AA8", "10920"),
+  // U+02AA9 GREATER-THAN CLOSED BY CURVE ABOVE SLANTED EQUAL
+  "\02AA9": ("\⪩", "gescc", "02AA9", "10921"),
+  // U+02AAA SMALLER THAN
+  "\02AAA": ("\⪪", "smt", "02AAA", "10922"),
+  // U+02AAB LARGER THAN
+  "\02AAB": ("\⪫", "lat", "02AAB", "10923"),
+  // U+02AAC SMALLER THAN OR EQUAL TO
+  "\02AAC": ("\⪬", "smte", "02AAC", "10924"),
+  // U+02AAD LARGER THAN OR EQUAL TO
+  "\02AAD": ("\⪭", "late", "02AAD", "10925"),
+  // U+02AAE EQUALS SIGN WITH BUMPY ABOVE
+  "\02AAE": ("\⪮", "bumpE", "02AAE", "10926"),
+  // U+02AAF PRECEDES ABOVE SINGLE-LINE EQUALS SIGN
+  "\02AAF": ("\⪯", "pre", "preceq", "PrecedesEqual", "02AAF", "10927"),
+  // U+02AB0 SUCCEEDS ABOVE SINGLE-LINE EQUALS SIGN
+  "\02AB0": ("\⪰", "sce", "succeq", "SucceedsEqual", "02AB0", "10928"),
+  // U+02AB3 PRECEDES ABOVE EQUALS SIGN
+  "\02AB3": ("\⪳", "prE", "02AB3", "10931"),
+  // U+02AB4 SUCCEEDS ABOVE EQUALS SIGN
+  "\02AB4": ("\⪴", "scE", "02AB4", "10932"),
+  // U+02AB5 PRECEDES ABOVE NOT EQUAL TO
+  "\02AB5": ("\⪵", "prnE", "precneqq", "02AB5", "10933"),
+  // U+02AB6 SUCCEEDS ABOVE NOT EQUAL TO
+  "\02AB6": ("\⪶", "scnE", "succneqq", "02AB6", "10934"),
+  // U+02AB7 PRECEDES ABOVE ALMOST EQUAL TO
+  "\02AB7": ("\⪷", "prap", "precapprox", "02AB7", "10935"),
+  // U+02AB8 SUCCEEDS ABOVE ALMOST EQUAL TO
+  "\02AB8": ("\⪸", "scap", "succapprox", "02AB8", "10936"),
+  // U+02AB9 PRECEDES ABOVE NOT ALMOST EQUAL TO
+  "\02AB9": ("\⪹", "prnap", "precnapprox", "02AB9", "10937"),
+  // U+02ABA SUCCEEDS ABOVE NOT ALMOST EQUAL TO
+  "\02ABA": ("\⪺", "scnap", "succnapprox", "02ABA", "10938"),
+  // U+02ABB DOUBLE PRECEDES
+  "\02ABB": ("\⪻", "Pr", "02ABB", "10939"),
+  // U+02ABC DOUBLE SUCCEEDS
+  "\02ABC": ("\⪼", "Sc", "02ABC", "10940"),
+  // U+02ABD SUBSET WITH DOT
+  "\02ABD": ("\⪽", "subdot", "02ABD", "10941"),
+  // U+02ABE SUPERSET WITH DOT
+  "\02ABE": ("\⪾", "supdot", "02ABE", "10942"),
+  // U+02ABF SUBSET WITH PLUS SIGN BELOW
+  "\02ABF": ("\⪿", "subplus", "02ABF", "10943"),
+  // U+02AC0 SUPERSET WITH PLUS SIGN BELOW
+  "\02AC0": ("\⫀", "supplus", "02AC0", "10944"),
+  // U+02AC1 SUBSET WITH MULTIPLICATION SIGN BELOW
+  "\02AC1": ("\⫁", "submult", "02AC1", "10945"),
+  // U+02AC2 SUPERSET WITH MULTIPLICATION SIGN BELOW
+  "\02AC2": ("\⫂", "supmult", "02AC2", "10946"),
+  // U+02AC3 SUBSET OF OR EQUAL TO WITH DOT ABOVE
+  "\02AC3": ("\⫃", "subedot", "02AC3", "10947"),
+  // U+02AC4 SUPERSET OF OR EQUAL TO WITH DOT ABOVE
+  "\02AC4": ("\⫄", "supedot", "02AC4", "10948"),
+  // U+02AC5 SUBSET OF ABOVE EQUALS SIGN
+  "\02AC5": ("\⫅", "subE", "subseteqq", "02AC5", "10949"),
+  // U+02AC6 SUPERSET OF ABOVE EQUALS SIGN
+  "\02AC6": ("\⫆", "supE", "supseteqq", "02AC6", "10950"),
+  // U+02AC7 SUBSET OF ABOVE TILDE OPERATOR
+  "\02AC7": ("\⫇", "subsim", "02AC7", "10951"),
+  // U+02AC8 SUPERSET OF ABOVE TILDE OPERATOR
+  "\02AC8": ("\⫈", "supsim", "02AC8", "10952"),
+  // U+02ACB SUBSET OF ABOVE NOT EQUAL TO
+  "\02ACB": ("\⫋", "subnE", "subsetneqq", "02ACB", "10955"),
+  // U+02ACC SUPERSET OF ABOVE NOT EQUAL TO
+  "\02ACC": ("\⫌", "supnE", "supsetneqq", "02ACC", "10956"),
+  // U+02ACF CLOSED SUBSET
+  "\02ACF": ("\⫏", "csub", "02ACF", "10959"),
+  // U+02AD0 CLOSED SUPERSET
+  "\02AD0": ("\⫐", "csup", "02AD0", "10960"),
+  // U+02AD1 CLOSED SUBSET OR EQUAL TO
+  "\02AD1": ("\⫑", "csube", "02AD1", "10961"),
+  // U+02AD2 CLOSED SUPERSET OR EQUAL TO
+  "\02AD2": ("\⫒", "csupe", "02AD2", "10962"),
+  // U+02AD3 SUBSET ABOVE SUPERSET
+  "\02AD3": ("\⫓", "subsup", "02AD3", "10963"),
+  // U+02AD4 SUPERSET ABOVE SUBSET
+  "\02AD4": ("\⫔", "supsub", "02AD4", "10964"),
+  // U+02AD5 SUBSET ABOVE SUBSET
+  "\02AD5": ("\⫕", "subsub", "02AD5", "10965"),
+  // U+02AD6 SUPERSET ABOVE SUPERSET
+  "\02AD6": ("\⫖", "supsup", "02AD6", "10966"),
+  // U+02AD7 SUPERSET BESIDE SUBSET
+  "\02AD7": ("\⫗", "suphsub", "02AD7", "10967"),
+  // U+02AD8 SUPERSET BESIDE AND JOINED BY DASH WITH SUBSET
+  "\02AD8": ("\⫘", "supdsub", "02AD8", "10968"),
+  // U+02AD9 ELEMENT OF OPENING DOWNWARDS
+  "\02AD9": ("\⫙", "forkv", "02AD9", "10969"),
+  // U+02ADA PITCHFORK WITH TEE TOP
+  "\02ADA": ("\⫚", "topfork", "02ADA", "10970"),
+  // U+02ADB TRANSVERSAL INTERSECTION
+  "\02ADB": ("\⫛", "mlcp", "02ADB", "10971"),
+  // U+02AE4 VERTICAL BAR DOUBLE LEFT TURNSTILE
+  "\02AE4": ("\⫤", "Dashv", "DoubleLeftTee", "02AE4", "10980"),
+  // U+02AE6 LONG DASH FROM LEFT MEMBER OF DOUBLE VERTICAL
+  "\02AE6": ("\⫦", "Vdashl", "02AE6", "10982"),
+  // U+02AE7 SHORT DOWN TACK WITH OVERBAR
+  "\02AE7": ("\⫧", "Barv", "02AE7", "10983"),
+  // U+02AE8 SHORT UP TACK WITH UNDERBAR
+  "\02AE8": ("\⫨", "vBar", "02AE8", "10984"),
+  // U+02AE9 SHORT UP TACK ABOVE SHORT DOWN TACK
+  "\02AE9": ("\⫩", "vBarv", "02AE9", "10985"),
+  // U+02AEB DOUBLE UP TACK
+  "\02AEB": ("\⫫", "Vbar", "02AEB", "10987"),
+  // U+02AEC DOUBLE STROKE NOT SIGN
+  "\02AEC": ("\⫬", "Not", "02AEC", "10988"),
+  // U+02AED REVERSED DOUBLE STROKE NOT SIGN
+  "\02AED": ("\⫭", "bNot", "02AED", "10989"),
+  // U+02AEE DOES NOT DIVIDE WITH REVERSED NEGATION SLASH
+  "\02AEE": ("\⫮", "rnmid", "02AEE", "10990"),
+  // U+02AEF VERTICAL LINE WITH CIRCLE ABOVE
+  "\02AEF": ("\⫯", "cirmid", "02AEF", "10991"),
+  // U+02AF0 VERTICAL LINE WITH CIRCLE BELOW
+  "\02AF0": ("\⫰", "midcir", "02AF0", "10992"),
+  // U+02AF1 DOWN TACK WITH CIRCLE BELOW
+  "\02AF1": ("\⫱", "topcir", "02AF1", "10993"),
+  // U+02AF2 PARALLEL WITH HORIZONTAL STROKE
+  "\02AF2": ("\⫲", "nhpar", "02AF2", "10994"),
+  // U+02AF3 PARALLEL WITH TILDE OPERATOR
+  "\02AF3": ("\⫳", "parsim", "02AF3", "10995"),
+  // U+02AFD DOUBLE SOLIDUS OPERATOR
+  "\02AFD": ("\⫽", "parsl", "02AFD", "11005"),
+  // U+0FB00 LATIN SMALL LIGATURE FF
+  "\0FB00": ("\ﬀ", "fflig", "0FB00", "64256"),
+  // U+0FB01 LATIN SMALL LIGATURE FI
+  "\0FB01": ("\ﬁ", "filig", "0FB01", "64257"),
+  // U+0FB02 LATIN SMALL LIGATURE FL
+  "\0FB02": ("\ﬂ", "fllig", "0FB02", "64258"),
+  // U+0FB03 LATIN SMALL LIGATURE FFI
+  "\0FB03": ("\ﬃ", "ffilig", "0FB03", "64259"),
+  // U+0FB04 LATIN SMALL LIGATURE FFL
+  "\0FB04": ("\ﬄ", "ffllig", "0FB04", "64260"),
+  // U+1D49C MATHEMATICAL SCRIPT CAPITAL A
+  "\1D49C": ("\𝒜", "Ascr", "1D49C", "119964"),
+  // U+1D49E MATHEMATICAL SCRIPT CAPITAL C
+  "\1D49E": ("\𝒞", "Cscr", "1D49E", "119966"),
+  // U+1D49F MATHEMATICAL SCRIPT CAPITAL D
+  "\1D49F": ("\𝒟", "Dscr", "1D49F", "119967"),
+  // U+1D4A2 MATHEMATICAL SCRIPT CAPITAL G
+  "\1D4A2": ("\𝒢", "Gscr", "1D4A2", "119970"),
+  // U+1D4A5 MATHEMATICAL SCRIPT CAPITAL J
+  "\1D4A5": ("\𝒥", "Jscr", "1D4A5", "119973"),
+  // U+1D4A6 MATHEMATICAL SCRIPT CAPITAL K
+  "\1D4A6": ("\𝒦", "Kscr", "1D4A6", "119974"),
+  // U+1D4A9 MATHEMATICAL SCRIPT CAPITAL N
+  "\1D4A9": ("\𝒩", "Nscr", "1D4A9", "119977"),
+  // U+1D4AA MATHEMATICAL SCRIPT CAPITAL O
+  "\1D4AA": ("\𝒪", "Oscr", "1D4AA", "119978"),
+  // U+1D4AB MATHEMATICAL SCRIPT CAPITAL P
+  "\1D4AB": ("\𝒫", "Pscr", "1D4AB", "119979"),
+  // U+1D4AC MATHEMATICAL SCRIPT CAPITAL Q
+  "\1D4AC": ("\𝒬", "Qscr", "1D4AC", "119980"),
+  // U+1D4AE MATHEMATICAL SCRIPT CAPITAL S
+  "\1D4AE": ("\𝒮", "Sscr", "1D4AE", "119982"),
+  // U+1D4AF MATHEMATICAL SCRIPT CAPITAL T
+  "\1D4AF": ("\𝒯", "Tscr", "1D4AF", "119983"),
+  // U+1D4B0 MATHEMATICAL SCRIPT CAPITAL U
+  "\1D4B0": ("\𝒰", "Uscr", "1D4B0", "119984"),
+  // U+1D4B1 MATHEMATICAL SCRIPT CAPITAL V
+  "\1D4B1": ("\𝒱", "Vscr", "1D4B1", "119985"),
+  // U+1D4B2 MATHEMATICAL SCRIPT CAPITAL W
+  "\1D4B2": ("\𝒲", "Wscr", "1D4B2", "119986"),
+  // U+1D4B3 MATHEMATICAL SCRIPT CAPITAL X
+  "\1D4B3": ("\𝒳", "Xscr", "1D4B3", "119987"),
+  // U+1D4B4 MATHEMATICAL SCRIPT CAPITAL Y
+  "\1D4B4": ("\𝒴", "Yscr", "1D4B4", "119988"),
+  // U+1D4B5 MATHEMATICAL SCRIPT CAPITAL Z
+  "\1D4B5": ("\𝒵", "Zscr", "1D4B5", "119989"),
+  // U+1D4B6 MATHEMATICAL SCRIPT SMALL A
+  "\1D4B6": ("\𝒶", "ascr", "1D4B6", "119990"),
+  // U+1D4B7 MATHEMATICAL SCRIPT SMALL B
+  "\1D4B7": ("\𝒷", "bscr", "1D4B7", "119991"),
+  // U+1D4B8 MATHEMATICAL SCRIPT SMALL C
+  "\1D4B8": ("\𝒸", "cscr", "1D4B8", "119992"),
+  // U+1D4B9 MATHEMATICAL SCRIPT SMALL D
+  "\1D4B9": ("\𝒹", "dscr", "1D4B9", "119993"),
+  // U+1D4BB MATHEMATICAL SCRIPT SMALL F
+  "\1D4BB": ("\𝒻", "fscr", "1D4BB", "119995"),
+  // U+1D4BD MATHEMATICAL SCRIPT SMALL H
+  "\1D4BD": ("\𝒽", "hscr", "1D4BD", "119997"),
+  // U+1D4BE MATHEMATICAL SCRIPT SMALL I
+  "\1D4BE": ("\𝒾", "iscr", "1D4BE", "119998"),
+  // U+1D4BF MATHEMATICAL SCRIPT SMALL J
+  "\1D4BF": ("\𝒿", "jscr", "1D4BF", "119999"),
+  // U+1D4C0 MATHEMATICAL SCRIPT SMALL K
+  "\1D4C0": ("\𝓀", "kscr", "1D4C0", "120000"),
+  // U+1D4C1 MATHEMATICAL SCRIPT SMALL L
+  "\1D4C1": ("\𝓁", "lscr", "1D4C1", "120001"),
+  // U+1D4C2 MATHEMATICAL SCRIPT SMALL M
+  "\1D4C2": ("\𝓂", "mscr", "1D4C2", "120002"),
+  // U+1D4C3 MATHEMATICAL SCRIPT SMALL N
+  "\1D4C3": ("\𝓃", "nscr", "1D4C3", "120003"),
+  // U+1D4C5 MATHEMATICAL SCRIPT SMALL P
+  "\1D4C5": ("\𝓅", "pscr", "1D4C5", "120005"),
+  // U+1D4C6 MATHEMATICAL SCRIPT SMALL Q
+  "\1D4C6": ("\𝓆", "qscr", "1D4C6", "120006"),
+  // U+1D4C7 MATHEMATICAL SCRIPT SMALL R
+  "\1D4C7": ("\𝓇", "rscr", "1D4C7", "120007"),
+  // U+1D4C8 MATHEMATICAL SCRIPT SMALL S
+  "\1D4C8": ("\𝓈", "sscr", "1D4C8", "120008"),
+  // U+1D4C9 MATHEMATICAL SCRIPT SMALL T
+  "\1D4C9": ("\𝓉", "tscr", "1D4C9", "120009"),
+  // U+1D4CA MATHEMATICAL SCRIPT SMALL U
+  "\1D4CA": ("\𝓊", "uscr", "1D4CA", "120010"),
+  // U+1D4CB MATHEMATICAL SCRIPT SMALL V
+  "\1D4CB": ("\𝓋", "vscr", "1D4CB", "120011"),
+  // U+1D4CC MATHEMATICAL SCRIPT SMALL W
+  "\1D4CC": ("\𝓌", "wscr", "1D4CC", "120012"),
+  // U+1D4CD MATHEMATICAL SCRIPT SMALL X
+  "\1D4CD": ("\𝓍", "xscr", "1D4CD", "120013"),
+  // U+1D4CE MATHEMATICAL SCRIPT SMALL Y
+  "\1D4CE": ("\𝓎", "yscr", "1D4CE", "120014"),
+  // U+1D4CF MATHEMATICAL SCRIPT SMALL Z
+  "\1D4CF": ("\𝓏", "zscr", "1D4CF", "120015"),
+  // U+1D504 MATHEMATICAL FRAKTUR CAPITAL A
+  "\1D504": ("\𝔄", "Afr", "1D504", "120068"),
+  // U+1D505 MATHEMATICAL FRAKTUR CAPITAL B
+  "\1D505": ("\𝔅", "Bfr", "1D505", "120069"),
+  // U+1D507 MATHEMATICAL FRAKTUR CAPITAL D
+  "\1D507": ("\𝔇", "Dfr", "1D507", "120071"),
+  // U+1D508 MATHEMATICAL FRAKTUR CAPITAL E
+  "\1D508": ("\𝔈", "Efr", "1D508", "120072"),
+  // U+1D509 MATHEMATICAL FRAKTUR CAPITAL F
+  "\1D509": ("\𝔉", "Ffr", "1D509", "120073"),
+  // U+1D50A MATHEMATICAL FRAKTUR CAPITAL G
+  "\1D50A": ("\𝔊", "Gfr", "1D50A", "120074"),
+  // U+1D50D MATHEMATICAL FRAKTUR CAPITAL J
+  "\1D50D": ("\𝔍", "Jfr", "1D50D", "120077"),
+  // U+1D50E MATHEMATICAL FRAKTUR CAPITAL K
+  "\1D50E": ("\𝔎", "Kfr", "1D50E", "120078"),
+  // U+1D50F MATHEMATICAL FRAKTUR CAPITAL L
+  "\1D50F": ("\𝔏", "Lfr", "1D50F", "120079"),
+  // U+1D510 MATHEMATICAL FRAKTUR CAPITAL M
+  "\1D510": ("\𝔐", "Mfr", "1D510", "120080"),
+  // U+1D511 MATHEMATICAL FRAKTUR CAPITAL N
+  "\1D511": ("\𝔑", "Nfr", "1D511", "120081"),
+  // U+1D512 MATHEMATICAL FRAKTUR CAPITAL O
+  "\1D512": ("\𝔒", "Ofr", "1D512", "120082"),
+  // U+1D513 MATHEMATICAL FRAKTUR CAPITAL P
+  "\1D513": ("\𝔓", "Pfr", "1D513", "120083"),
+  // U+1D514 MATHEMATICAL FRAKTUR CAPITAL Q
+  "\1D514": ("\𝔔", "Qfr", "1D514", "120084"),
+  // U+1D516 MATHEMATICAL FRAKTUR CAPITAL S
+  "\1D516": ("\𝔖", "Sfr", "1D516", "120086"),
+  // U+1D517 MATHEMATICAL FRAKTUR CAPITAL T
+  "\1D517": ("\𝔗", "Tfr", "1D517", "120087"),
+  // U+1D518 MATHEMATICAL FRAKTUR CAPITAL U
+  "\1D518": ("\𝔘", "Ufr", "1D518", "120088"),
+  // U+1D519 MATHEMATICAL FRAKTUR CAPITAL V
+  "\1D519": ("\𝔙", "Vfr", "1D519", "120089"),
+  // U+1D51A MATHEMATICAL FRAKTUR CAPITAL W
+  "\1D51A": ("\𝔚", "Wfr", "1D51A", "120090"),
+  // U+1D51B MATHEMATICAL FRAKTUR CAPITAL X
+  "\1D51B": ("\𝔛", "Xfr", "1D51B", "120091"),
+  // U+1D51C MATHEMATICAL FRAKTUR CAPITAL Y
+  "\1D51C": ("\𝔜", "Yfr", "1D51C", "120092"),
+  // U+1D51E MATHEMATICAL FRAKTUR SMALL A
+  "\1D51E": ("\𝔞", "afr", "1D51E", "120094"),
+  // U+1D51F MATHEMATICAL FRAKTUR SMALL B
+  "\1D51F": ("\𝔟", "bfr", "1D51F", "120095"),
+  // U+1D520 MATHEMATICAL FRAKTUR SMALL C
+  "\1D520": ("\𝔠", "cfr", "1D520", "120096"),
+  // U+1D521 MATHEMATICAL FRAKTUR SMALL D
+  "\1D521": ("\𝔡", "dfr", "1D521", "120097"),
+  // U+1D522 MATHEMATICAL FRAKTUR SMALL E
+  "\1D522": ("\𝔢", "efr", "1D522", "120098"),
+  // U+1D523 MATHEMATICAL FRAKTUR SMALL F
+  "\1D523": ("\𝔣", "ffr", "1D523", "120099"),
+  // U+1D524 MATHEMATICAL FRAKTUR SMALL G
+  "\1D524": ("\𝔤", "gfr", "1D524", "120100"),
+  // U+1D525 MATHEMATICAL FRAKTUR SMALL H
+  "\1D525": ("\𝔥", "hfr", "1D525", "120101"),
+  // U+1D526 MATHEMATICAL FRAKTUR SMALL I
+  "\1D526": ("\𝔦", "ifr", "1D526", "120102"),
+  // U+1D527 MATHEMATICAL FRAKTUR SMALL J
+  "\1D527": ("\𝔧", "jfr", "1D527", "120103"),
+  // U+1D528 MATHEMATICAL FRAKTUR SMALL K
+  "\1D528": ("\𝔨", "kfr", "1D528", "120104"),
+  // U+1D529 MATHEMATICAL FRAKTUR SMALL L
+  "\1D529": ("\𝔩", "lfr", "1D529", "120105"),
+  // U+1D52A MATHEMATICAL FRAKTUR SMALL M
+  "\1D52A": ("\𝔪", "mfr", "1D52A", "120106"),
+  // U+1D52B MATHEMATICAL FRAKTUR SMALL N
+  "\1D52B": ("\𝔫", "nfr", "1D52B", "120107"),
+  // U+1D52C MATHEMATICAL FRAKTUR SMALL O
+  "\1D52C": ("\𝔬", "ofr", "1D52C", "120108"),
+  // U+1D52D MATHEMATICAL FRAKTUR SMALL P
+  "\1D52D": ("\𝔭", "pfr", "1D52D", "120109"),
+  // U+1D52E MATHEMATICAL FRAKTUR SMALL Q
+  "\1D52E": ("\𝔮", "qfr", "1D52E", "120110"),
+  // U+1D52F MATHEMATICAL FRAKTUR SMALL R
+  "\1D52F": ("\𝔯", "rfr", "1D52F", "120111"),
+  // U+1D530 MATHEMATICAL FRAKTUR SMALL S
+  "\1D530": ("\𝔰", "sfr", "1D530", "120112"),
+  // U+1D531 MATHEMATICAL FRAKTUR SMALL T
+  "\1D531": ("\𝔱", "tfr", "1D531", "120113"),
+  // U+1D532 MATHEMATICAL FRAKTUR SMALL U
+  "\1D532": ("\𝔲", "ufr", "1D532", "120114"),
+  // U+1D533 MATHEMATICAL FRAKTUR SMALL V
+  "\1D533": ("\𝔳", "vfr", "1D533", "120115"),
+  // U+1D534 MATHEMATICAL FRAKTUR SMALL W
+  "\1D534": ("\𝔴", "wfr", "1D534", "120116"),
+  // U+1D535 MATHEMATICAL FRAKTUR SMALL X
+  "\1D535": ("\𝔵", "xfr", "1D535", "120117"),
+  // U+1D536 MATHEMATICAL FRAKTUR SMALL Y
+  "\1D536": ("\𝔶", "yfr", "1D536", "120118"),
+  // U+1D537 MATHEMATICAL FRAKTUR SMALL Z
+  "\1D537": ("\𝔷", "zfr", "1D537", "120119"),
+  // U+1D538 MATHEMATICAL DOUBLE-STRUCK CAPITAL A
+  "\1D538": ("\𝔸", "Aopf", "1D538", "120120"),
+  // U+1D539 MATHEMATICAL DOUBLE-STRUCK CAPITAL B
+  "\1D539": ("\𝔹", "Bopf", "1D539", "120121"),
+  // U+1D53B MATHEMATICAL DOUBLE-STRUCK CAPITAL D
+  "\1D53B": ("\𝔻", "Dopf", "1D53B", "120123"),
+  // U+1D53C MATHEMATICAL DOUBLE-STRUCK CAPITAL E
+  "\1D53C": ("\𝔼", "Eopf", "1D53C", "120124"),
+  // U+1D53D MATHEMATICAL DOUBLE-STRUCK CAPITAL F
+  "\1D53D": ("\𝔽", "Fopf", "1D53D", "120125"),
+  // U+1D53E MATHEMATICAL DOUBLE-STRUCK CAPITAL G
+  "\1D53E": ("\𝔾", "Gopf", "1D53E", "120126"),
+  // U+1D540 MATHEMATICAL DOUBLE-STRUCK CAPITAL I
+  "\1D540": ("\𝕀", "Iopf", "1D540", "120128"),
+  // U+1D541 MATHEMATICAL DOUBLE-STRUCK CAPITAL J
+  "\1D541": ("\𝕁", "Jopf", "1D541", "120129"),
+  // U+1D542 MATHEMATICAL DOUBLE-STRUCK CAPITAL K
+  "\1D542": ("\𝕂", "Kopf", "1D542", "120130"),
+  // U+1D543 MATHEMATICAL DOUBLE-STRUCK CAPITAL L
+  "\1D543": ("\𝕃", "Lopf", "1D543", "120131"),
+  // U+1D544 MATHEMATICAL DOUBLE-STRUCK CAPITAL M
+  "\1D544": ("\𝕄", "Mopf", "1D544", "120132"),
+  // U+1D546 MATHEMATICAL DOUBLE-STRUCK CAPITAL O
+  "\1D546": ("\𝕆", "Oopf", "1D546", "120134"),
+  // U+1D54A MATHEMATICAL DOUBLE-STRUCK CAPITAL S
+  "\1D54A": ("\𝕊", "Sopf", "1D54A", "120138"),
+  // U+1D54B MATHEMATICAL DOUBLE-STRUCK CAPITAL T
+  "\1D54B": ("\𝕋", "Topf", "1D54B", "120139"),
+  // U+1D54C MATHEMATICAL DOUBLE-STRUCK CAPITAL U
+  "\1D54C": ("\𝕌", "Uopf", "1D54C", "120140"),
+  // U+1D54D MATHEMATICAL DOUBLE-STRUCK CAPITAL V
+  "\1D54D": ("\𝕍", "Vopf", "1D54D", "120141"),
+  // U+1D54E MATHEMATICAL DOUBLE-STRUCK CAPITAL W
+  "\1D54E": ("\𝕎", "Wopf", "1D54E", "120142"),
+  // U+1D54F MATHEMATICAL DOUBLE-STRUCK CAPITAL X
+  "\1D54F": ("\𝕏", "Xopf", "1D54F", "120143"),
+  // U+1D550 MATHEMATICAL DOUBLE-STRUCK CAPITAL Y
+  "\1D550": ("\𝕐", "Yopf", "1D550", "120144"),
+  // U+1D552 MATHEMATICAL DOUBLE-STRUCK SMALL A
+  "\1D552": ("\𝕒", "aopf", "1D552", "120146"),
+  // U+1D553 MATHEMATICAL DOUBLE-STRUCK SMALL B
+  "\1D553": ("\𝕓", "bopf", "1D553", "120147"),
+  // U+1D554 MATHEMATICAL DOUBLE-STRUCK SMALL C
+  "\1D554": ("\𝕔", "copf", "1D554", "120148"),
+  // U+1D555 MATHEMATICAL DOUBLE-STRUCK SMALL D
+  "\1D555": ("\𝕕", "dopf", "1D555", "120149"),
+  // U+1D556 MATHEMATICAL DOUBLE-STRUCK SMALL E
+  "\1D556": ("\𝕖", "eopf", "1D556", "120150"),
+  // U+1D557 MATHEMATICAL DOUBLE-STRUCK SMALL F
+  "\1D557": ("\𝕗", "fopf", "1D557", "120151"),
+  // U+1D558 MATHEMATICAL DOUBLE-STRUCK SMALL G
+  "\1D558": ("\𝕘", "gopf", "1D558", "120152"),
+  // U+1D559 MATHEMATICAL DOUBLE-STRUCK SMALL H
+  "\1D559": ("\𝕙", "hopf", "1D559", "120153"),
+  // U+1D55A MATHEMATICAL DOUBLE-STRUCK SMALL I
+  "\1D55A": ("\𝕚", "iopf", "1D55A", "120154"),
+  // U+1D55B MATHEMATICAL DOUBLE-STRUCK SMALL J
+  "\1D55B": ("\𝕛", "jopf", "1D55B", "120155"),
+  // U+1D55C MATHEMATICAL DOUBLE-STRUCK SMALL K
+  "\1D55C": ("\𝕜", "kopf", "1D55C", "120156"),
+  // U+1D55D MATHEMATICAL DOUBLE-STRUCK SMALL L
+  "\1D55D": ("\𝕝", "lopf", "1D55D", "120157"),
+  // U+1D55E MATHEMATICAL DOUBLE-STRUCK SMALL M
+  "\1D55E": ("\𝕞", "mopf", "1D55E", "120158"),
+  // U+1D55F MATHEMATICAL DOUBLE-STRUCK SMALL N
+  "\1D55F": ("\𝕟", "nopf", "1D55F", "120159"),
+  // U+1D560 MATHEMATICAL DOUBLE-STRUCK SMALL O
+  "\1D560": ("\𝕠", "oopf", "1D560", "120160"),
+  // U+1D561 MATHEMATICAL DOUBLE-STRUCK SMALL P
+  "\1D561": ("\𝕡", "popf", "1D561", "120161"),
+  // U+1D562 MATHEMATICAL DOUBLE-STRUCK SMALL Q
+  "\1D562": ("\𝕢", "qopf", "1D562", "120162"),
+  // U+1D563 MATHEMATICAL DOUBLE-STRUCK SMALL R
+  "\1D563": ("\𝕣", "ropf", "1D563", "120163"),
+  // U+1D564 MATHEMATICAL DOUBLE-STRUCK SMALL S
+  "\1D564": ("\𝕤", "sopf", "1D564", "120164"),
+  // U+1D565 MATHEMATICAL DOUBLE-STRUCK SMALL T
+  "\1D565": ("\𝕥", "topf", "1D565", "120165"),
+  // U+1D566 MATHEMATICAL DOUBLE-STRUCK SMALL U
+  "\1D566": ("\𝕦", "uopf", "1D566", "120166"),
+  // U+1D567 MATHEMATICAL DOUBLE-STRUCK SMALL V
+  "\1D567": ("\𝕧", "vopf", "1D567", "120167"),
+  // U+1D568 MATHEMATICAL DOUBLE-STRUCK SMALL W
+  "\1D568": ("\𝕨", "wopf", "1D568", "120168"),
+  // U+1D569 MATHEMATICAL DOUBLE-STRUCK SMALL X
+  "\1D569": ("\𝕩", "xopf", "1D569", "120169"),
+  // U+1D56A MATHEMATICAL DOUBLE-STRUCK SMALL Y
+  "\1D56A": ("\𝕪", "yopf", "1D56A", "120170"),
+  // U+1D56B MATHEMATICAL DOUBLE-STRUCK SMALL Z
+  "\1D56B": ("\𝕫", "zopf", "1D56B", "120171")
+);
+
+@function entity($char) {
+  @each $entity, $keys in $entities {
+    @if index($keys, $char) {
+      @return $entity;
+    }
+  }
+  @return $char;
+}

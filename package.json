@@ -1,0 +1,16 @@
+{
+  "name": "entity-sass",
+  "version": "1.0.0",
+  "description": "A Sass function that will output properly encoded entities.",
+  "main": "scss/_entity.scss",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "keywords": ["sass", "entity", "entities", "function"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^3.3.0",
+    "sass-true": "^2.2.2"
+  }
+}
